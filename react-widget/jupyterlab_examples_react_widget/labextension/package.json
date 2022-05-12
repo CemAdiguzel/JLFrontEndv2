@@ -79,7 +79,7 @@
     "extension": true,
     "outputDir": "jupyterlab_examples_react_widget/labextension",
     "_build": {
-      "load": "static/remoteEntry.6e2cb9a04d87050dcc76.js",
+      "load": "static/remoteEntry.4c706a16c35dbf664130.js",
       "extension": "./extension",
       "style": "./style"
     }

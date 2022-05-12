@@ -1,7 +1,9 @@
+/* eslint-disable @typescript-eslint/quotes */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-import * as React from 'react';
-import { Grid, Button } from '@material-ui/core';
-import { Link } from 'react-router-dom';
+// eslint-disable-next-line @typescript-eslint/quotes
+import * as React from "react";
+import { Grid, Button } from "@material-ui/core";
+import { Link } from "react-router-dom";
 
 export default function MainPage() {
   return (
@@ -10,14 +12,14 @@ export default function MainPage() {
         item
         xs={12}
         style={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignContent: 'center',
+          display: "flex",
+          justifyContent: "center",
+          alignContent: "center",
         }}
       >
         <Link to="/lab/selection-page">
           <Button variant="contained" color="primary">
-            Login
+            OurLocalLogin
           </Button>
         </Link>
       </Grid>
