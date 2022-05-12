@@ -43,13 +43,11 @@ export default function MainPage() {
         <TextField
           id="standard-basic"
           label="Email"
-          placeholder="Enter Email"
           onChange={(e) => setEmail(e.target.value)}
         />
         <TextField
           id="standard-basic"
-          label="Email"
-          placeholder="Enter Password"
+          label="Password"
           type="password"
           onChange={(e) => setPassword(e.target.value)}
         />
