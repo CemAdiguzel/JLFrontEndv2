@@ -1,0 +1,6 @@
+.MuiCardContent-root:last-child {
+  padding-bottom: 12 !important;
+  padding-top: 12 !important;
+  padding-left: 12 !important;
+  padding-right: 12 !important;
+}
