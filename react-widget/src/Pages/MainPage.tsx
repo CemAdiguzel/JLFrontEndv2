@@ -38,22 +38,31 @@ export default function MainPage() {
           display: "flex",
           justifyContent: "center",
           alignContent: "center",
+          flexWrap: "wrap",
         }}
       >
-        <TextField
-          id="standard-basic"
-          label="Email"
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <TextField
-          id="standard-basic"
-          label="Password"
-          type="password"
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <Button variant="contained" color="primary" onClick={handleSubmit}>
-          OurLocalLogin2
-        </Button>
+        <Grid item xs={12}>
+          <TextField
+            id="standard-basic"
+            variant="outlined"
+            label="Email"
+            onChange={(e) => setEmail(e.target.value)}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <TextField
+            id="standard-basic"
+            variant="outlined"
+            label="Password"
+            type="password"
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <Button variant="contained" color="primary" onClick={handleSubmit}>
+            OurLocalLogin2
+          </Button>
+        </Grid>
       </Grid>
     </Grid>
   );
