@@ -19,7 +19,7 @@ export default function MainPage() {
       >
         <Link to="/lab/selection-page">
           <Button variant="contained" color="primary">
-            OurLocalLogin
+            OurLocalLogin2
           </Button>
         </Link>
       </Grid>

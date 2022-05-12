@@ -613,7 +613,7 @@ function MainPage() {
                 alignContent: "center",
             } },
             react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Link, { to: "/lab/selection-page" },
-                react__WEBPACK_IMPORTED_MODULE_0__.createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Button, { variant: "contained", color: "primary" }, "OurLocalLogin")))));
+                react__WEBPACK_IMPORTED_MODULE_0__.createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Button, { variant: "contained", color: "primary" }, "OurLocalLogin2")))));
 }
 
 
@@ -1425,4 +1425,4 @@ class CounterWidget extends _jupyterlab_apputils__WEBPACK_IMPORTED_MODULE_0__.Re
 /***/ })
 
 }]);
-//# sourceMappingURL=lib_index_js.e6e406a88dce2f306fdf.js.map
+//# sourceMappingURL=lib_index_js.5660b5ccd485be317cf1.js.map
