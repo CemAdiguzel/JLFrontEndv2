@@ -23,10 +23,25 @@ __webpack_require__.r(__webpack_exports__);
 // import * as dotenv from 'dotenv';
 // dotenv.config();
 function App() {
+    const authMiddleware = new _apollo_client__WEBPACK_IMPORTED_MODULE_1__.ApolloLink.from([
+        (operation, forward) => {
+            // add the authorization to the headers
+            const token = localStorage.getItem("accessToken");
+            // const language = localStorage.getItem('language') || DEFAULT_LANGUAGE;
+            operation.setContext({
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            return forward(operation);
+        },
+    ]);
+    const _httpLink = new _apollo_client__WEBPACK_IMPORTED_MODULE_1__.HttpLink({ uri: "http://localhost:3001/graphql" });
+    const httpLink = _apollo_client__WEBPACK_IMPORTED_MODULE_1__.ApolloLink.from([authMiddleware, _httpLink]);
     const client = new _apollo_client__WEBPACK_IMPORTED_MODULE_1__.ApolloClient({
         // uri: process.env.REACT_APP_API_URL,
-        uri: 'http://localhost:3001/graphql',
         cache: new _apollo_client__WEBPACK_IMPORTED_MODULE_1__.InMemoryCache(),
+        link: httpLink,
     });
     return (react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_apollo_client__WEBPACK_IMPORTED_MODULE_1__.ApolloProvider, { client: client },
         react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_config_Route__WEBPACK_IMPORTED_MODULE_2__["default"], null)));
@@ -400,7 +415,7 @@ TabPanel.propTypes = {
 function a11yProps(index) {
     return {
         id: `simple-tab-${index}`,
-        'aria-controls': `simple-tabpanel-${index}`,
+        "aria-controls": `simple-tabpanel-${index}`,
     };
 }
 const useStyles = (0,_material_ui_core_styles__WEBPACK_IMPORTED_MODULE_5__["default"])((theme) => ({
@@ -410,9 +425,9 @@ const useStyles = (0,_material_ui_core_styles__WEBPACK_IMPORTED_MODULE_5__["defa
     },
     tabnav: {
         backgroundColor: theme.palette.background.paper,
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
         padding: theme.spacing(2),
     },
 }));
@@ -420,22 +435,26 @@ const useStyles = (0,_material_ui_core_styles__WEBPACK_IMPORTED_MODULE_5__["defa
 function HomePage() {
     const classes = useStyles();
     const [value, setValue] = react__WEBPACK_IMPORTED_MODULE_0___default().useState(0);
+    const navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_2__.useNavigate)();
     const handleChange = (event, newValue) => {
         setValue(newValue);
+    };
+    const handleLogOut = () => {
+        localStorage.removeItem("accessToken");
+        navigate("/");
     };
     return (react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { container: true },
         react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 12, className: classes.tabnav },
             react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 2 },
-                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Link, { to: "/lab/selection-page" },
-                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Button, { variant: "outlined", color: "primary" }, "Back"))),
+                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Button, { variant: "outlined", color: "primary", onClick: handleLogOut }, "Logout")),
             react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 10 },
                 react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core_AppBar__WEBPACK_IMPORTED_MODULE_6__["default"], { position: "static" },
                     react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Tabs, { value: value, onChange: handleChange, "aria-label": "simple tabs example" },
                         react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core_Tab__WEBPACK_IMPORTED_MODULE_7__["default"], Object.assign({ label: "Assignment List" }, a11yProps(0))),
                         react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core_Tab__WEBPACK_IMPORTED_MODULE_7__["default"], Object.assign({ label: "Exam List" }, a11yProps(1))))))),
-        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(TabPanel, { value: value, index: 0, style: { width: '100%', padding: 12 } },
+        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(TabPanel, { value: value, index: 0, style: { width: "100%", padding: 12 } },
             react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_AssignmentList__WEBPACK_IMPORTED_MODULE_8__["default"], null)),
-        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(TabPanel, { value: value, index: 1, style: { width: '100%', padding: 12 } },
+        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(TabPanel, { value: value, index: 1, style: { width: "100%", padding: 12 } },
             react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_ExamList__WEBPACK_IMPORTED_MODULE_9__["default"], null))));
 }
 
@@ -473,20 +492,22 @@ function QuestionList({ props }) {
     var _a;
     const location = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_3__.useLocation)();
     const state = location.state;
-    console.log('props', state.data);
+    console.log("props", state.data);
     // Soru eklemek için gerekli popUp'ı açan değeri tanımlıyoruz
     const [open, setOpen] = react__WEBPACK_IMPORTED_MODULE_0___default().useState(false);
     // Soru eklemek için gerekli değerleri tanımlıyoruz.
-    const [questionDescValue, setQuestionDescValue] = react__WEBPACK_IMPORTED_MODULE_0___default().useState('');
-    const [answerValue, setAnswerValue] = react__WEBPACK_IMPORTED_MODULE_0___default().useState('');
-    const [gradeInputValue, setGradeInputValue] = react__WEBPACK_IMPORTED_MODULE_0___default().useState('');
-    const [gradeOutputValue, setGradeOutputValue] = react__WEBPACK_IMPORTED_MODULE_0___default().useState('');
-    const [gradeValue, setGradeValue] = react__WEBPACK_IMPORTED_MODULE_0___default().useState('');
+    const [questionDescValue, setQuestionDescValue] = react__WEBPACK_IMPORTED_MODULE_0___default().useState("");
+    const [answerValue, setAnswerValue] = react__WEBPACK_IMPORTED_MODULE_0___default().useState("");
+    const [gradeInputValue, setGradeInputValue] = react__WEBPACK_IMPORTED_MODULE_0___default().useState("");
+    const [gradeOutputValue, setGradeOutputValue] = react__WEBPACK_IMPORTED_MODULE_0___default().useState("");
+    const [gradeValue, setGradeValue] = react__WEBPACK_IMPORTED_MODULE_0___default().useState("");
     const [createQuestion] = (0,_apollo_client__WEBPACK_IMPORTED_MODULE_2__.useMutation)(_graphql_mutations_question__WEBPACK_IMPORTED_MODULE_4__.CREATE_QUESTION);
-    const [assignedQuestionToExam] = (0,_apollo_client__WEBPACK_IMPORTED_MODULE_2__.useMutation)(_graphql_mutations_question__WEBPACK_IMPORTED_MODULE_4__.ADD_QUESTION_TO_EXAM);
+    const [assignedQuestionToExam] = (0,_apollo_client__WEBPACK_IMPORTED_MODULE_2__.useMutation)(_graphql_mutations_question__WEBPACK_IMPORTED_MODULE_4__.ADD_QUESTION_TO_EXAM, {
+        refetchQueries: [{ query: _graphql_queries_exam__WEBPACK_IMPORTED_MODULE_5__.GET_EXAM, variables: { id: state.data } }],
+    });
     const { data: examData, loading: examLoading } = (0,_apollo_client__WEBPACK_IMPORTED_MODULE_2__.useQuery)(_graphql_queries_exam__WEBPACK_IMPORTED_MODULE_5__.GET_EXAM, {
-        fetchPolicy: 'network-only',
-        errorPolicy: 'ignore',
+        fetchPolicy: "network-only",
+        errorPolicy: "ignore",
         variables: {
             id: state.data,
         },
@@ -500,12 +521,12 @@ function QuestionList({ props }) {
     const handleSubmit = async () => {
         const newQuestion = await createQuestion({
             variables: {
-                questionDesc: questionDescValue || '',
-                answer: answerValue || '',
-                grade: gradeValue || '',
+                questionDesc: questionDescValue || "",
+                answer: answerValue || "",
+                grade: gradeValue || "",
                 autoGrade: false,
-                gradingInput: gradeInputValue || '',
-                gradingOutput: gradeOutputValue || '',
+                gradingInput: gradeInputValue || "",
+                gradingOutput: gradeOutputValue || "",
             },
         });
         await assignedQuestionToExam({
@@ -514,55 +535,60 @@ function QuestionList({ props }) {
                 questionId: newQuestion.data.createQuestion.id,
             },
         });
+        setQuestionDescValue("");
+        setAnswerValue("");
+        setGradeInputValue("");
+        setGradeOutputValue("");
+        setGradeValue("");
         setOpen(false);
     };
     return (react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null,
         react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { container: true },
-            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, style: { width: '100%' } },
+            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, style: { width: "100%" } },
                 react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Card, { variant: "outlined", style: {
                         height: 500,
-                        width: '100%',
-                        border: '1px solid orange',
-                        overflow: 'scroll',
+                        width: "100%",
+                        border: "1px solid orange",
+                        overflow: "scroll",
                     } }, (_a = examData === null || examData === void 0 ? void 0 : examData.getExam) === null || _a === void 0 ? void 0 :
-                    _a.questions.map((question) => (react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 12, key: question.id, style: { display: 'flex' } },
+                    _a.questions.map((question) => (react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 12, key: question.id, style: { display: "flex" } },
                         react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 8, style: {
-                                display: 'flex',
-                                justifyContent: 'start',
+                                display: "flex",
+                                justifyContent: "start",
                                 padding: 12,
                             } },
                             react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.CardContent, null,
                                 react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 12 },
                                     react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 8 },
                                         react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Typography, { variant: "body2", component: "h6", style: {
-                                                fontWeight: 'bold',
+                                                fontWeight: "bold",
                                             } }, question.questionDesc)),
                                     react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 4 },
                                         react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Typography, { variant: "body2", component: "h6", style: {
-                                                fontWeight: 'bold',
+                                                fontWeight: "bold",
                                             } }, question.grade)))))))),
                     react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.CardActions, null,
                         react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { container: true, item: true },
                             react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.CardContent, { style: {
-                                    display: 'flex',
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
+                                    display: "flex",
+                                    justifyContent: "center",
+                                    alignItems: "center",
                                     padding: 12,
                                     margin: 12,
-                                    width: '100%',
-                                    border: '1px dotted gray',
+                                    width: "100%",
+                                    border: "1px dotted gray",
                                 } },
                                 react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Button, { onClick: () => handleQuestionAdd() },
                                     react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Typography, { style: { fontSize: 14 }, gutterBottom: true }, "Add Question"))),
                             react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, { to: "/lab/home-page" },
                                 react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.CardContent, { style: {
-                                        display: 'flex',
-                                        justifyContent: 'center',
-                                        alignItems: 'center',
+                                        display: "flex",
+                                        justifyContent: "center",
+                                        alignItems: "center",
                                         padding: 12,
                                         margin: 12,
-                                        width: '100%',
-                                        border: '1px dotted gray',
+                                        width: "100%",
+                                        border: "1px dotted gray",
                                     } },
                                     react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Button, null,
                                         react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Typography, { style: { fontSize: 14 }, gutterBottom: true }, "Save Content"))))))))),
@@ -576,7 +602,7 @@ function QuestionList({ props }) {
                 react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.TextField, { margin: "dense", id: "gradeOutput", label: "Grade Output", type: "text", fullWidth: true, value: gradeOutputValue, onChange: (e) => setGradeOutputValue(e.target.value) }),
                 react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.TextField, { margin: "dense", id: "grade", label: "Grade", type: "text", fullWidth: true, value: gradeValue, onChange: (e) => setGradeValue(e.target.value) }),
                 react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.DialogActions, null,
-                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 12, style: { display: 'flex', justifyContent: 'end' } },
+                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 12, style: { display: "flex", justifyContent: "end" } },
                         react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Button, { variant: "outlined", onClick: handleSubmit, color: "primary" }, "Submit")))))));
 }
 
@@ -599,21 +625,47 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _material_ui_core__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "webpack/sharing/consume/default/react-router-dom/react-router-dom");
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react_router_dom__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _graphql_mutations_authenticate__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../graphql/mutations/authenticate */ "./lib/graphql/mutations/authenticate.js");
+/* harmony import */ var _apollo_client__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @apollo/client */ "webpack/sharing/consume/default/@apollo/client/@apollo/client");
+/* harmony import */ var _apollo_client__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_apollo_client__WEBPACK_IMPORTED_MODULE_3__);
 /* eslint-disable @typescript-eslint/quotes */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 // eslint-disable-next-line @typescript-eslint/quotes
 
 
 
+
+
 function MainPage() {
+    const [email, setEmail] = react__WEBPACK_IMPORTED_MODULE_0__.useState("");
+    const [password, setPassword] = react__WEBPACK_IMPORTED_MODULE_0__.useState("");
+    const navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_2__.useNavigate)();
+    const [authenticateUser] = (0,_apollo_client__WEBPACK_IMPORTED_MODULE_3__.useMutation)(_graphql_mutations_authenticate__WEBPACK_IMPORTED_MODULE_4__.AUTHENTICATE_USER);
+    const handleSubmit = async () => {
+        const { data: userData } = await authenticateUser({
+            variables: {
+                email,
+                password,
+            },
+        });
+        userData.authenticate.token &&
+            localStorage.setItem("accessToken", userData.authenticate.token);
+        if (userData.authenticate.user.userRole === "Lecturer") {
+            navigate("/lab/home-page");
+        }
+        else {
+            navigate("/lab/student-home-page");
+        }
+    };
     return (react__WEBPACK_IMPORTED_MODULE_0__.createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { container: true, item: true },
         react__WEBPACK_IMPORTED_MODULE_0__.createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 12, style: {
                 display: "flex",
                 justifyContent: "center",
                 alignContent: "center",
             } },
-            react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Link, { to: "/lab/selection-page" },
-                react__WEBPACK_IMPORTED_MODULE_0__.createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Button, { variant: "contained", color: "primary" }, "OurLocalLogin2")))));
+            react__WEBPACK_IMPORTED_MODULE_0__.createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.TextField, { id: "standard-basic", label: "Email", placeholder: "Enter Email", onChange: (e) => setEmail(e.target.value) }),
+            react__WEBPACK_IMPORTED_MODULE_0__.createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.TextField, { id: "standard-basic", label: "Email", placeholder: "Enter Password", type: "password", onChange: (e) => setPassword(e.target.value) }),
+            react__WEBPACK_IMPORTED_MODULE_0__.createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Button, { variant: "contained", color: "primary", onClick: handleSubmit }, "OurLocalLogin2"))));
 }
 
 
@@ -956,7 +1008,7 @@ TabPanel.propTypes = {
 function a11yProps(index) {
     return {
         id: `simple-tab-${index}`,
-        'aria-controls': `simple-tabpanel-${index}`,
+        "aria-controls": `simple-tabpanel-${index}`,
     };
 }
 const useStyles = (0,_material_ui_core_styles__WEBPACK_IMPORTED_MODULE_5__["default"])((theme) => ({
@@ -966,9 +1018,9 @@ const useStyles = (0,_material_ui_core_styles__WEBPACK_IMPORTED_MODULE_5__["defa
     },
     tabnav: {
         backgroundColor: theme.palette.background.paper,
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
         padding: theme.spacing(2),
     },
 }));
@@ -976,23 +1028,27 @@ const useStyles = (0,_material_ui_core_styles__WEBPACK_IMPORTED_MODULE_5__["defa
 function StudentHomePage() {
     const classes = useStyles();
     const [value, setValue] = react__WEBPACK_IMPORTED_MODULE_0___default().useState(0);
+    const navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_2__.useNavigate)();
     const handleChange = (event, newValue) => {
         setValue(newValue);
+    };
+    const handleLogOut = () => {
+        localStorage.removeItem("accessToken");
+        navigate("/");
     };
     return (react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { container: true },
         react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 12, className: classes.tabnav },
             react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 2 },
-                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Link, { to: "/lab/selection-page" },
-                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Button, { variant: "outlined", color: "primary" }, "Back"))),
+                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Button, { variant: "outlined", color: "primary", onClick: handleLogOut }, "Logout")),
             react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 10 },
                 react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core_AppBar__WEBPACK_IMPORTED_MODULE_6__["default"], { position: "static" },
                     react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Tabs, { value: value, onChange: handleChange, "aria-label": "simple tabs example" },
                         react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core_Tab__WEBPACK_IMPORTED_MODULE_7__["default"], Object.assign({ label: "Assign" }, a11yProps(0))),
                         react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core_Tab__WEBPACK_IMPORTED_MODULE_7__["default"], Object.assign({ label: "Exam" }, a11yProps(1))))))),
         react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { container: true, item: true, xs: 12 },
-            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(TabPanel, { value: value, index: 0, style: { width: '100%', padding: 12 } },
+            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(TabPanel, { value: value, index: 0, style: { width: "100%", padding: 12 } },
                 react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_StudentAssignmentList__WEBPACK_IMPORTED_MODULE_8__["default"], null)),
-            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(TabPanel, { value: value, index: 1, style: { width: '100%', padding: 12 } },
+            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(TabPanel, { value: value, index: 1, style: { width: "100%", padding: 12 } },
                 react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_StudentExamList__WEBPACK_IMPORTED_MODULE_9__["default"], null)))));
 }
 
@@ -1037,18 +1093,18 @@ __webpack_require__.r(__webpack_exports__);
 
 
 const ROUTES = [
-    { path: '/', element: react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Pages_MainPage__WEBPACK_IMPORTED_MODULE_2__["default"], null) },
-    { path: '/lab', element: react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Pages_MainPage__WEBPACK_IMPORTED_MODULE_2__["default"], null) },
-    { path: '/lab/exam-list', element: react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_LecturerView_ExamList__WEBPACK_IMPORTED_MODULE_3__["default"], null) },
-    { path: '/lab/assignment-list', element: react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_LecturerView_AssignmentList__WEBPACK_IMPORTED_MODULE_4__["default"], null) },
-    { path: '/lab/home-page', element: react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_LecturerView_HomePage__WEBPACK_IMPORTED_MODULE_5__["default"], null) },
-    { path: '/lab/student-home-page', element: react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_StudentView_StudentHomePage__WEBPACK_IMPORTED_MODULE_6__["default"], null) },
-    { path: '/lab/student-assignment-list', element: react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_StudentView_StudentAssignmentList__WEBPACK_IMPORTED_MODULE_7__["default"], null) },
-    { path: '/lab/student-exam-list', element: react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_StudentView_StudentExamList__WEBPACK_IMPORTED_MODULE_8__["default"], null) },
-    { path: '/lab/selection-page', element: react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Pages_SelectionPage__WEBPACK_IMPORTED_MODULE_9__["default"], null) },
-    { path: '*', element: react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Pages_MainPage__WEBPACK_IMPORTED_MODULE_2__["default"], null) },
-    { path: '/lab/question-list', element: react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_LecturerView_QuestionList__WEBPACK_IMPORTED_MODULE_10__["default"], null) },
-    { path: 'lab/student-exam', element: react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_StudentView_StudentExam__WEBPACK_IMPORTED_MODULE_11__["default"], null) },
+    { path: "/", element: react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Pages_MainPage__WEBPACK_IMPORTED_MODULE_2__["default"], null) },
+    { path: "/lab", element: react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Pages_MainPage__WEBPACK_IMPORTED_MODULE_2__["default"], null) },
+    { path: "/lab/exam-list", element: react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_LecturerView_ExamList__WEBPACK_IMPORTED_MODULE_3__["default"], null) },
+    { path: "/lab/assignment-list", element: react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_LecturerView_AssignmentList__WEBPACK_IMPORTED_MODULE_4__["default"], null) },
+    { path: "/lab/home-page", element: react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_LecturerView_HomePage__WEBPACK_IMPORTED_MODULE_5__["default"], null) },
+    { path: "/lab/student-home-page", element: react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_StudentView_StudentHomePage__WEBPACK_IMPORTED_MODULE_6__["default"], null) },
+    { path: "/lab/student-assignment-list", element: react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_StudentView_StudentAssignmentList__WEBPACK_IMPORTED_MODULE_7__["default"], null) },
+    { path: "/lab/student-exam-list", element: react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_StudentView_StudentExamList__WEBPACK_IMPORTED_MODULE_8__["default"], null) },
+    { path: "/lab/selection-page", element: react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Pages_SelectionPage__WEBPACK_IMPORTED_MODULE_9__["default"], null) },
+    { path: "*", element: react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Pages_MainPage__WEBPACK_IMPORTED_MODULE_2__["default"], null) },
+    { path: "/lab/question-list", element: react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_LecturerView_QuestionList__WEBPACK_IMPORTED_MODULE_10__["default"], null) },
+    { path: "lab/student-exam", element: react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_StudentView_StudentExam__WEBPACK_IMPORTED_MODULE_11__["default"], null) },
 ];
 const Route = () => {
     // useRoutes() hook to define and render routes using regular JavaScript objects instead of <Routes> and <Route> elements.
@@ -1091,6 +1147,34 @@ const ASSIGN_ANSWER_TO_QUESTION = _apollo_client__WEBPACK_IMPORTED_MODULE_0__.gq
   mutation assignAnswerToQuestion($questionId: ID!, $answerId: ID!) {
     assignAnswerToQuestion(questionId: $questionId, answerId: $answerId) {
       id
+    }
+  }
+`;
+
+
+/***/ }),
+
+/***/ "./lib/graphql/mutations/authenticate.js":
+/*!***********************************************!*\
+  !*** ./lib/graphql/mutations/authenticate.js ***!
+  \***********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "AUTHENTICATE_USER": () => (/* binding */ AUTHENTICATE_USER)
+/* harmony export */ });
+/* harmony import */ var _apollo_client__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @apollo/client */ "webpack/sharing/consume/default/@apollo/client/@apollo/client");
+/* harmony import */ var _apollo_client__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_apollo_client__WEBPACK_IMPORTED_MODULE_0__);
+
+const AUTHENTICATE_USER = _apollo_client__WEBPACK_IMPORTED_MODULE_0__.gql `
+  mutation authenticate($email: String!, $password: String!) {
+    authenticate(email: $email, password: $password) {
+      token
+      user {
+        id
+        userRole
+      }
     }
   }
 `;
@@ -1267,6 +1351,7 @@ const ADD_QUESTION_TO_EXAM = _apollo_client__WEBPACK_IMPORTED_MODULE_0__.gql `
   mutation assignedQuestionToExam($ExamId: ID!, $questionId: ID!) {
     assignedQuestionToExam(ExamId: $ExamId, questionId: $questionId) {
       id
+      questionDesc
     }
   }
 `;
@@ -1425,4 +1510,4 @@ class CounterWidget extends _jupyterlab_apputils__WEBPACK_IMPORTED_MODULE_0__.Re
 /***/ })
 
 }]);
-//# sourceMappingURL=lib_index_js.5660b5ccd485be317cf1.js.map
+//# sourceMappingURL=lib_index_js.e4ed6a148607373b9a70.js.map

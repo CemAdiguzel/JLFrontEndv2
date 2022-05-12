@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-import React from 'react';
+import React from "react";
 import {
   Button,
   Grid,
@@ -13,36 +13,57 @@ import {
   TextField,
   Typography,
   DialogActions,
-} from '@material-ui/core';
-import { useMutation, useQuery } from '@apollo/client';
+} from "@material-ui/core";
+import { useMutation, useQuery } from "@apollo/client";
 import {
   ADD_QUESTION_TO_EXAM,
   CREATE_QUESTION,
-} from '../graphql/mutations/question';
-import { GET_EXAM } from '../graphql/queries/exam';
+} from "../graphql/mutations/question";
+import { GET_EXAM } from "../graphql/queries/exam";
 
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation } from "react-router-dom";
 
 export default function QuestionList({ props }: any) {
   const location = useLocation();
   const state = location.state as any;
-  console.log('props', state.data);
+  console.log("props", state.data);
 
   // Soru eklemek için gerekli popUp'ı açan değeri tanımlıyoruz
   const [open, setOpen] = React.useState(false);
   // Soru eklemek için gerekli değerleri tanımlıyoruz.
-  const [questionDescValue, setQuestionDescValue] = React.useState('');
-  const [answerValue, setAnswerValue] = React.useState('');
-  const [gradeInputValue, setGradeInputValue] = React.useState('');
-  const [gradeOutputValue, setGradeOutputValue] = React.useState('');
-  const [gradeValue, setGradeValue] = React.useState('');
+  const [questionDescValue, setQuestionDescValue] = React.useState("");
+  const [answerValue, setAnswerValue] = React.useState("");
+  const [gradeInputValue, setGradeInputValue] = React.useState("");
+  const [gradeOutputValue, setGradeOutputValue] = React.useState("");
+  const [gradeValue, setGradeValue] = React.useState("");
 
   const [createQuestion] = useMutation(CREATE_QUESTION);
-  const [assignedQuestionToExam] = useMutation(ADD_QUESTION_TO_EXAM);
+  const [assignedQuestionToExam] = useMutation(ADD_QUESTION_TO_EXAM, {
+    refetchQueries: [{ query: GET_EXAM, variables: { id: state.data } }],
+    // update(cache, { data: { assignedQuestionToExam } }) {
+    //   cache.modify({
+    //     fields: {
+    //       questions(existingQuestions = []) {
+    //         const newQuestionRef = cache.writeFragment({
+    //           data: assignedQuestionToExam,
+
+    //           fragment: gql`
+    //             fragment QuestionFragment on Question {
+    //               id
+    //               questionDesc
+    //             }
+    //           `,
+    //         });
+    //         return [...existingQuestions, newQuestionRef];
+    //       },
+    //     },
+    //   });
+    // },
+  });
 
   const { data: examData, loading: examLoading } = useQuery(GET_EXAM, {
-    fetchPolicy: 'network-only',
-    errorPolicy: 'ignore',
+    fetchPolicy: "network-only",
+    errorPolicy: "ignore",
     variables: {
       id: state.data,
     },
@@ -58,12 +79,12 @@ export default function QuestionList({ props }: any) {
   const handleSubmit = async (): Promise<any> => {
     const newQuestion = await createQuestion({
       variables: {
-        questionDesc: questionDescValue || '',
-        answer: answerValue || '',
-        grade: gradeValue || '',
+        questionDesc: questionDescValue || "",
+        answer: answerValue || "",
+        grade: gradeValue || "",
         autoGrade: false,
-        gradingInput: gradeInputValue || '',
-        gradingOutput: gradeOutputValue || '',
+        gradingInput: gradeInputValue || "",
+        gradingOutput: gradeOutputValue || "",
       },
     });
     await assignedQuestionToExam({
@@ -72,30 +93,35 @@ export default function QuestionList({ props }: any) {
         questionId: newQuestion.data.createQuestion.id,
       },
     });
+    setQuestionDescValue("");
+    setAnswerValue("");
+    setGradeInputValue("");
+    setGradeOutputValue("");
+    setGradeValue("");
     setOpen(false);
   };
 
   return (
     <>
       <Grid container>
-        <Grid item style={{ width: '100%' }}>
+        <Grid item style={{ width: "100%" }}>
           <Card
             variant="outlined"
             style={{
               height: 500,
-              width: '100%',
-              border: '1px solid orange',
-              overflow: 'scroll',
+              width: "100%",
+              border: "1px solid orange",
+              overflow: "scroll",
             }}
           >
             {examData?.getExam?.questions.map((question: any) => (
-              <Grid item xs={12} key={question.id} style={{ display: 'flex' }}>
+              <Grid item xs={12} key={question.id} style={{ display: "flex" }}>
                 <Grid
                   item
                   xs={8}
                   style={{
-                    display: 'flex',
-                    justifyContent: 'start',
+                    display: "flex",
+                    justifyContent: "start",
                     padding: 12,
                   }}
                 >
@@ -106,7 +132,7 @@ export default function QuestionList({ props }: any) {
                           variant="body2"
                           component="h6"
                           style={{
-                            fontWeight: 'bold',
+                            fontWeight: "bold",
                           }}
                         >
                           {question.questionDesc}
@@ -117,7 +143,7 @@ export default function QuestionList({ props }: any) {
                           variant="body2"
                           component="h6"
                           style={{
-                            fontWeight: 'bold',
+                            fontWeight: "bold",
                           }}
                         >
                           {question.grade}
@@ -132,13 +158,13 @@ export default function QuestionList({ props }: any) {
               <Grid container item>
                 <CardContent
                   style={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
                     padding: 12,
                     margin: 12,
-                    width: '100%',
-                    border: '1px dotted gray',
+                    width: "100%",
+                    border: "1px dotted gray",
                   }}
                 >
                   <Button onClick={() => handleQuestionAdd()}>
@@ -150,13 +176,13 @@ export default function QuestionList({ props }: any) {
                 <Link to="/lab/home-page">
                   <CardContent
                     style={{
-                      display: 'flex',
-                      justifyContent: 'center',
-                      alignItems: 'center',
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
                       padding: 12,
                       margin: 12,
-                      width: '100%',
-                      border: '1px dotted gray',
+                      width: "100%",
+                      border: "1px dotted gray",
                     }}
                   >
                     <Button>
@@ -231,7 +257,7 @@ export default function QuestionList({ props }: any) {
             <Grid
               item
               xs={12}
-              style={{ display: 'flex', justifyContent: 'end' }}
+              style={{ display: "flex", justifyContent: "end" }}
             >
               <Button variant="outlined" onClick={handleSubmit} color="primary">
                 Submit

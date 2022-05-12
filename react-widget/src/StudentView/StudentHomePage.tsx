@@ -1,13 +1,13 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import { Tabs, Button, Grid } from '@material-ui/core';
-import Tab from '@material-ui/core/Tab';
-import Typography from '@material-ui/core/Typography';
-import StudentExamList from './StudentExamList';
-import StudentAssignmentList from './StudentAssignmentList';
-import { Link } from 'react-router-dom';
+import React from "react";
+import PropTypes from "prop-types";
+import { makeStyles } from "@material-ui/core/styles";
+import AppBar from "@material-ui/core/AppBar";
+import { Tabs, Button, Grid } from "@material-ui/core";
+import Tab from "@material-ui/core/Tab";
+import Typography from "@material-ui/core/Typography";
+import StudentExamList from "./StudentExamList";
+import StudentAssignmentList from "./StudentAssignmentList";
+import { useNavigate } from "react-router-dom";
 
 function TabPanel(props: {
   [x: string]: any;
@@ -43,7 +43,7 @@ TabPanel.propTypes = {
 function a11yProps(index: number) {
   return {
     id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`,
+    "aria-controls": `simple-tabpanel-${index}`,
   };
 }
 
@@ -54,9 +54,9 @@ const useStyles = makeStyles((theme) => ({
   },
   tabnav: {
     backgroundColor: theme.palette.background.paper,
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
     padding: theme.spacing(2),
   },
 }));
@@ -65,19 +65,22 @@ const useStyles = makeStyles((theme) => ({
 export default function StudentHomePage() {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
+  const navigate = useNavigate();
 
   const handleChange = (event: any, newValue: React.SetStateAction<number>) => {
     setValue(newValue);
+  };
+  const handleLogOut = () => {
+    localStorage.removeItem("accessToken");
+    navigate("/");
   };
   return (
     <Grid container>
       <Grid item xs={12} className={classes.tabnav}>
         <Grid item xs={2}>
-          <Link to="/lab/selection-page">
-            <Button variant="outlined" color="primary">
-              Back
-            </Button>
-          </Link>
+          <Button variant="outlined" color="primary" onClick={handleLogOut}>
+            Logout
+          </Button>
         </Grid>
         <Grid item xs={10}>
           <AppBar position="static">
@@ -96,14 +99,14 @@ export default function StudentHomePage() {
         <TabPanel
           value={value}
           index={0}
-          style={{ width: '100%', padding: 12 }}
+          style={{ width: "100%", padding: 12 }}
         >
           <StudentAssignmentList />
         </TabPanel>
         <TabPanel
           value={value}
           index={1}
-          style={{ width: '100%', padding: 12 }}
+          style={{ width: "100%", padding: 12 }}
         >
           <StudentExamList />
         </TabPanel>
