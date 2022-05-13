@@ -78,7 +78,11 @@ export default function HomePage() {
     <Grid container>
       <Grid item xs={12} className={classes.tabnav}>
         <Grid item xs={2}>
-          <Button variant="outlined" color="primary" onClick={handleLogOut}>
+          <Button
+            variant="outlined"
+            style={{ background: "orange", color: "#fff" }}
+            onClick={handleLogOut}
+          >
             Logout
           </Button>
         </Grid>

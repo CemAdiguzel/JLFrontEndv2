@@ -45,7 +45,7 @@ export default function MainPage() {
           <TextField
             id="standard-basic"
             variant="outlined"
-            label="Email"
+            label="User Name"
             onChange={(e) => setEmail(e.target.value)}
           />
         </Grid>
@@ -59,8 +59,12 @@ export default function MainPage() {
           />
         </Grid>
         <Grid item xs={12}>
-          <Button variant="contained" color="primary" onClick={handleSubmit}>
-            Login
+          <Button
+            variant="contained"
+            style={{ background: "orange", color: "#fff" }}
+            onClick={handleSubmit}
+          >
+            Login2
           </Button>
         </Grid>
       </Grid>

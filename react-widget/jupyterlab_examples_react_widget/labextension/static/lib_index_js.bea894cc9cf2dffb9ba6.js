@@ -124,23 +124,23 @@ function ExamList() {
     // Exam listeleme ve ekleme işlemleri
     const [open, setOpen] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
     const [addOpener, setAddOpener] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
-    const [titleValue, setTitleValue] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
-    const [descriptionValue, setDescriptionValue] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
-    const [dateValue, setDateValue] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
-    const [timeValue, setTimeValue] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
-    const [durationValue, setDurationValue] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
-    const [typeValue, setTypeValue] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
-    const [assignedToValue, setAssignedToValue] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
-    const [resubmissionValue, setResubmissionValue] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
-    const [resubmissionDateValue, setResubmissionDateValue] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
-    const [gradeScaleValue, setGradeScaleValue] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
+    const [titleValue, setTitleValue] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)("");
+    const [descriptionValue, setDescriptionValue] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)("");
+    const [dateValue, setDateValue] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)("");
+    const [timeValue, setTimeValue] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)("");
+    const [durationValue, setDurationValue] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)("");
+    const [typeValue, setTypeValue] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)("");
+    const [assignedToValue, setAssignedToValue] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)("");
+    const [resubmissionValue, setResubmissionValue] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)("");
+    const [resubmissionDateValue, setResubmissionDateValue] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)("");
+    const [gradeScaleValue, setGradeScaleValue] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)("");
     const [asdasd, setAsdasd] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]);
     const [createExam] = (0,_apollo_client__WEBPACK_IMPORTED_MODULE_2__.useMutation)(_graphql_mutations_exam__WEBPACK_IMPORTED_MODULE_4__.CREATE_EXAM);
     const [deleteExam] = (0,_apollo_client__WEBPACK_IMPORTED_MODULE_2__.useMutation)(_graphql_mutations_exam__WEBPACK_IMPORTED_MODULE_4__.DELETE_EXAM);
     const [updateExam] = (0,_apollo_client__WEBPACK_IMPORTED_MODULE_2__.useMutation)(_graphql_mutations_exam__WEBPACK_IMPORTED_MODULE_4__.UPDATE_EXAM);
     const { data: examList, loading: examLoading, refetch, } = (0,_apollo_client__WEBPACK_IMPORTED_MODULE_2__.useQuery)(_graphql_queries_exam__WEBPACK_IMPORTED_MODULE_5__.LIST_EXAM, {
-        fetchPolicy: 'cache-first',
-        errorPolicy: 'ignore',
+        fetchPolicy: "cache-first",
+        errorPolicy: "ignore",
     });
     if (examLoading) {
         return react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, "Loading...");
@@ -149,39 +149,39 @@ function ExamList() {
     const handleSubmit = async () => {
         await createExam({
             variables: {
-                title: titleValue || '',
-                description: descriptionValue || '',
-                date: dateValue || '',
-                time: timeValue || '',
-                duration: durationValue || '',
-                type: typeValue || '',
-                resubmissionNumber: resubmissionValue || '',
-                resubmissionDate: resubmissionDateValue || '',
-                gradeScale: gradeScaleValue || '',
-                resubmissionTime: '',
-                dueDate: dateValue || '',
-                dueTime: '',
+                title: titleValue || "",
+                description: descriptionValue || "",
+                date: dateValue || "",
+                time: timeValue || "",
+                duration: durationValue || "",
+                type: typeValue || "",
+                resubmissionNumber: resubmissionValue || "",
+                resubmissionDate: resubmissionDateValue || "",
+                gradeScale: gradeScaleValue || "",
+                resubmissionTime: "",
+                dueDate: dateValue || "",
+                dueTime: "",
                 status: false,
             },
         });
         // clear all the states
-        setTitleValue('');
-        setDescriptionValue('');
-        setDateValue('');
-        setTimeValue('');
-        setDurationValue('');
-        setTypeValue('');
-        setResubmissionValue('');
-        setResubmissionDateValue('');
-        setGradeScaleValue('');
+        setTitleValue("");
+        setDescriptionValue("");
+        setDateValue("");
+        setTimeValue("");
+        setDurationValue("");
+        setTypeValue("");
+        setResubmissionValue("");
+        setResubmissionDateValue("");
+        setGradeScaleValue("");
         refetch();
         setAsdasd(examList.examList);
-        console.log('create sonrası', asdasd);
+        console.log("create sonrası", asdasd);
         setAddOpener(false);
     };
     // Bu fonksiyonla herhangi bir exami silebiliyoruz
     const handleDeleteExam = async (deletedId) => {
-        console.log('delete');
+        console.log("delete");
         await deleteExam({
             variables: {
                 id: deletedId,
@@ -197,7 +197,7 @@ function ExamList() {
                 status: true,
             },
         });
-        console.log('update', examList.examList);
+        console.log("update", examList.examList);
     };
     // Bu fonksiyonla detaylar popup'ını kapatıyoruz
     const handleClose = () => {
@@ -211,47 +211,46 @@ function ExamList() {
     const handleAddCloser = () => {
         setAddOpener(false);
     };
-    console.log('examList', examList.examList);
+    console.log("examList", examList.examList);
     return (react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null,
         react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { style: { minWidth: 275, margin: 12 } },
             react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core_Card__WEBPACK_IMPORTED_MODULE_6__["default"], { variant: "outlined", style: {
                     height: 500,
-                    width: '100%',
-                    border: '1px solid orange',
-                    overflow: 'scroll',
+                    width: "100%",
+                    border: "1px solid orange",
+                    overflow: "scroll",
                 } }, (_a = examList === null || examList === void 0 ? void 0 : examList.examList) === null || _a === void 0 ? void 0 :
-                _a.map((exam) => (react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 12, key: exam.id, style: { display: 'flex' } },
-                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, { to: "/lab/question-list", state: { data: exam.id } },
-                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 8, style: {
-                                display: 'flex',
-                                justifyContent: 'start',
-                                padding: 12,
-                            } },
+                _a.map((exam) => (react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 12, key: exam.id, style: { display: "flex" } },
+                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 8, style: {
+                            display: "flex",
+                            justifyContent: "start",
+                            padding: 12,
+                        } },
+                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, { to: "/lab/question-list", state: { data: exam.id } },
                             react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core_CardContent__WEBPACK_IMPORTED_MODULE_7__["default"], null,
                                 react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core_Typography__WEBPACK_IMPORTED_MODULE_8__["default"], { variant: "body2", component: "h6", style: {
-                                        fontWeight: 'bold',
+                                        fontWeight: "bold",
                                     } }, exam.title)))),
                     react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 4, style: {
                             padding: 12,
-                            display: 'flex',
-                            justifyContent: 'end',
+                            display: "flex",
+                            justifyContent: "end",
                         } },
                         react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.CardActions, null,
-                            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Button, { variant: "contained", color: "primary", onClick: () => {
+                            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Button, { variant: "contained", style: { background: "orange", color: "#fff" }, onClick: () => {
                                     handleUpdateExam(exam === null || exam === void 0 ? void 0 : exam.id);
                                 } }, "Publish"),
-                            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Button, { variant: "contained", color: "primary", onClick: () => {
+                            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Button, { variant: "contained", style: { background: "orange", color: "#fff" }, onClick: () => {
                                     handleDeleteExam(exam === null || exam === void 0 ? void 0 : exam.id);
                                 } }, "Delete")))))),
                 react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { container: true, item: true },
                     react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core_CardContent__WEBPACK_IMPORTED_MODULE_7__["default"], { style: {
-                            display: 'flex',
-                            justifyContent: 'start',
-                            alignItems: 'center',
+                            display: "flex",
+                            justifyContent: "center",
                             padding: 12,
                             margin: 12,
-                            width: '100%',
-                            border: '1px solid gray',
+                            width: "100%",
+                            border: "1px dotted orange",
                         }, onClick: handleAddOpen },
                         react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Button, null,
                             react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core_Typography__WEBPACK_IMPORTED_MODULE_8__["default"], { style: { fontSize: 14 }, gutterBottom: true }, "Add New Exam")))))),
@@ -260,8 +259,8 @@ function ExamList() {
                 minHeight: 250,
             } },
             react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.DialogActions, null,
-                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Button, { variant: "outlined", onClick: handleDeleteExam, color: "primary" }, "Delete"),
-                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Button, { onClick: handleClose, color: "primary" }, "Close"))),
+                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Button, { variant: "outlined", onClick: handleDeleteExam, style: { background: "orange", color: "#fff" } }, "Delete"),
+                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Button, { onClick: handleClose, style: { background: "orange", color: "#fff" } }, "Close"))),
         react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Dialog, { open: addOpener, onClose: handleAddCloser, style: {
                 borderRadius: 10,
                 minHeight: 250,
@@ -269,8 +268,8 @@ function ExamList() {
             react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { container: true, item: true, xs: 12 },
                 react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.DialogContent, { style: { width: 800 } },
                     react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 12, style: {
-                            display: 'flex',
-                            alignItems: 'center',
+                            display: "flex",
+                            alignItems: "center",
                             marginBottom: 12,
                         } },
                         react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 4 },
@@ -278,8 +277,8 @@ function ExamList() {
                         react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 8 },
                             react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.TextField, { fullWidth: true, id: "outlined-basic", placeholder: "Enter the Title", variant: "outlined", type: "text", value: titleValue, onChange: (e) => setTitleValue(e.target.value) }))),
                     react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 12, style: {
-                            display: 'flex',
-                            alignItems: 'center',
+                            display: "flex",
+                            alignItems: "center",
                             marginBottom: 12,
                         } },
                         react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 4 },
@@ -287,8 +286,8 @@ function ExamList() {
                         react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 8 },
                             react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.TextField, { fullWidth: true, id: "outlined-basic", placeholder: "Description Value", variant: "outlined", type: "text", value: descriptionValue, onChange: (e) => setDescriptionValue(e.target.value) }))),
                     react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 12, style: {
-                            display: 'flex',
-                            alignItems: 'center',
+                            display: "flex",
+                            alignItems: "center",
                             marginBottom: 12,
                         } },
                         react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 4 },
@@ -296,8 +295,8 @@ function ExamList() {
                         react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 8 },
                             react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.TextField, { fullWidth: true, id: "outlined-basic", placeholder: "Select the Type", variant: "outlined", type: "text", value: typeValue, onChange: (e) => setTypeValue(e.target.value) }))),
                     react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 12, style: {
-                            display: 'flex',
-                            alignItems: 'center',
+                            display: "flex",
+                            alignItems: "center",
                             marginBottom: 12,
                         } },
                         react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 4 },
@@ -305,8 +304,8 @@ function ExamList() {
                         react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 8 },
                             react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.TextField, { fullWidth: true, id: "outlined-basic", placeholder: "Select the assigned to", variant: "outlined", type: "date", value: assignedToValue, onChange: (e) => setAssignedToValue(e.target.value) }))),
                     react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 12, style: {
-                            display: 'flex',
-                            alignItems: 'center',
+                            display: "flex",
+                            alignItems: "center",
                             marginBottom: 12,
                         } },
                         react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 4 },
@@ -314,8 +313,8 @@ function ExamList() {
                         react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 8 },
                             react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.TextField, { fullWidth: true, id: "outlined-basic", placeholder: "Enter the Time", variant: "outlined", type: "time", value: timeValue, onChange: (e) => setTimeValue(e.target.value) }))),
                     react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 12, style: {
-                            display: 'flex',
-                            alignItems: 'center',
+                            display: "flex",
+                            alignItems: "center",
                             marginBottom: 12,
                         } },
                         react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 4 },
@@ -323,8 +322,8 @@ function ExamList() {
                         react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 8 },
                             react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.TextField, { fullWidth: true, id: "outlined-basic", placeholder: "Enter the number of resubmissions", variant: "outlined", type: "number", value: resubmissionValue, onChange: (e) => setResubmissionValue(e.target.value) }))),
                     react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 12, style: {
-                            display: 'flex',
-                            alignItems: 'center',
+                            display: "flex",
+                            alignItems: "center",
                             marginBottom: 12,
                         } },
                         react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 4 },
@@ -332,8 +331,8 @@ function ExamList() {
                         react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 8 },
                             react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.TextField, { fullWidth: true, id: "outlined-basic", placeholder: "Enter the number of resubmissions", variant: "outlined", type: "date", value: resubmissionDateValue, onChange: (e) => setResubmissionDateValue(e.target.value) }))),
                     react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 12, style: {
-                            display: 'flex',
-                            alignItems: 'center',
+                            display: "flex",
+                            alignItems: "center",
                             marginBottom: 12,
                         } },
                         react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 4 },
@@ -341,8 +340,8 @@ function ExamList() {
                         react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 8 },
                             react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.TextField, { fullWidth: true, id: "outlined-basic", placeholder: "Enter the Grade Scale", variant: "outlined", type: "date", value: dateValue, onChange: (e) => setDateValue(e.target.value) }))),
                     react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 12, style: {
-                            display: 'flex',
-                            alignItems: 'center',
+                            display: "flex",
+                            alignItems: "center",
                             marginBottom: 12,
                         } },
                         react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 4 },
@@ -350,8 +349,8 @@ function ExamList() {
                         react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 8 },
                             react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.TextField, { fullWidth: true, id: "outlined-basic", placeholder: "Enter the Grade Scale", variant: "outlined", type: "number", value: gradeScaleValue, onChange: (e) => setGradeScaleValue(e.target.value) }))),
                     react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.DialogActions, null,
-                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 12, style: { display: 'flex', justifyContent: 'end' } },
-                            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Button, { variant: "outlined", onClick: handleSubmit, color: "primary" }, "Submit"))))))));
+                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 12, style: { display: "flex", justifyContent: "end" } },
+                            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Button, { variant: "outlined", onClick: handleSubmit, style: { background: "orange", color: "#fff" } }, "Submit"))))))));
 }
 
 
@@ -446,7 +445,7 @@ function HomePage() {
     return (react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { container: true },
         react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 12, className: classes.tabnav },
             react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 2 },
-                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Button, { variant: "outlined", color: "primary", onClick: handleLogOut }, "Logout")),
+                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Button, { variant: "outlined", style: { background: "orange", color: "#fff" }, onClick: handleLogOut }, "Logout")),
             react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 10 },
                 react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core_AppBar__WEBPACK_IMPORTED_MODULE_6__["default"], { position: "static" },
                     react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Tabs, { value: value, onChange: handleChange, "aria-label": "simple tabs example" },
@@ -576,7 +575,7 @@ function QuestionList({ props }) {
                                     padding: 12,
                                     margin: 12,
                                     width: "100%",
-                                    border: "1px dotted gray",
+                                    border: "1px dotted orange",
                                 } },
                                 react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Button, { onClick: () => handleQuestionAdd() },
                                     react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Typography, { style: { fontSize: 14 }, gutterBottom: true }, "Add Question"))),
@@ -588,7 +587,7 @@ function QuestionList({ props }) {
                                         padding: 12,
                                         margin: 12,
                                         width: "100%",
-                                        border: "1px dotted gray",
+                                        border: "1px dotted orange",
                                     } },
                                     react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Button, null,
                                         react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Typography, { style: { fontSize: 14 }, gutterBottom: true }, "Save Content"))))))))),
@@ -603,7 +602,7 @@ function QuestionList({ props }) {
                 react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.TextField, { margin: "dense", id: "grade", label: "Grade", type: "text", fullWidth: true, value: gradeValue, onChange: (e) => setGradeValue(e.target.value) }),
                 react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.DialogActions, null,
                     react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 12, style: { display: "flex", justifyContent: "end" } },
-                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Button, { variant: "outlined", onClick: handleSubmit, color: "primary" }, "Submit")))))));
+                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Button, { variant: "outlined", onClick: handleSubmit, style: { background: "orange", color: "#fff" } }, "Submit")))))));
 }
 
 
@@ -665,11 +664,11 @@ function MainPage() {
                 flexWrap: "wrap",
             } },
             react__WEBPACK_IMPORTED_MODULE_0__.createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 12 },
-                react__WEBPACK_IMPORTED_MODULE_0__.createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.TextField, { id: "standard-basic", variant: "outlined", label: "Email", onChange: (e) => setEmail(e.target.value) })),
+                react__WEBPACK_IMPORTED_MODULE_0__.createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.TextField, { id: "standard-basic", variant: "outlined", label: "User Name", onChange: (e) => setEmail(e.target.value) })),
             react__WEBPACK_IMPORTED_MODULE_0__.createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 12 },
                 react__WEBPACK_IMPORTED_MODULE_0__.createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.TextField, { id: "standard-basic", variant: "outlined", label: "Password", type: "password", onChange: (e) => setPassword(e.target.value) })),
             react__WEBPACK_IMPORTED_MODULE_0__.createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 12 },
-                react__WEBPACK_IMPORTED_MODULE_0__.createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Button, { variant: "contained", color: "primary", onClick: handleSubmit }, "Login")))));
+                react__WEBPACK_IMPORTED_MODULE_0__.createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Button, { variant: "contained", style: { background: "orange", color: "#fff" }, onClick: handleSubmit }, "Login2")))));
 }
 
 
@@ -699,14 +698,14 @@ __webpack_require__.r(__webpack_exports__);
 function SelectionPage() {
     return (react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { container: true },
         react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 12, style: {
-                display: 'flex',
-                justifyContent: 'center',
-                alignContent: 'center',
+                display: "flex",
+                justifyContent: "center",
+                alignContent: "center",
             } },
             react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Link, { to: "/lab/student-home-page" },
                 react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Button, { variant: "contained", color: "primary" }, "Student View")),
             react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Link, { to: "/lab/home-page" },
-                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Button, { variant: "contained", color: "primary" }, "Lecturer View")))));
+                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Button, { variant: "contained", style: { background: "orange", color: "#fff" } }, "Lecturer View")))));
 }
 
 
@@ -776,11 +775,11 @@ function StudentExam({ props }) {
     var _a;
     const location = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_3__.useLocation)();
     const state = location.state;
-    console.log('props', state.data);
-    const [answerValue, setAnswerValue] = react__WEBPACK_IMPORTED_MODULE_0___default().useState('');
+    console.log("props", state.data);
+    const [answerValue, setAnswerValue] = react__WEBPACK_IMPORTED_MODULE_0___default().useState("");
     const { data: examData, loading: examLoading } = (0,_apollo_client__WEBPACK_IMPORTED_MODULE_2__.useQuery)(_graphql_queries_exam__WEBPACK_IMPORTED_MODULE_4__.GET_EXAM, {
-        fetchPolicy: 'network-only',
-        errorPolicy: 'ignore',
+        fetchPolicy: "network-only",
+        errorPolicy: "ignore",
         variables: {
             id: state.data,
         },
@@ -791,77 +790,66 @@ function StudentExam({ props }) {
         return react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, "Loading...");
     }
     const handleSave = async (idValue) => {
-        console.log('idValue', idValue);
+        console.log("idValue", idValue);
         const newAnswer = await createAnswer({
             variables: {
                 questionId: idValue,
                 answer: answerValue,
             },
         });
-        console.log('newAnswer', newAnswer);
+        console.log("newAnswer", newAnswer);
         await assignAnswerToQuestion({
             variables: {
                 answerId: newAnswer.data.createAnswer.id,
                 questionId: idValue,
             },
         });
-        setAnswerValue('');
+        setAnswerValue("");
     };
     return (react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null,
         react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { container: true },
-            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, style: { width: '100%' } },
+            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, style: { width: "100%" } },
                 react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Card, { variant: "outlined", style: {
                         height: 500,
-                        width: '100%',
-                        border: '1px solid orange',
-                        overflow: 'scroll',
+                        width: "100%",
+                        border: "1px solid orange",
+                        overflow: "scroll",
                     } }, (_a = examData === null || examData === void 0 ? void 0 : examData.getExam) === null || _a === void 0 ? void 0 :
-                    _a.questions.map((question) => (react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 12, key: question.id, style: { display: 'flex' } },
+                    _a.questions.map((question) => (react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 12, key: question.id, style: { display: "flex" } },
                         react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 12, style: {
-                                display: 'flex',
-                                justifyContent: 'start',
+                                display: "flex",
+                                justifyContent: "start",
                                 padding: 12,
                             } },
-                            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.CardContent, { style: { width: '100%' } },
+                            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.CardContent, { style: { width: "100%" } },
                                 react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 12 },
                                     react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Typography, { variant: "body2", component: "h6", style: {
-                                            fontWeight: 'semi-bold',
+                                            fontWeight: "semi-bold",
                                         } }, question.questionDesc)),
                                 react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 12, style: {
-                                        width: '100%',
-                                        display: 'flex',
-                                        alignItems: 'center',
+                                        width: "100%",
+                                        display: "flex",
+                                        alignItems: "center",
                                     } },
                                     react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 8 },
-                                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.TextareaAutosize, { maxRows: 8, minRows: 8, style: { width: '100%' }, onChange: (e) => {
+                                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.TextareaAutosize, { maxRows: 8, minRows: 8, style: { width: "100%" }, onChange: (e) => {
                                                 setAnswerValue(e.target.value);
                                             } })),
                                     react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 4 },
-                                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Button, { variant: "contained", color: "primary", onClick: () => {
+                                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Button, { variant: "contained", style: { background: "orange", color: "#fff" }, onClick: () => {
                                                 handleSave(question.id);
                                             } }, "Save")))))))),
                     react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.CardActions, null,
                         react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { container: true, item: true },
-                            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.CardContent, { style: {
-                                    display: 'flex',
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
-                                    padding: 12,
-                                    margin: 12,
-                                    width: '100%',
-                                    border: '1px dotted gray',
-                                } },
-                                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Button, null,
-                                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Typography, { style: { fontSize: 14 }, gutterBottom: true }, "Add Question"))),
-                            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, { to: "/lab/home-page" },
+                            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, { to: "/lab/student-home-page" },
                                 react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.CardContent, { style: {
-                                        display: 'flex',
-                                        justifyContent: 'center',
-                                        alignItems: 'center',
+                                        display: "flex",
+                                        justifyContent: "center",
+                                        alignItems: "center",
                                         padding: 12,
                                         margin: 12,
-                                        width: '100%',
-                                        border: '1px dotted gray',
+                                        width: "100%",
+                                        border: "1px dotted orange",
                                     } },
                                     react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Button, null,
                                         react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Typography, { style: { fontSize: 14 }, gutterBottom: true }, "Save Content")))))))))));
@@ -905,50 +893,39 @@ __webpack_require__.r(__webpack_exports__);
 /* eslint-disable react/prop-types */
 function StudentExamList() {
     var _a;
-    const [open, setOpen] = react__WEBPACK_IMPORTED_MODULE_0__.useState(false);
     const { data: examList, loading: examLoading } = (0,_apollo_client__WEBPACK_IMPORTED_MODULE_2__.useQuery)(_graphql_queries_exam__WEBPACK_IMPORTED_MODULE_4__.LIST_EXAM, {
-        fetchPolicy: 'cache-first',
-        errorPolicy: 'ignore',
+        fetchPolicy: "cache-first",
+        errorPolicy: "ignore",
     });
     if (examLoading) {
         return react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, "Loading...");
     }
-    const handleClose = () => {
-        setOpen(false);
-    };
-    // Bu fonksiyonla detaylar popup'ını açıyoruz.
     return (react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null,
         react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null,
             react__WEBPACK_IMPORTED_MODULE_0__.createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { style: { minWidth: 275, margin: 12 } },
                 react__WEBPACK_IMPORTED_MODULE_0__.createElement(_material_ui_core_Card__WEBPACK_IMPORTED_MODULE_5__["default"], { variant: "outlined", style: {
                         height: 500,
-                        width: '100%',
-                        border: '1px solid orange',
-                        overflow: 'scroll',
-                    } }, (_a = examList === null || examList === void 0 ? void 0 : examList.examList) === null || _a === void 0 ? void 0 : _a.filter((u) => u.status === true).map((exam) => (react__WEBPACK_IMPORTED_MODULE_0__.createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 12, key: exam.id, style: { display: 'flex' } },
+                        width: "100%",
+                        border: "1px solid orange",
+                        overflow: "scroll",
+                    } }, (_a = examList === null || examList === void 0 ? void 0 : examList.examList) === null || _a === void 0 ? void 0 : _a.filter((u) => u.status === true).map((exam) => (react__WEBPACK_IMPORTED_MODULE_0__.createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 12, key: exam.id, style: { display: "flex" } },
                     react__WEBPACK_IMPORTED_MODULE_0__.createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 8, style: {
-                            display: 'flex',
-                            justifyContent: 'start',
+                            display: "flex",
+                            justifyContent: "start",
                             padding: 12,
                         } },
                         react__WEBPACK_IMPORTED_MODULE_0__.createElement(_material_ui_core_CardContent__WEBPACK_IMPORTED_MODULE_6__["default"], null,
                             react__WEBPACK_IMPORTED_MODULE_0__.createElement(_material_ui_core_Typography__WEBPACK_IMPORTED_MODULE_7__["default"], { variant: "body2", component: "h6", style: {
-                                    fontWeight: 'bold',
+                                    fontWeight: "bold",
                                 } }, exam.title))),
                     react__WEBPACK_IMPORTED_MODULE_0__.createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 4, style: {
                             padding: 12,
-                            display: 'flex',
-                            justifyContent: 'end',
+                            display: "flex",
+                            justifyContent: "end",
                         } },
                         react__WEBPACK_IMPORTED_MODULE_0__.createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.CardActions, null,
                             react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, { to: "/lab/student-exam", state: { data: exam.id } },
-                                react__WEBPACK_IMPORTED_MODULE_0__.createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Button, { variant: "contained", color: "primary" }, "Take Exam")))))))))),
-        react__WEBPACK_IMPORTED_MODULE_0__.createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Dialog, { open: open, onClose: handleClose, style: {
-                borderRadius: 10,
-                minHeight: 250,
-            } },
-            react__WEBPACK_IMPORTED_MODULE_0__.createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.DialogActions, null,
-                react__WEBPACK_IMPORTED_MODULE_0__.createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Button, { onClick: handleClose, color: "primary" }, "Close")))));
+                                react__WEBPACK_IMPORTED_MODULE_0__.createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Button, { variant: "contained", style: { background: "orange", color: "#fff" } }, "Take Exam"))))))))))));
 }
 
 
@@ -1043,7 +1020,7 @@ function StudentHomePage() {
     return (react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { container: true },
         react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 12, className: classes.tabnav },
             react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 2 },
-                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Button, { variant: "outlined", color: "primary", onClick: handleLogOut }, "Logout")),
+                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Button, { variant: "outlined", style: { background: "orange", color: "#fff" }, onClick: handleLogOut }, "Logout")),
             react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 10 },
                 react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core_AppBar__WEBPACK_IMPORTED_MODULE_6__["default"], { position: "static" },
                     react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Tabs, { value: value, onChange: handleChange, "aria-label": "simple tabs example" },
@@ -1514,4 +1491,4 @@ class CounterWidget extends _jupyterlab_apputils__WEBPACK_IMPORTED_MODULE_0__.Re
 /***/ })
 
 }]);
-//# sourceMappingURL=lib_index_js.0a03f96e39e1ac6f8771.js.map
+//# sourceMappingURL=lib_index_js.bea894cc9cf2dffb9ba6.js.map

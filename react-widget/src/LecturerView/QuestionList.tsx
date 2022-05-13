@@ -164,7 +164,7 @@ export default function QuestionList({ props }: any) {
                     padding: 12,
                     margin: 12,
                     width: "100%",
-                    border: "1px dotted gray",
+                    border: "1px dotted orange",
                   }}
                 >
                   <Button onClick={() => handleQuestionAdd()}>
@@ -182,7 +182,7 @@ export default function QuestionList({ props }: any) {
                       padding: 12,
                       margin: 12,
                       width: "100%",
-                      border: "1px dotted gray",
+                      border: "1px dotted orange",
                     }}
                   >
                     <Button>
@@ -259,7 +259,11 @@ export default function QuestionList({ props }: any) {
               xs={12}
               style={{ display: "flex", justifyContent: "end" }}
             >
-              <Button variant="outlined" onClick={handleSubmit} color="primary">
+              <Button
+                variant="outlined"
+                onClick={handleSubmit}
+                style={{ background: "orange", color: "#fff" }}
+              >
                 Submit
               </Button>
             </Grid>

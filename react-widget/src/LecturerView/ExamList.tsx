@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-unused-vars */
-import React, { useState } from 'react';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import Typography from '@material-ui/core/Typography';
+import React, { useState } from "react";
+import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
+import Typography from "@material-ui/core/Typography";
 import {
   Button,
   CardActions,
@@ -13,31 +13,31 @@ import {
   DialogContent,
   Grid,
   TextField,
-} from '@material-ui/core';
+} from "@material-ui/core";
 import {
   CREATE_EXAM,
   DELETE_EXAM,
   UPDATE_EXAM,
-} from '../graphql/mutations/exam';
-import { LIST_EXAM } from '../graphql/queries/exam';
-import { useMutation, useQuery } from '@apollo/client';
-import { Link } from 'react-router-dom';
+} from "../graphql/mutations/exam";
+import { LIST_EXAM } from "../graphql/queries/exam";
+import { useMutation, useQuery } from "@apollo/client";
+import { Link } from "react-router-dom";
 
 /* eslint-disable react/prop-types */
 export default function ExamList(): JSX.Element {
   // Exam listeleme ve ekleme işlemleri
   const [open, setOpen] = useState(false);
   const [addOpener, setAddOpener] = useState(false);
-  const [titleValue, setTitleValue] = useState('');
-  const [descriptionValue, setDescriptionValue] = useState('');
-  const [dateValue, setDateValue] = useState('');
-  const [timeValue, setTimeValue] = useState('');
-  const [durationValue, setDurationValue] = useState('');
-  const [typeValue, setTypeValue] = useState('');
-  const [assignedToValue, setAssignedToValue] = useState('');
-  const [resubmissionValue, setResubmissionValue] = useState('');
-  const [resubmissionDateValue, setResubmissionDateValue] = useState('');
-  const [gradeScaleValue, setGradeScaleValue] = useState('');
+  const [titleValue, setTitleValue] = useState("");
+  const [descriptionValue, setDescriptionValue] = useState("");
+  const [dateValue, setDateValue] = useState("");
+  const [timeValue, setTimeValue] = useState("");
+  const [durationValue, setDurationValue] = useState("");
+  const [typeValue, setTypeValue] = useState("");
+  const [assignedToValue, setAssignedToValue] = useState("");
+  const [resubmissionValue, setResubmissionValue] = useState("");
+  const [resubmissionDateValue, setResubmissionDateValue] = useState("");
+  const [gradeScaleValue, setGradeScaleValue] = useState("");
   const [asdasd, setAsdasd] = useState([]);
 
   const [createExam] = useMutation(CREATE_EXAM);
@@ -49,8 +49,8 @@ export default function ExamList(): JSX.Element {
     loading: examLoading,
     refetch,
   } = useQuery(LIST_EXAM, {
-    fetchPolicy: 'cache-first',
-    errorPolicy: 'ignore',
+    fetchPolicy: "cache-first",
+    errorPolicy: "ignore",
   });
   if (examLoading) {
     return <div>Loading...</div>;
@@ -60,40 +60,40 @@ export default function ExamList(): JSX.Element {
   const handleSubmit = async (): Promise<any> => {
     await createExam({
       variables: {
-        title: titleValue || '',
-        description: descriptionValue || '',
-        date: dateValue || '',
-        time: timeValue || '',
-        duration: durationValue || '',
-        type: typeValue || '',
-        resubmissionNumber: resubmissionValue || '',
-        resubmissionDate: resubmissionDateValue || '',
-        gradeScale: gradeScaleValue || '',
-        resubmissionTime: '',
-        dueDate: dateValue || '',
-        dueTime: '',
+        title: titleValue || "",
+        description: descriptionValue || "",
+        date: dateValue || "",
+        time: timeValue || "",
+        duration: durationValue || "",
+        type: typeValue || "",
+        resubmissionNumber: resubmissionValue || "",
+        resubmissionDate: resubmissionDateValue || "",
+        gradeScale: gradeScaleValue || "",
+        resubmissionTime: "",
+        dueDate: dateValue || "",
+        dueTime: "",
         status: false,
       },
     });
     // clear all the states
-    setTitleValue('');
-    setDescriptionValue('');
-    setDateValue('');
-    setTimeValue('');
-    setDurationValue('');
-    setTypeValue('');
-    setResubmissionValue('');
-    setResubmissionDateValue('');
-    setGradeScaleValue('');
+    setTitleValue("");
+    setDescriptionValue("");
+    setDateValue("");
+    setTimeValue("");
+    setDurationValue("");
+    setTypeValue("");
+    setResubmissionValue("");
+    setResubmissionDateValue("");
+    setGradeScaleValue("");
 
     refetch();
     setAsdasd(examList.examList);
-    console.log('create sonrası', asdasd);
+    console.log("create sonrası", asdasd);
     setAddOpener(false);
   };
   // Bu fonksiyonla herhangi bir exami silebiliyoruz
   const handleDeleteExam = async (deletedId: any) => {
-    console.log('delete');
+    console.log("delete");
     await deleteExam({
       variables: {
         id: deletedId,
@@ -109,7 +109,7 @@ export default function ExamList(): JSX.Element {
         status: true,
       },
     });
-    console.log('update', examList.examList);
+    console.log("update", examList.examList);
   };
   // Bu fonksiyonla detaylar popup'ını kapatıyoruz
   const handleClose = () => {
@@ -124,7 +124,7 @@ export default function ExamList(): JSX.Element {
     setAddOpener(false);
   };
 
-  console.log('examList', examList.examList);
+  console.log("examList", examList.examList);
   return (
     <>
       <Grid style={{ minWidth: 275, margin: 12 }}>
@@ -132,50 +132,50 @@ export default function ExamList(): JSX.Element {
           variant="outlined"
           style={{
             height: 500,
-            width: '100%',
-            border: '1px solid orange',
-            overflow: 'scroll',
+            width: "100%",
+            border: "1px solid orange",
+            overflow: "scroll",
           }}
         >
           {/* Burası genel listeleme kısmı. Tüm Sınavların sadece title ları yazıyor */}
           {examList?.examList?.map((exam: any) => (
-            <Grid item xs={12} key={exam.id} style={{ display: 'flex' }}>
-              <Link to="/lab/question-list" state={{ data: exam.id }}>
-                <Grid
-                  item
-                  xs={8}
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'start',
-                    padding: 12,
-                  }}
-                >
+            <Grid item xs={12} key={exam.id} style={{ display: "flex" }}>
+              <Grid
+                item
+                xs={8}
+                style={{
+                  display: "flex",
+                  justifyContent: "start",
+                  padding: 12,
+                }}
+              >
+                <Link to="/lab/question-list" state={{ data: exam.id }}>
                   <CardContent>
                     <Typography
                       variant="body2"
                       component="h6"
                       style={{
-                        fontWeight: 'bold',
+                        fontWeight: "bold",
                       }}
                     >
                       {exam.title}
                     </Typography>
                   </CardContent>
-                </Grid>
-              </Link>
+                </Link>
+              </Grid>
               <Grid
                 item
                 xs={4}
                 style={{
                   padding: 12,
-                  display: 'flex',
-                  justifyContent: 'end',
+                  display: "flex",
+                  justifyContent: "end",
                 }}
               >
                 <CardActions>
                   <Button
                     variant="contained"
-                    color="primary"
+                    style={{ background: "orange", color: "#fff" }}
                     onClick={() => {
                       handleUpdateExam(exam?.id);
                     }}
@@ -184,7 +184,7 @@ export default function ExamList(): JSX.Element {
                   </Button>
                   <Button
                     variant="contained"
-                    color="primary"
+                    style={{ background: "orange", color: "#fff" }}
                     onClick={() => {
                       handleDeleteExam(exam?.id);
                     }}
@@ -199,13 +199,12 @@ export default function ExamList(): JSX.Element {
           <Grid container item>
             <CardContent
               style={{
-                display: 'flex',
-                justifyContent: 'start',
-                alignItems: 'center',
+                display: "flex",
+                justifyContent: "center",
                 padding: 12,
                 margin: 12,
-                width: '100%',
-                border: '1px solid gray',
+                width: "100%",
+                border: "1px dotted orange",
               }}
               onClick={handleAddOpen}
             >
@@ -228,10 +227,17 @@ export default function ExamList(): JSX.Element {
         }}
       >
         <DialogActions>
-          <Button variant="outlined" onClick={handleDeleteExam} color="primary">
+          <Button
+            variant="outlined"
+            onClick={handleDeleteExam}
+            style={{ background: "orange", color: "#fff" }}
+          >
             Delete
           </Button>
-          <Button onClick={handleClose} color="primary">
+          <Button
+            onClick={handleClose}
+            style={{ background: "orange", color: "#fff" }}
+          >
             Close
           </Button>
         </DialogActions>
@@ -252,8 +258,8 @@ export default function ExamList(): JSX.Element {
               item
               xs={12}
               style={{
-                display: 'flex',
-                alignItems: 'center',
+                display: "flex",
+                alignItems: "center",
                 marginBottom: 12,
               }}
             >
@@ -278,8 +284,8 @@ export default function ExamList(): JSX.Element {
               item
               xs={12}
               style={{
-                display: 'flex',
-                alignItems: 'center',
+                display: "flex",
+                alignItems: "center",
                 marginBottom: 12,
               }}
             >
@@ -304,8 +310,8 @@ export default function ExamList(): JSX.Element {
               item
               xs={12}
               style={{
-                display: 'flex',
-                alignItems: 'center',
+                display: "flex",
+                alignItems: "center",
                 marginBottom: 12,
               }}
             >
@@ -330,8 +336,8 @@ export default function ExamList(): JSX.Element {
               item
               xs={12}
               style={{
-                display: 'flex',
-                alignItems: 'center',
+                display: "flex",
+                alignItems: "center",
                 marginBottom: 12,
               }}
             >
@@ -356,8 +362,8 @@ export default function ExamList(): JSX.Element {
               item
               xs={12}
               style={{
-                display: 'flex',
-                alignItems: 'center',
+                display: "flex",
+                alignItems: "center",
                 marginBottom: 12,
               }}
             >
@@ -382,8 +388,8 @@ export default function ExamList(): JSX.Element {
               item
               xs={12}
               style={{
-                display: 'flex',
-                alignItems: 'center',
+                display: "flex",
+                alignItems: "center",
                 marginBottom: 12,
               }}
             >
@@ -408,8 +414,8 @@ export default function ExamList(): JSX.Element {
               item
               xs={12}
               style={{
-                display: 'flex',
-                alignItems: 'center',
+                display: "flex",
+                alignItems: "center",
                 marginBottom: 12,
               }}
             >
@@ -434,8 +440,8 @@ export default function ExamList(): JSX.Element {
               item
               xs={12}
               style={{
-                display: 'flex',
-                alignItems: 'center',
+                display: "flex",
+                alignItems: "center",
                 marginBottom: 12,
               }}
             >
@@ -460,8 +466,8 @@ export default function ExamList(): JSX.Element {
               item
               xs={12}
               style={{
-                display: 'flex',
-                alignItems: 'center',
+                display: "flex",
+                alignItems: "center",
                 marginBottom: 12,
               }}
             >
@@ -486,12 +492,12 @@ export default function ExamList(): JSX.Element {
               <Grid
                 item
                 xs={12}
-                style={{ display: 'flex', justifyContent: 'end' }}
+                style={{ display: "flex", justifyContent: "end" }}
               >
                 <Button
                   variant="outlined"
                   onClick={handleSubmit}
-                  color="primary"
+                  style={{ background: "orange", color: "#fff" }}
                 >
                   Submit
                 </Button>
