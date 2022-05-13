@@ -18,6 +18,7 @@ import { useMutation, useQuery } from "@apollo/client";
 import {
   ADD_QUESTION_TO_EXAM,
   CREATE_QUESTION,
+  DELETE_QUESTION,
 } from "../graphql/mutations/question";
 import { GET_EXAM } from "../graphql/queries/exam";
 
@@ -40,25 +41,9 @@ export default function QuestionList({ props }: any) {
   const [createQuestion] = useMutation(CREATE_QUESTION);
   const [assignedQuestionToExam] = useMutation(ADD_QUESTION_TO_EXAM, {
     refetchQueries: [{ query: GET_EXAM, variables: { id: state.data } }],
-    // update(cache, { data: { assignedQuestionToExam } }) {
-    //   cache.modify({
-    //     fields: {
-    //       questions(existingQuestions = []) {
-    //         const newQuestionRef = cache.writeFragment({
-    //           data: assignedQuestionToExam,
-
-    //           fragment: gql`
-    //             fragment QuestionFragment on Question {
-    //               id
-    //               questionDesc
-    //             }
-    //           `,
-    //         });
-    //         return [...existingQuestions, newQuestionRef];
-    //       },
-    //     },
-    //   });
-    // },
+  });
+  const [deleteQuestion] = useMutation(DELETE_QUESTION, {
+    refetchQueries: [{ query: GET_EXAM, variables: { id: state.data } }],
   });
 
   const { data: examData, loading: examLoading } = useQuery(GET_EXAM, {
@@ -100,6 +85,13 @@ export default function QuestionList({ props }: any) {
     setGradeValue("");
     setOpen(false);
   };
+  const handleDeleteQuestion = async (questionId: any): Promise<any> => {
+    await deleteQuestion({
+      variables: {
+        id: questionId,
+      },
+    });
+  };
 
   return (
     <>
@@ -116,42 +108,69 @@ export default function QuestionList({ props }: any) {
           >
             {examData?.getExam?.questions.map((question: any) => (
               <Grid item xs={12} key={question.id} style={{ display: "flex" }}>
-                <Grid
-                  item
-                  xs={8}
-                  style={{
-                    display: "flex",
-                    justifyContent: "start",
-                    padding: 12,
-                  }}
-                >
-                  <CardContent>
-                    <Grid item xs={12}>
-                      <Grid item xs={8}>
-                        <Typography
-                          variant="body2"
-                          component="h6"
-                          style={{
-                            fontWeight: "bold",
-                          }}
-                        >
-                          {question.questionDesc}
-                        </Typography>
-                      </Grid>
-                      <Grid item xs={4}>
-                        <Typography
-                          variant="body2"
-                          component="h6"
-                          style={{
-                            fontWeight: "bold",
-                          }}
-                        >
-                          {question.grade}
-                        </Typography>
-                      </Grid>
+                <CardContent style={{ width: "100%", display: "flex" }}>
+                  <Grid item xs={9} style={{ display: "flex" }}>
+                    <Grid
+                      item
+                      xs={8}
+                      style={{
+                        display: "flex",
+                        justifyContent: "start",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Typography
+                        variant="body2"
+                        component="h6"
+                        style={{
+                          fontWeight: "bold",
+                        }}
+                      >
+                        <span style={{ color: "orange" }}>Question:</span>{" "}
+                        {question.questionDesc}
+                      </Typography>
                     </Grid>
-                  </CardContent>
-                </Grid>
+                    <Grid
+                      item
+                      xs={4}
+                      style={{
+                        display: "flex",
+                        justifyContent: "end",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Typography
+                        variant="body2"
+                        component="h6"
+                        style={{
+                          fontWeight: "bold",
+                        }}
+                      >
+                        <span style={{ color: "orange" }}>Grade:</span>{" "}
+                        {question.grade}
+                      </Typography>
+                    </Grid>
+                  </Grid>
+                  <Grid
+                    item
+                    xs={3}
+                    style={{
+                      display: "flex",
+                      justifyContent: "end",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Button
+                      variant="contained"
+                      style={{ background: "orange", color: "#fff" }}
+                      onClick={() => {
+                        handleDeleteQuestion(question.id);
+                      }}
+                    >
+                      DELETE
+                    </Button>
+                  </Grid>
+                </CardContent>
               </Grid>
             ))}
             <CardActions>

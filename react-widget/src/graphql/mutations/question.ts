@@ -35,3 +35,11 @@ export const ADD_QUESTION_TO_EXAM = gql`
     }
   }
 `;
+
+export const DELETE_QUESTION = gql`
+  mutation deleteQuestion($id: ID!) {
+    deleteQuestion(id: $id) {
+      id
+    }
+  }
+`;

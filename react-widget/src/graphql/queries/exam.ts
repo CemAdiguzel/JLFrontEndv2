@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client';
+import { gql } from "@apollo/client";
 
 export const LIST_EXAM = gql`
   query examList {
@@ -8,6 +8,8 @@ export const LIST_EXAM = gql`
       questions {
         id
         questionDesc
+        grade
+        answer
       }
       status
     }
@@ -21,6 +23,8 @@ export const GET_EXAM = gql`
       questions {
         id
         questionDesc
+        grade
+        answer
       }
     }
   }

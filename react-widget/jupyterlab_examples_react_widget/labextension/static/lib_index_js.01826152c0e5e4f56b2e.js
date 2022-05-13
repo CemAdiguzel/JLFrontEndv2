@@ -504,6 +504,9 @@ function QuestionList({ props }) {
     const [assignedQuestionToExam] = (0,_apollo_client__WEBPACK_IMPORTED_MODULE_2__.useMutation)(_graphql_mutations_question__WEBPACK_IMPORTED_MODULE_4__.ADD_QUESTION_TO_EXAM, {
         refetchQueries: [{ query: _graphql_queries_exam__WEBPACK_IMPORTED_MODULE_5__.GET_EXAM, variables: { id: state.data } }],
     });
+    const [deleteQuestion] = (0,_apollo_client__WEBPACK_IMPORTED_MODULE_2__.useMutation)(_graphql_mutations_question__WEBPACK_IMPORTED_MODULE_4__.DELETE_QUESTION, {
+        refetchQueries: [{ query: _graphql_queries_exam__WEBPACK_IMPORTED_MODULE_5__.GET_EXAM, variables: { id: state.data } }],
+    });
     const { data: examData, loading: examLoading } = (0,_apollo_client__WEBPACK_IMPORTED_MODULE_2__.useQuery)(_graphql_queries_exam__WEBPACK_IMPORTED_MODULE_5__.GET_EXAM, {
         fetchPolicy: "network-only",
         errorPolicy: "ignore",
@@ -541,6 +544,13 @@ function QuestionList({ props }) {
         setGradeValue("");
         setOpen(false);
     };
+    const handleDeleteQuestion = async (questionId) => {
+        await deleteQuestion({
+            variables: {
+                id: questionId,
+            },
+        });
+    };
     return (react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null,
         react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { container: true },
             react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, style: { width: "100%" } },
@@ -551,21 +561,38 @@ function QuestionList({ props }) {
                         overflow: "scroll",
                     } }, (_a = examData === null || examData === void 0 ? void 0 : examData.getExam) === null || _a === void 0 ? void 0 :
                     _a.questions.map((question) => (react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 12, key: question.id, style: { display: "flex" } },
-                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 8, style: {
-                                display: "flex",
-                                justifyContent: "start",
-                                padding: 12,
-                            } },
-                            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.CardContent, null,
-                                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 12 },
-                                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 8 },
-                                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Typography, { variant: "body2", component: "h6", style: {
-                                                fontWeight: "bold",
-                                            } }, question.questionDesc)),
-                                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 4 },
-                                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Typography, { variant: "body2", component: "h6", style: {
-                                                fontWeight: "bold",
-                                            } }, question.grade)))))))),
+                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.CardContent, { style: { width: "100%", display: "flex" } },
+                            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 9, style: { display: "flex" } },
+                                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 8, style: {
+                                        display: "flex",
+                                        justifyContent: "start",
+                                        alignItems: "center",
+                                    } },
+                                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Typography, { variant: "body2", component: "h6", style: {
+                                            fontWeight: "bold",
+                                        } },
+                                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", { style: { color: "orange" } }, "Question:"),
+                                        " ",
+                                        question.questionDesc)),
+                                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 4, style: {
+                                        display: "flex",
+                                        justifyContent: "end",
+                                        alignItems: "center",
+                                    } },
+                                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Typography, { variant: "body2", component: "h6", style: {
+                                            fontWeight: "bold",
+                                        } },
+                                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", { style: { color: "orange" } }, "Grade:"),
+                                        " ",
+                                        question.grade))),
+                            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 3, style: {
+                                    display: "flex",
+                                    justifyContent: "end",
+                                    alignItems: "center",
+                                } },
+                                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Button, { variant: "contained", style: { background: "orange", color: "#fff" }, onClick: () => {
+                                        handleDeleteQuestion(question.id);
+                                    } }, "DELETE")))))),
                     react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.CardActions, null,
                         react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { container: true, item: true },
                             react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.CardContent, { style: {
@@ -669,43 +696,6 @@ function MainPage() {
                 react__WEBPACK_IMPORTED_MODULE_0__.createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.TextField, { id: "standard-basic", variant: "outlined", label: "Password", type: "password", onChange: (e) => setPassword(e.target.value) })),
             react__WEBPACK_IMPORTED_MODULE_0__.createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 12 },
                 react__WEBPACK_IMPORTED_MODULE_0__.createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Button, { variant: "contained", style: { background: "orange", color: "#fff" }, onClick: handleSubmit }, "Login2")))));
-}
-
-
-/***/ }),
-
-/***/ "./lib/Pages/SelectionPage.js":
-/*!************************************!*\
-  !*** ./lib/Pages/SelectionPage.js ***!
-  \************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ SelectionPage)
-/* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "webpack/sharing/consume/default/react");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _material_ui_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @material-ui/core */ "webpack/sharing/consume/default/@material-ui/core/@material-ui/core");
-/* harmony import */ var _material_ui_core__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "webpack/sharing/consume/default/react-router-dom/react-router-dom");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react_router_dom__WEBPACK_IMPORTED_MODULE_2__);
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-
-
-
-/* eslint-disable react/prop-types */
-function SelectionPage() {
-    return (react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { container: true },
-        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 12, style: {
-                display: "flex",
-                justifyContent: "center",
-                alignContent: "center",
-            } },
-            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Link, { to: "/lab/student-home-page" },
-                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Button, { variant: "contained", color: "primary" }, "Student View")),
-            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Link, { to: "/lab/home-page" },
-                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Button, { variant: "contained", style: { background: "orange", color: "#fff" } }, "Lecturer View")))));
 }
 
 
@@ -1054,14 +1044,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _LecturerView_ExamList__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../LecturerView/ExamList */ "./lib/LecturerView/ExamList.js");
 /* harmony import */ var _LecturerView_HomePage__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../LecturerView/HomePage */ "./lib/LecturerView/HomePage.js");
 /* harmony import */ var _Pages_MainPage__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Pages/MainPage */ "./lib/Pages/MainPage.js");
-/* harmony import */ var _LecturerView_QuestionList__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../LecturerView/QuestionList */ "./lib/LecturerView/QuestionList.js");
-/* harmony import */ var _Pages_SelectionPage__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../Pages/SelectionPage */ "./lib/Pages/SelectionPage.js");
+/* harmony import */ var _LecturerView_QuestionList__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../LecturerView/QuestionList */ "./lib/LecturerView/QuestionList.js");
 /* harmony import */ var _StudentView_StudentAssignmentList__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../StudentView/StudentAssignmentList */ "./lib/StudentView/StudentAssignmentList.js");
 /* harmony import */ var _StudentView_StudentExamList__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../StudentView/StudentExamList */ "./lib/StudentView/StudentExamList.js");
 /* harmony import */ var _StudentView_StudentHomePage__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../StudentView/StudentHomePage */ "./lib/StudentView/StudentHomePage.js");
-/* harmony import */ var _StudentView_StudentExam__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../StudentView/StudentExam */ "./lib/StudentView/StudentExam.js");
+/* harmony import */ var _StudentView_StudentExam__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../StudentView/StudentExam */ "./lib/StudentView/StudentExam.js");
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-
 
 
 
@@ -1082,10 +1070,9 @@ const ROUTES = [
     { path: "/lab/student-home-page", element: react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_StudentView_StudentHomePage__WEBPACK_IMPORTED_MODULE_6__["default"], null) },
     { path: "/lab/student-assignment-list", element: react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_StudentView_StudentAssignmentList__WEBPACK_IMPORTED_MODULE_7__["default"], null) },
     { path: "/lab/student-exam-list", element: react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_StudentView_StudentExamList__WEBPACK_IMPORTED_MODULE_8__["default"], null) },
-    { path: "/lab/selection-page", element: react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Pages_SelectionPage__WEBPACK_IMPORTED_MODULE_9__["default"], null) },
     { path: "*", element: react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Pages_MainPage__WEBPACK_IMPORTED_MODULE_2__["default"], null) },
-    { path: "/lab/question-list", element: react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_LecturerView_QuestionList__WEBPACK_IMPORTED_MODULE_10__["default"], null) },
-    { path: "lab/student-exam", element: react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_StudentView_StudentExam__WEBPACK_IMPORTED_MODULE_11__["default"], null) },
+    { path: "/lab/question-list", element: react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_LecturerView_QuestionList__WEBPACK_IMPORTED_MODULE_9__["default"], null) },
+    { path: "lab/student-exam", element: react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_StudentView_StudentExam__WEBPACK_IMPORTED_MODULE_10__["default"], null) },
 ];
 const Route = () => {
     // useRoutes() hook to define and render routes using regular JavaScript objects instead of <Routes> and <Route> elements.
@@ -1296,7 +1283,8 @@ const UPDATE_EXAM = _apollo_client__WEBPACK_IMPORTED_MODULE_0__.gql `
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "ADD_QUESTION_TO_EXAM": () => (/* binding */ ADD_QUESTION_TO_EXAM),
-/* harmony export */   "CREATE_QUESTION": () => (/* binding */ CREATE_QUESTION)
+/* harmony export */   "CREATE_QUESTION": () => (/* binding */ CREATE_QUESTION),
+/* harmony export */   "DELETE_QUESTION": () => (/* binding */ DELETE_QUESTION)
 /* harmony export */ });
 /* harmony import */ var _apollo_client__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @apollo/client */ "webpack/sharing/consume/default/@apollo/client/@apollo/client");
 /* harmony import */ var _apollo_client__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_apollo_client__WEBPACK_IMPORTED_MODULE_0__);
@@ -1336,6 +1324,13 @@ const ADD_QUESTION_TO_EXAM = _apollo_client__WEBPACK_IMPORTED_MODULE_0__.gql `
     }
   }
 `;
+const DELETE_QUESTION = _apollo_client__WEBPACK_IMPORTED_MODULE_0__.gql `
+  mutation deleteQuestion($id: ID!) {
+    deleteQuestion(id: $id) {
+      id
+    }
+  }
+`;
 
 
 /***/ }),
@@ -1362,6 +1357,8 @@ const LIST_EXAM = _apollo_client__WEBPACK_IMPORTED_MODULE_0__.gql `
       questions {
         id
         questionDesc
+        grade
+        answer
       }
       status
     }
@@ -1375,6 +1372,8 @@ const GET_EXAM = _apollo_client__WEBPACK_IMPORTED_MODULE_0__.gql `
       questions {
         id
         questionDesc
+        grade
+        answer
       }
     }
   }
@@ -1491,4 +1490,4 @@ class CounterWidget extends _jupyterlab_apputils__WEBPACK_IMPORTED_MODULE_0__.Re
 /***/ })
 
 }]);
-//# sourceMappingURL=lib_index_js.bea894cc9cf2dffb9ba6.js.map
+//# sourceMappingURL=lib_index_js.01826152c0e5e4f56b2e.js.map
