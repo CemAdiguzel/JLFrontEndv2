@@ -6,7 +6,6 @@ import ExamList from "../LecturerView/ExamList";
 import HomePage from "../LecturerView/HomePage";
 import MainPage from "../Pages/MainPage";
 import QuestionList from "../LecturerView/QuestionList";
-import SelectionPage from "../Pages/SelectionPage";
 import StudentAssignmentList from "../StudentView/StudentAssignmentList";
 import StudentExamList from "../StudentView/StudentExamList";
 import StudentHomePage from "../StudentView/StudentHomePage";
@@ -21,7 +20,6 @@ const ROUTES = [
   { path: "/lab/student-home-page", element: <StudentHomePage /> },
   { path: "/lab/student-assignment-list", element: <StudentAssignmentList /> },
   { path: "/lab/student-exam-list", element: <StudentExamList /> },
-  { path: "/lab/selection-page", element: <SelectionPage /> },
   { path: "*", element: <MainPage /> },
   { path: "/lab/question-list", element: <QuestionList /> },
   { path: "lab/student-exam", element: <StudentExam /> },
