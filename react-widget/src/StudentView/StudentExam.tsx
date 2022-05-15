@@ -81,7 +81,16 @@ export default function StudentExam({ props }: any) {
                   }}
                 >
                   <CardContent style={{ width: "100%" }}>
-                    <Grid item xs={12}>
+                    <Grid
+                      item
+                      xs={12}
+                      style={{
+                        display: "flex",
+                        justifyContent: "start",
+                        border: "1px dotted orange",
+                        marginBottom: 12,
+                      }}
+                    >
                       <Typography
                         variant="body2"
                         component="h6"
@@ -89,6 +98,7 @@ export default function StudentExam({ props }: any) {
                           fontWeight: "semi-bold",
                         }}
                       >
+                        <span style={{ color: "orange" }}>Question:</span>{" "}
                         {question.questionDesc}
                       </Typography>
                     </Grid>
@@ -105,6 +115,7 @@ export default function StudentExam({ props }: any) {
                         <TextareaAutosize
                           maxRows={8}
                           minRows={8}
+                          defaultValue="Answer"
                           style={{ width: "100%" }}
                           onChange={(e: any) => {
                             setAnswerValue(e.target.value);

@@ -695,7 +695,7 @@ function MainPage() {
             react__WEBPACK_IMPORTED_MODULE_0__.createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 12 },
                 react__WEBPACK_IMPORTED_MODULE_0__.createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.TextField, { id: "standard-basic", variant: "outlined", label: "Password", type: "password", onChange: (e) => setPassword(e.target.value) })),
             react__WEBPACK_IMPORTED_MODULE_0__.createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 12 },
-                react__WEBPACK_IMPORTED_MODULE_0__.createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Button, { variant: "contained", style: { background: "orange", color: "#fff" }, onClick: handleSubmit }, "Login2")))));
+                react__WEBPACK_IMPORTED_MODULE_0__.createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Button, { variant: "contained", style: { background: "orange", color: "#fff" }, onClick: handleSubmit }, "Login")))));
 }
 
 
@@ -812,17 +812,25 @@ function StudentExam({ props }) {
                                 padding: 12,
                             } },
                             react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.CardContent, { style: { width: "100%" } },
-                                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 12 },
+                                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 12, style: {
+                                        display: "flex",
+                                        justifyContent: "start",
+                                        border: "1px dotted orange",
+                                        marginBottom: 12,
+                                    } },
                                     react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Typography, { variant: "body2", component: "h6", style: {
                                             fontWeight: "semi-bold",
-                                        } }, question.questionDesc)),
+                                        } },
+                                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", { style: { color: "orange" } }, "Question:"),
+                                        " ",
+                                        question.questionDesc)),
                                 react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 12, style: {
                                         width: "100%",
                                         display: "flex",
                                         alignItems: "center",
                                     } },
                                     react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 8 },
-                                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.TextareaAutosize, { maxRows: 8, minRows: 8, style: { width: "100%" }, onChange: (e) => {
+                                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.TextareaAutosize, { maxRows: 8, minRows: 8, defaultValue: "Answer", style: { width: "100%" }, onChange: (e) => {
                                                 setAnswerValue(e.target.value);
                                             } })),
                                     react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 4 },
@@ -1490,4 +1498,4 @@ class CounterWidget extends _jupyterlab_apputils__WEBPACK_IMPORTED_MODULE_0__.Re
 /***/ })
 
 }]);
-//# sourceMappingURL=lib_index_js.01826152c0e5e4f56b2e.js.map
+//# sourceMappingURL=lib_index_js.c7340b61af04c02565aa.js.map
