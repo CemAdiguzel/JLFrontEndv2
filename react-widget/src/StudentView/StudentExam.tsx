@@ -89,6 +89,7 @@ export default function StudentExam({ props }: any) {
                         justifyContent: "start",
                         border: "1px dotted orange",
                         marginBottom: 12,
+                        minHeight: 55,
                       }}
                     >
                       <Typography
@@ -123,6 +124,14 @@ export default function StudentExam({ props }: any) {
                         />
                       </Grid>
                       <Grid item xs={4}>
+                        <Link to="/lab/terminal">
+                          <Button
+                            variant="contained"
+                            style={{ background: "orange", color: "#fff" }}
+                          >
+                            Terminal
+                          </Button>
+                        </Link>
                         <Button
                           variant="contained"
                           style={{ background: "orange", color: "#fff" }}

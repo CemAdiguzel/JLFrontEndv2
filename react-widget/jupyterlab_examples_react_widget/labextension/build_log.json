@@ -614,10 +614,13 @@
             },
             "@apollo/client": {},
             "@material-ui/core": {},
+            "@monaco-editor/react": {},
+            "axios": {},
             "dotenv": {},
             "graphql": {},
             "react-router-dom": {},
             "react-scripts": {},
+            "react-select": {},
             "@jupyterlab-examples/react-widget": {
               "version": "0.1.0",
               "singleton": true,

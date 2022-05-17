@@ -695,8 +695,216 @@ function MainPage() {
             react__WEBPACK_IMPORTED_MODULE_0__.createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 12 },
                 react__WEBPACK_IMPORTED_MODULE_0__.createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.TextField, { id: "standard-basic", variant: "outlined", label: "Password", type: "password", onChange: (e) => setPassword(e.target.value) })),
             react__WEBPACK_IMPORTED_MODULE_0__.createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 12 },
-                react__WEBPACK_IMPORTED_MODULE_0__.createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Button, { variant: "contained", style: { background: "orange", color: "#fff" }, onClick: handleSubmit }, "Login")))));
+                react__WEBPACK_IMPORTED_MODULE_0__.createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Button, { variant: "contained", style: { background: "orange", color: "#fff" }, onClick: handleSubmit }, "Login23")))));
 }
+
+
+/***/ }),
+
+/***/ "./lib/Pages/Navbar.js":
+/*!*****************************!*\
+  !*** ./lib/Pages/Navbar.js ***!
+  \*****************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _material_ui_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @material-ui/core */ "webpack/sharing/consume/default/@material-ui/core/@material-ui/core");
+/* harmony import */ var _material_ui_core__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_material_ui_core__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "webpack/sharing/consume/default/react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var react_select__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-select */ "webpack/sharing/consume/default/react-select/react-select");
+/* harmony import */ var react_select__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react_select__WEBPACK_IMPORTED_MODULE_2__);
+
+
+
+function Navbar({ userLang, setUserLang, userTheme, setUserTheme, fontSize, setFontSize, }) {
+    const languages = [
+        { value: "c", label: "C" },
+        { value: "cpp", label: "C++" },
+        { value: "python", label: "Python" },
+        { value: "java", label: "Java" },
+    ];
+    const themes = [
+        { value: "vs-dark", label: "Dark" },
+        { value: "light", label: "Light" },
+    ];
+    return (react__WEBPACK_IMPORTED_MODULE_1___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_0__.Grid, { container: true, item: true },
+        react__WEBPACK_IMPORTED_MODULE_1___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_0__.Grid, { item: true, xs: 12, style: {
+                display: "flex",
+                alignItems: "center",
+                paddingLeft: "20px",
+                height: "50px",
+                textAlign: "center",
+                color: "#afec3f",
+                backgroundColor: "#474747",
+                gap: "20px",
+            } },
+            react__WEBPACK_IMPORTED_MODULE_1___default().createElement((react_select__WEBPACK_IMPORTED_MODULE_2___default()), { options: languages, value: userLang, onChange: (e) => setUserLang(e.value), placeholder: userLang }),
+            react__WEBPACK_IMPORTED_MODULE_1___default().createElement((react_select__WEBPACK_IMPORTED_MODULE_2___default()), { options: themes, value: userTheme, onChange: (e) => setUserTheme(e.value), placeholder: userTheme }),
+            react__WEBPACK_IMPORTED_MODULE_1___default().createElement("label", null, "Font Size"),
+            react__WEBPACK_IMPORTED_MODULE_1___default().createElement("input", { type: "range", min: "18", max: "30", value: fontSize, step: "2", onChange: (e) => {
+                    setFontSize(e.target.value);
+                } }))));
+}
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Navbar);
+
+
+/***/ }),
+
+/***/ "./lib/Pages/Terminal.js":
+/*!*******************************!*\
+  !*** ./lib/Pages/Terminal.js ***!
+  \*******************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "webpack/sharing/consume/default/react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _monaco_editor_react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @monaco-editor/react */ "webpack/sharing/consume/default/@monaco-editor/react/@monaco-editor/react");
+/* harmony import */ var _monaco_editor_react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_monaco_editor_react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _Navbar__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Navbar */ "./lib/Pages/Navbar.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "webpack/sharing/consume/default/axios/axios");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _material_ui_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @material-ui/core */ "webpack/sharing/consume/default/@material-ui/core/@material-ui/core");
+/* harmony import */ var _material_ui_core__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_material_ui_core__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-router-dom */ "webpack/sharing/consume/default/react-router-dom/react-router-dom");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(react_router_dom__WEBPACK_IMPORTED_MODULE_4__);
+
+// import "./Terminal.css";
+
+
+
+
+
+
+function Terminal() {
+    // State variable to set users source code
+    const [userCode, setUserCode] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(``);
+    // State variable to set editors default language
+    const [userLang, setUserLang] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)("python");
+    // State variable to set editors default theme
+    const [userTheme, setUserTheme] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)("vs-dark");
+    // State variable to set editors default font size
+    const [fontSize, setFontSize] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(20);
+    // State variable to set users input
+    const [userInput, setUserInput] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)("");
+    // State variable to set users output
+    const [userOutput, setUserOutput] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)("");
+    // Loading state variable to show spinner
+    // while fetching data
+    const [loading, setLoading] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
+    const options = {
+        fontSize: fontSize,
+    };
+    // Function to call the compile endpoint
+    function compile() {
+        setLoading(true);
+        if (userCode === ``) {
+            return;
+        }
+        // Post request to compile endpoint
+        axios__WEBPACK_IMPORTED_MODULE_2___default().post(`http://localhost:3001/compile`, {
+            code: userCode,
+            language: userLang,
+            input: userInput,
+        })
+            .then((res) => {
+            setUserOutput(res.data.output);
+        })
+            .then(() => {
+            setLoading(false);
+        });
+    }
+    // Function to clear the output screen
+    function clearOutput() {
+        setUserOutput("");
+    }
+    return (react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_3__.Grid, { container: true, style: { height: "100%" } },
+        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_3__.Grid, { item: true, xs: 12, style: {
+                width: "100%",
+                overflowY: "scroll",
+                backgroundColor: "#474747",
+            } },
+            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_3__.Grid, { item: true, xs: 12 },
+                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Navbar__WEBPACK_IMPORTED_MODULE_5__["default"], { userLang: userLang, setUserLang: setUserLang, userTheme: userTheme, setUserTheme: setUserTheme, fontSize: fontSize, setFontSize: setFontSize })),
+            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_3__.Grid, { item: true, xs: 12, style: { display: "flex" } },
+                react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", { className: "left-container", style: { position: "relative", flex: "60%" } },
+                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement((_monaco_editor_react__WEBPACK_IMPORTED_MODULE_1___default()), { options: options, width: "100%", theme: userTheme, language: userLang, defaultLanguage: "python", defaultValue: "# Enter your code here", onChange: (value) => {
+                            setUserCode(value);
+                        } }),
+                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", { className: "run-btn", onClick: () => compile(), style: {
+                            position: "absolute",
+                            bottom: "10px",
+                            right: "18px",
+                            width: "80px",
+                            height: "40px",
+                            fontSize: "22px",
+                            fontWeight: "bold",
+                            backgroundColor: "#afec3f",
+                            border: "none",
+                            borderRadius: "4px",
+                            transition: "0.3s",
+                            cursor: "pointer",
+                        } }, "Run")),
+                react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", { className: "right-container", style: {
+                        flex: "40%",
+                        height: "80vh",
+                        display: "flex",
+                        flexDirection: "column",
+                        backgroundColor: "#242424",
+                        borderLeft: "3px solid #1f65e6",
+                        padding: "5px",
+                    } },
+                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h4", { style: { color: "orange" } }, "Input:"),
+                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", { className: "input-box", style: { flex: "50%" } },
+                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement("textarea", { id: "code-inp", style: { fontSize: "16px" }, onChange: (e) => setUserInput(e.target.value) })),
+                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h4", { style: { color: "orange" } }, "Output:"),
+                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_3__.Grid, { item: true }, loading ? (react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", { className: "spinner-box", style: {
+                            flex: "50%",
+                            backgroundColor: "#242424",
+                            overflowY: "auto",
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                        } },
+                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h4", { style: { color: "orange" } }, "Loading .."))) : (react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", { className: "output-box", style: {
+                            flex: "50%",
+                            overflowY: "auto",
+                            color: "white",
+                            position: "relative",
+                            border: "1px solid orange",
+                            backgroundColor: "#fff",
+                            minHeight: 250,
+                        } },
+                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement("pre", null, userOutput),
+                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", { onClick: () => {
+                                clearOutput();
+                            }, className: "clear-btn", style: {
+                                position: "absolute",
+                                bottom: "14px",
+                                right: "18px",
+                                width: "80px",
+                                height: "40px",
+                                fontSize: "22px",
+                                fontWeight: "bold",
+                                color: "white",
+                                backgroundColor: "#1f65e6",
+                                border: "none",
+                                borderRadius: "4px",
+                                transition: "0.3s",
+                                cursor: "pointer",
+                            } }, "Clear")))))),
+            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_3__.Grid, { item: true, xs: 12, style: { display: "flex" } },
+                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__.Link, { to: "/lab/student-exam-list" },
+                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_3__.Button, { variant: "contained", style: { background: "orange", color: "#fff" } }, "Save"))))));
+}
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Terminal);
 
 
 /***/ }),
@@ -817,6 +1025,7 @@ function StudentExam({ props }) {
                                         justifyContent: "start",
                                         border: "1px dotted orange",
                                         marginBottom: 12,
+                                        minHeight: 55,
                                     } },
                                     react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Typography, { variant: "body2", component: "h6", style: {
                                             fontWeight: "semi-bold",
@@ -834,6 +1043,8 @@ function StudentExam({ props }) {
                                                 setAnswerValue(e.target.value);
                                             } })),
                                     react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 4 },
+                                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, { to: "/lab/terminal" },
+                                            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Button, { variant: "contained", style: { background: "orange", color: "#fff" } }, "Terminal")),
                                         react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Button, { variant: "contained", style: { background: "orange", color: "#fff" }, onClick: () => {
                                                 handleSave(question.id);
                                             } }, "Save")))))))),
@@ -1052,12 +1263,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _LecturerView_ExamList__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../LecturerView/ExamList */ "./lib/LecturerView/ExamList.js");
 /* harmony import */ var _LecturerView_HomePage__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../LecturerView/HomePage */ "./lib/LecturerView/HomePage.js");
 /* harmony import */ var _Pages_MainPage__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Pages/MainPage */ "./lib/Pages/MainPage.js");
+/* harmony import */ var _Pages_Terminal__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../Pages/Terminal */ "./lib/Pages/Terminal.js");
 /* harmony import */ var _LecturerView_QuestionList__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../LecturerView/QuestionList */ "./lib/LecturerView/QuestionList.js");
 /* harmony import */ var _StudentView_StudentAssignmentList__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../StudentView/StudentAssignmentList */ "./lib/StudentView/StudentAssignmentList.js");
 /* harmony import */ var _StudentView_StudentExamList__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../StudentView/StudentExamList */ "./lib/StudentView/StudentExamList.js");
 /* harmony import */ var _StudentView_StudentHomePage__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../StudentView/StudentHomePage */ "./lib/StudentView/StudentHomePage.js");
 /* harmony import */ var _StudentView_StudentExam__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../StudentView/StudentExam */ "./lib/StudentView/StudentExam.js");
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+
 
 
 
@@ -1081,6 +1294,7 @@ const ROUTES = [
     { path: "*", element: react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Pages_MainPage__WEBPACK_IMPORTED_MODULE_2__["default"], null) },
     { path: "/lab/question-list", element: react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_LecturerView_QuestionList__WEBPACK_IMPORTED_MODULE_9__["default"], null) },
     { path: "lab/student-exam", element: react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_StudentView_StudentExam__WEBPACK_IMPORTED_MODULE_10__["default"], null) },
+    { path: "/lab/terminal", element: react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Pages_Terminal__WEBPACK_IMPORTED_MODULE_11__["default"], null) },
 ];
 const Route = () => {
     // useRoutes() hook to define and render routes using regular JavaScript objects instead of <Routes> and <Route> elements.
@@ -1498,4 +1712,4 @@ class CounterWidget extends _jupyterlab_apputils__WEBPACK_IMPORTED_MODULE_0__.Re
 /***/ })
 
 }]);
-//# sourceMappingURL=lib_index_js.c7340b61af04c02565aa.js.map
+//# sourceMappingURL=lib_index_js.17d11f8d12974ca33c5b.js.map
