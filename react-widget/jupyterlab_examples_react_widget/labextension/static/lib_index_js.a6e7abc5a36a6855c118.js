@@ -622,7 +622,7 @@ function QuestionList({ props }) {
             react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.DialogTitle, { id: "form-dialog-title" }, "Add Question"),
             react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.DialogContent, null,
                 react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.DialogContentText, null, "Please enter the question and the answer."),
-                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.TextField, { autoFocus: true, margin: "dense", id: "question", label: "Question", type: "text", fullWidth: true, value: questionDescValue, onChange: (e) => setQuestionDescValue(e.target.value) }),
+                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.TextareaAutosize, { autoFocus: true, id: "question", maxRows: 8, minRows: 8, style: { width: "100%", whiteSpace: "pre-line" }, value: questionDescValue, onChange: (e) => setQuestionDescValue(e.target.value) }),
                 react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.TextField, { margin: "dense", id: "answer", label: "Answer", type: "text", fullWidth: true, value: answerValue, onChange: (e) => setAnswerValue(e.target.value) }),
                 react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.TextField, { margin: "dense", id: "gradeInput", label: "Grade Input", type: "text", fullWidth: true, value: gradeInputValue, onChange: (e) => setGradeInputValue(e.target.value) }),
                 react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.TextField, { margin: "dense", id: "gradeOutput", label: "Grade Output", type: "text", fullWidth: true, value: gradeOutputValue, onChange: (e) => setGradeOutputValue(e.target.value) }),
@@ -742,9 +742,17 @@ function Navbar({ userLang, setUserLang, userTheme, setUserTheme, fontSize, setF
                 backgroundColor: "#474747",
                 gap: "20px",
             } },
-            react__WEBPACK_IMPORTED_MODULE_1___default().createElement((react_select__WEBPACK_IMPORTED_MODULE_2___default()), { options: languages, value: userLang, onChange: (e) => setUserLang(e.value), placeholder: userLang }),
-            react__WEBPACK_IMPORTED_MODULE_1___default().createElement((react_select__WEBPACK_IMPORTED_MODULE_2___default()), { options: themes, value: userTheme, onChange: (e) => setUserTheme(e.value), placeholder: userTheme }),
-            react__WEBPACK_IMPORTED_MODULE_1___default().createElement("label", null, "Font Size"),
+            react__WEBPACK_IMPORTED_MODULE_1___default().createElement((react_select__WEBPACK_IMPORTED_MODULE_2___default()), { options: languages, value: userLang, onChange: (e) => setUserLang(e.value), placeholder: userLang, styles: {
+                    control: (base) => (Object.assign(Object.assign({}, base), { backgroundColor: "#474747", color: "#afec3f", border: "none", borderRadius: "0px", height: "40px", width: "100px", fontSize: "14px", fontWeight: "bold", padding: "0px", margin: "0px" })),
+                    menu: (base) => (Object.assign(Object.assign({}, base), { backgroundColor: "#474747", color: "#afec3f", border: "none", borderRadius: "0px", height: "40px", width: "100px", fontSize: "14px", fontWeight: "bold", padding: "0px", margin: "0px" })),
+                    option: (base) => (Object.assign(Object.assign({}, base), { backgroundColor: "#474747", color: "#afec3f", border: "none", borderRadius: "0px", height: "40px", width: "100px", fontSize: "14px", fontWeight: "bold", padding: "0px", margin: "0px" })),
+                } }),
+            react__WEBPACK_IMPORTED_MODULE_1___default().createElement((react_select__WEBPACK_IMPORTED_MODULE_2___default()), { options: themes, value: userTheme, onChange: (e) => setUserTheme(e.value), placeholder: userTheme, styles: {
+                    control: (base) => (Object.assign(Object.assign({}, base), { backgroundColor: "#474747", color: "#afec3f", border: "none", borderRadius: "0px", height: "40px", width: "100px", fontSize: "14px", fontWeight: "bold", padding: "0px", margin: "0px" })),
+                    menu: (base) => (Object.assign(Object.assign({}, base), { backgroundColor: "#474747", color: "#afec3f", border: "none", borderRadius: "0px", height: "40px", width: "100px", fontSize: "14px", fontWeight: "bold", padding: "0px", margin: "0px" })),
+                    option: (base) => (Object.assign(Object.assign({}, base), { backgroundColor: "#474747", color: "#afec3f", border: "none", borderRadius: "0px", height: "40px", width: "100px", fontSize: "14px", fontWeight: "bold", padding: "0px", margin: "0px" })),
+                } }),
+            react__WEBPACK_IMPORTED_MODULE_1___default().createElement("label", { style: { fontSize: 14 } }, "Font Size"),
             react__WEBPACK_IMPORTED_MODULE_1___default().createElement("input", { type: "range", min: "18", max: "30", value: fontSize, step: "2", onChange: (e) => {
                     setFontSize(e.target.value);
                 } }))));
@@ -784,6 +792,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 function Terminal() {
+    const location = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_4__.useLocation)();
+    const state = location.state;
+    console.log("data", state.data);
     // State variable to set users source code
     const [userCode, setUserCode] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(``);
     // State variable to set editors default language
@@ -825,7 +836,7 @@ function Terminal() {
     function clearOutput() {
         setUserOutput("");
     }
-    return (react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_3__.Grid, { container: true, style: { height: "100%" } },
+    return (react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_3__.Grid, { container: true, style: { height: "100%", overflowY: "scroll" } },
         react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_3__.Grid, { item: true, xs: 12, style: {
                 width: "100%",
                 overflowY: "scroll",
@@ -834,8 +845,8 @@ function Terminal() {
             react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_3__.Grid, { item: true, xs: 12 },
                 react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Navbar__WEBPACK_IMPORTED_MODULE_5__["default"], { userLang: userLang, setUserLang: setUserLang, userTheme: userTheme, setUserTheme: setUserTheme, fontSize: fontSize, setFontSize: setFontSize })),
             react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_3__.Grid, { item: true, xs: 12, style: { display: "flex" } },
-                react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", { className: "left-container", style: { position: "relative", flex: "60%" } },
-                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement((_monaco_editor_react__WEBPACK_IMPORTED_MODULE_1___default()), { options: options, width: "100%", theme: userTheme, language: userLang, defaultLanguage: "python", defaultValue: "# Enter your code here", onChange: (value) => {
+                react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", { className: "left-container", style: { position: "relative", flex: "60%", height: "80vh" } },
+                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement((_monaco_editor_react__WEBPACK_IMPORTED_MODULE_1___default()), { options: options, width: "100%", theme: userTheme, language: userLang, defaultLanguage: "python", defaultValue: state.data.terminalQuestion, onChange: (value) => {
                             setUserCode(value);
                         } }),
                     react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", { className: "run-btn", onClick: () => compile(), style: {
@@ -861,10 +872,10 @@ function Terminal() {
                         borderLeft: "3px solid #1f65e6",
                         padding: "5px",
                     } },
-                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h4", { style: { color: "orange" } }, "Input:"),
+                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h4", { style: { color: "orange", fontSize: 18 } }, "Input:"),
                     react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", { className: "input-box", style: { flex: "50%" } },
                         react__WEBPACK_IMPORTED_MODULE_0___default().createElement("textarea", { id: "code-inp", style: { fontSize: "16px" }, onChange: (e) => setUserInput(e.target.value) })),
-                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h4", { style: { color: "orange" } }, "Output:"),
+                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h4", { style: { color: "orange", fontSize: 18 } }, "Output:"),
                     react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_3__.Grid, { item: true }, loading ? (react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", { className: "spinner-box", style: {
                             flex: "50%",
                             backgroundColor: "#242424",
@@ -873,35 +884,32 @@ function Terminal() {
                             justifyContent: "center",
                             alignItems: "center",
                         } },
-                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h4", { style: { color: "orange" } }, "Loading .."))) : (react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", { className: "output-box", style: {
-                            flex: "50%",
-                            overflowY: "auto",
-                            color: "white",
-                            position: "relative",
-                            border: "1px solid orange",
-                            backgroundColor: "#fff",
-                            minHeight: 250,
-                        } },
-                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement("pre", null, userOutput),
+                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h4", { style: { color: "orange", fontSize: 14 } }, "Loading .."))) : (react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null,
+                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", { className: "output-box", style: {
+                                flex: "50%",
+                                overflowY: "auto",
+                                color: "white",
+                                position: "relative",
+                                border: "1px solid orange",
+                                minHeight: 50,
+                            } },
+                            react__WEBPACK_IMPORTED_MODULE_0___default().createElement("pre", null, userOutput)),
                         react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", { onClick: () => {
                                 clearOutput();
                             }, className: "clear-btn", style: {
-                                position: "absolute",
-                                bottom: "14px",
-                                right: "18px",
                                 width: "80px",
                                 height: "40px",
-                                fontSize: "22px",
+                                fontSize: "18px",
                                 fontWeight: "bold",
                                 color: "white",
-                                backgroundColor: "#1f65e6",
+                                backgroundColor: "orange",
                                 border: "none",
                                 borderRadius: "4px",
                                 transition: "0.3s",
                                 cursor: "pointer",
                             } }, "Clear")))))),
             react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_3__.Grid, { item: true, xs: 12, style: { display: "flex" } },
-                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__.Link, { to: "/lab/student-exam-list" },
+                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__.Link, { to: "/lab/student-exam", state: { data: state.data.id } },
                     react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_3__.Button, { variant: "contained", style: { background: "orange", color: "#fff" } }, "Save"))))));
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Terminal);
@@ -1043,7 +1051,12 @@ function StudentExam({ props }) {
                                                 setAnswerValue(e.target.value);
                                             } })),
                                     react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 4 },
-                                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, { to: "/lab/terminal" },
+                                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, { to: "/lab/terminal", state: {
+                                                data: {
+                                                    terminalQuestion: question.questionDesc,
+                                                    id: state.data,
+                                                },
+                                            } },
                                             react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Button, { variant: "contained", style: { background: "orange", color: "#fff" } }, "Terminal")),
                                         react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Button, { variant: "contained", style: { background: "orange", color: "#fff" }, onClick: () => {
                                                 handleSave(question.id);
@@ -1712,4 +1725,4 @@ class CounterWidget extends _jupyterlab_apputils__WEBPACK_IMPORTED_MODULE_0__.Re
 /***/ })
 
 }]);
-//# sourceMappingURL=lib_index_js.17d11f8d12974ca33c5b.js.map
+//# sourceMappingURL=lib_index_js.a6e7abc5a36a6855c118.js.map

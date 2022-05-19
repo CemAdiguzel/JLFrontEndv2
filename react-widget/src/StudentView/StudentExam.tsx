@@ -124,7 +124,15 @@ export default function StudentExam({ props }: any) {
                         />
                       </Grid>
                       <Grid item xs={4}>
-                        <Link to="/lab/terminal">
+                        <Link
+                          to="/lab/terminal"
+                          state={{
+                            data: {
+                              terminalQuestion: question.questionDesc,
+                              id: state.data,
+                            },
+                          }}
+                        >
                           <Button
                             variant="contained"
                             style={{ background: "orange", color: "#fff" }}

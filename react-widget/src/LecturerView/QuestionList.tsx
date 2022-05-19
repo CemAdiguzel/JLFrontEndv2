@@ -13,6 +13,7 @@ import {
   TextField,
   Typography,
   DialogActions,
+  TextareaAutosize,
 } from "@material-ui/core";
 import { useMutation, useQuery } from "@apollo/client";
 import {
@@ -226,13 +227,12 @@ export default function QuestionList({ props }: any) {
           <DialogContentText>
             Please enter the question and the answer.
           </DialogContentText>
-          <TextField
+          <TextareaAutosize
             autoFocus
-            margin="dense"
             id="question"
-            label="Question"
-            type="text"
-            fullWidth
+            maxRows={8}
+            minRows={8}
+            style={{ width: "100%", whiteSpace: "pre-line" }}
             value={questionDescValue}
             onChange={(e) => setQuestionDescValue(e.target.value)}
           />

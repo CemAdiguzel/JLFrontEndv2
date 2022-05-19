@@ -5,9 +5,12 @@ import Navbar from "./Navbar";
 import Axios from "axios";
 import React from "react";
 import { Button, Grid } from "@material-ui/core";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 function Terminal() {
+  const location = useLocation();
+  const state = location.state as any;
+  console.log("data", state.data);
   // State variable to set users source code
   const [userCode, setUserCode] = useState(``);
 
@@ -61,7 +64,7 @@ function Terminal() {
   }
 
   return (
-    <Grid container style={{ height: "100%" }}>
+    <Grid container style={{ height: "100%", overflowY: "scroll" }}>
       <Grid
         item
         xs={12}
@@ -84,7 +87,7 @@ function Terminal() {
         <Grid item xs={12} style={{ display: "flex" }}>
           <div
             className="left-container"
-            style={{ position: "relative", flex: "60%" }}
+            style={{ position: "relative", flex: "60%", height: "80vh" }}
           >
             <Editor
               options={options}
@@ -92,7 +95,7 @@ function Terminal() {
               theme={userTheme}
               language={userLang}
               defaultLanguage="python"
-              defaultValue="# Enter your code here"
+              defaultValue={state.data.terminalQuestion}
               onChange={(value) => {
                 setUserCode(value);
               }}
@@ -130,7 +133,7 @@ function Terminal() {
               padding: "5px",
             }}
           >
-            <h4 style={{ color: "orange" }}>Input:</h4>
+            <h4 style={{ color: "orange", fontSize: 18 }}>Input:</h4>
             <div className="input-box" style={{ flex: "50%" }}>
               <textarea
                 id="code-inp"
@@ -138,7 +141,7 @@ function Terminal() {
                 onChange={(e) => setUserInput(e.target.value)}
               ></textarea>
             </div>
-            <h4 style={{ color: "orange" }}>Output:</h4>
+            <h4 style={{ color: "orange", fontSize: 18 }}>Output:</h4>
             <Grid item>
               {loading ? (
                 <div
@@ -152,37 +155,35 @@ function Terminal() {
                     alignItems: "center",
                   }}
                 >
-                  <h4 style={{ color: "orange" }}>Loading ..</h4>
+                  <h4 style={{ color: "orange", fontSize: 14 }}>Loading ..</h4>
                 </div>
               ) : (
-                <div
-                  className="output-box"
-                  style={{
-                    flex: "50%",
-                    overflowY: "auto",
-                    color: "white",
-                    position: "relative",
-                    border: "1px solid orange",
-                    backgroundColor: "#fff",
-                    minHeight: 250,
-                  }}
-                >
-                  <pre>{userOutput}</pre>
+                <>
+                  <div
+                    className="output-box"
+                    style={{
+                      flex: "50%",
+                      overflowY: "auto",
+                      color: "white",
+                      position: "relative",
+                      border: "1px solid orange",
+                      minHeight: 50,
+                    }}
+                  >
+                    <pre>{userOutput}</pre>
+                  </div>
                   <button
                     onClick={() => {
                       clearOutput();
                     }}
                     className="clear-btn"
                     style={{
-                      position: "absolute",
-                      bottom: "14px",
-                      right: "18px",
                       width: "80px",
                       height: "40px",
-                      fontSize: "22px",
+                      fontSize: "18px",
                       fontWeight: "bold",
                       color: "white",
-                      backgroundColor: "#1f65e6",
+                      backgroundColor: "orange",
                       border: "none",
                       borderRadius: "4px",
                       transition: "0.3s",
@@ -191,13 +192,13 @@ function Terminal() {
                   >
                     Clear
                   </button>
-                </div>
+                </>
               )}
             </Grid>
           </div>
         </Grid>
         <Grid item xs={12} style={{ display: "flex" }}>
-          <Link to="/lab/student-exam-list">
+          <Link to="/lab/student-exam" state={{ data: state.data.id }}>
             <Button
               variant="contained"
               style={{ background: "orange", color: "#fff" }}
