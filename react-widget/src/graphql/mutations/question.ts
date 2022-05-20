@@ -35,6 +35,17 @@ export const ADD_QUESTION_TO_EXAM = gql`
     }
   }
 `;
+export const ADD_QUESTION_TO_ASSIGNMENT = gql`
+  mutation assignedQuestionToAssignment($AssignmentId: ID!, $questionId: ID!) {
+    assignedQuestionToAssignment(
+      AssignmentId: $AssignmentId
+      questionId: $questionId
+    ) {
+      id
+      questionDesc
+    }
+  }
+`;
 
 export const DELETE_QUESTION = gql`
   mutation deleteQuestion($id: ID!) {

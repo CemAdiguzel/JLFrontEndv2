@@ -62,22 +62,422 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "webpack/sharing/consume/default/react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _material_ui_core_Card__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @material-ui/core/Card */ "../node_modules/@material-ui/core/esm/Card/Card.js");
+/* harmony import */ var _material_ui_core_Card__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @material-ui/core/Card */ "../node_modules/@material-ui/core/esm/Card/Card.js");
+/* harmony import */ var _material_ui_core_CardContent__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @material-ui/core/CardContent */ "../node_modules/@material-ui/core/esm/CardContent/CardContent.js");
+/* harmony import */ var _material_ui_core_Typography__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @material-ui/core/Typography */ "../node_modules/@material-ui/core/esm/Typography/Typography.js");
 /* harmony import */ var _material_ui_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @material-ui/core */ "webpack/sharing/consume/default/@material-ui/core/@material-ui/core");
 /* harmony import */ var _material_ui_core__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__);
-/* eslint-disable @typescript-eslint/no-unused-vars */ /* eslint-disable no-unused-vars */ 
+/* harmony import */ var _graphql_mutations_assignment__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../graphql/mutations/assignment */ "./lib/graphql/mutations/assignment.js");
+/* harmony import */ var _graphql_queries_assignment__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../graphql/queries/assignment */ "./lib/graphql/queries/assignment.js");
+/* harmony import */ var _apollo_client__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @apollo/client */ "webpack/sharing/consume/default/@apollo/client/@apollo/client");
+/* harmony import */ var _apollo_client__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_apollo_client__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-router-dom */ "webpack/sharing/consume/default/react-router-dom/react-router-dom");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react_router_dom__WEBPACK_IMPORTED_MODULE_3__);
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable no-unused-vars */
 
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+
+
+
+
+
+
+
+/* eslint-disable react/prop-types */
 function AssignmentList() {
-    const [open, setOpen] = react__WEBPACK_IMPORTED_MODULE_0__.useState(false);
+    var _a;
+    // Exam listeleme ve ekleme işlemleri
+    const [open, setOpen] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
+    const [addOpener, setAddOpener] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
+    const [titleValue, setTitleValue] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)("");
+    const [descriptionValue, setDescriptionValue] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)("");
+    const [dateValue, setDateValue] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)("");
+    const [durationValue, setDurationValue] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)("");
+    const [typeValue, setTypeValue] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)("");
+    const [assignedToValue, setAssignedToValue] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)("");
+    const [resubmissionValue, setResubmissionValue] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)("");
+    const [resubmissionDateValue, setResubmissionDateValue] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)("");
+    const [gradeScaleValue, setGradeScaleValue] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)("");
+    const [createAssignment] = (0,_apollo_client__WEBPACK_IMPORTED_MODULE_2__.useMutation)(_graphql_mutations_assignment__WEBPACK_IMPORTED_MODULE_4__.CREATE_ASSIGNMENT);
+    const [deleteAssignment] = (0,_apollo_client__WEBPACK_IMPORTED_MODULE_2__.useMutation)(_graphql_mutations_assignment__WEBPACK_IMPORTED_MODULE_4__.DELETE_ASSIGNMENT);
+    const [updateAssignment] = (0,_apollo_client__WEBPACK_IMPORTED_MODULE_2__.useMutation)(_graphql_mutations_assignment__WEBPACK_IMPORTED_MODULE_4__.UPDATE_ASSIGNMENT);
+    const { data: assignmentList, loading: assignmentLoading, refetch, } = (0,_apollo_client__WEBPACK_IMPORTED_MODULE_2__.useQuery)(_graphql_queries_assignment__WEBPACK_IMPORTED_MODULE_5__.LIST_ASSIGNMENT, {
+        fetchPolicy: "cache-first",
+        errorPolicy: "ignore",
+    });
+    if (assignmentLoading) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, "Loading...");
+    }
+    // Bu fonksiyonla exam ekleyebiliyoruz.
+    const handleSubmit = async () => {
+        await createAssignment({
+            variables: {
+                title: titleValue || "",
+                description: descriptionValue || "",
+                date: dateValue || "",
+                duration: durationValue || "",
+                type: typeValue || "",
+                resubmissionNumber: resubmissionValue || "",
+                resubmissionDate: resubmissionDateValue || "",
+                gradeScale: gradeScaleValue || "",
+                resubmissionTime: "",
+                dueDate: dateValue || "",
+                dueTime: "",
+                status: false,
+            },
+        });
+        // clear all the states
+        setTitleValue("");
+        setDescriptionValue("");
+        setDateValue("");
+        setDurationValue("");
+        setTypeValue("");
+        setResubmissionValue("");
+        setResubmissionDateValue("");
+        setGradeScaleValue("");
+        refetch();
+        setAddOpener(false);
+    };
+    // Bu fonksiyonla herhangi bir exami silebiliyoruz
+    const handleDeleteAssignment = async (deletedId) => {
+        await deleteAssignment({
+            variables: {
+                id: deletedId,
+            },
+        });
+        refetch();
+    };
+    // Bu fonksiyonla herhangi bir exami güncelleyebiliyoruz
+    const handleUpdateAssignment = async (updatedId) => {
+        await updateAssignment({
+            variables: {
+                id: updatedId,
+                status: true,
+            },
+        });
+    };
+    // Bu fonksiyonla detaylar popup'ını kapatıyoruz
     const handleClose = () => {
         setOpen(false);
     };
-    return (react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null,
-        react__WEBPACK_IMPORTED_MODULE_0__.createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { style: { minWidth: 275 } },
-            react__WEBPACK_IMPORTED_MODULE_0__.createElement(_material_ui_core_Card__WEBPACK_IMPORTED_MODULE_2__["default"], { variant: "outlined", style: { minHeight: 500, border: '1px solid orange' } })),
-        react__WEBPACK_IMPORTED_MODULE_0__.createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Dialog, { open: open, onClose: handleClose })));
+    // Bu fonksionla exam ekleme popup'ını açıyoruz.
+    const handleAddOpen = () => {
+        setAddOpener(true);
+    };
+    // Bu fonksiyonla exam ekleme popup'ını kapatıyoruz.
+    const handleAddCloser = () => {
+        setAddOpener(false);
+    };
+    return (react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null,
+        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { style: { minWidth: 275, margin: 12 } },
+            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core_Card__WEBPACK_IMPORTED_MODULE_6__["default"], { variant: "outlined", style: {
+                    height: 500,
+                    width: "100%",
+                    border: "1px solid orange",
+                    overflow: "scroll",
+                } }, (_a = assignmentList === null || assignmentList === void 0 ? void 0 : assignmentList.assignmentList) === null || _a === void 0 ? void 0 :
+                _a.map((assignment) => (react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 12, key: assignment.id, style: { display: "flex" } },
+                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 8, style: {
+                            display: "flex",
+                            justifyContent: "start",
+                            padding: 12,
+                        } },
+                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, { to: "/lab/assignment-question-list", state: { data: assignment.id } },
+                            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core_CardContent__WEBPACK_IMPORTED_MODULE_7__["default"], null,
+                                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core_Typography__WEBPACK_IMPORTED_MODULE_8__["default"], { variant: "body2", component: "h6", style: {
+                                        fontWeight: "bold",
+                                    } }, assignment.title)))),
+                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 4, style: {
+                            padding: 12,
+                            display: "flex",
+                            justifyContent: "end",
+                        } },
+                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.CardActions, null,
+                            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Button, { variant: "contained", style: { background: "orange", color: "#fff" }, onClick: () => {
+                                    handleUpdateAssignment(assignment === null || assignment === void 0 ? void 0 : assignment.id);
+                                } }, "Publish"),
+                            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Button, { variant: "contained", style: { background: "orange", color: "#fff" }, onClick: () => {
+                                    handleDeleteAssignment(assignment === null || assignment === void 0 ? void 0 : assignment.id);
+                                } }, "Delete")))))),
+                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { container: true, item: true },
+                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core_CardContent__WEBPACK_IMPORTED_MODULE_7__["default"], { style: {
+                            display: "flex",
+                            justifyContent: "center",
+                            padding: 12,
+                            margin: 12,
+                            width: "100%",
+                            border: "1px dotted orange",
+                        }, onClick: handleAddOpen },
+                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Button, null,
+                            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core_Typography__WEBPACK_IMPORTED_MODULE_8__["default"], { style: { fontSize: 14 }, gutterBottom: true }, "Add New Assignment")))))),
+        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Dialog, { open: open, onClose: handleClose, style: {
+                borderRadius: 10,
+                minHeight: 250,
+            } },
+            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.DialogActions, null,
+                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Button, { variant: "outlined", onClick: handleDeleteAssignment, style: { background: "orange", color: "#fff" } }, "Delete"),
+                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Button, { onClick: handleClose, style: { background: "orange", color: "#fff" } }, "Close"))),
+        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Dialog, { open: addOpener, onClose: handleAddCloser, style: {
+                borderRadius: 10,
+                minHeight: 250,
+            } },
+            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { container: true, item: true, xs: 12 },
+                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.DialogContent, { style: { width: 800 } },
+                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 12, style: {
+                            display: "flex",
+                            alignItems: "center",
+                            marginBottom: 12,
+                        } },
+                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 4 },
+                            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core_Typography__WEBPACK_IMPORTED_MODULE_8__["default"], { variant: "body2", gutterBottom: true }, "Title:")),
+                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 8 },
+                            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.TextField, { fullWidth: true, id: "outlined-basic", placeholder: "Enter the Title", variant: "outlined", type: "text", value: titleValue, onChange: (e) => setTitleValue(e.target.value) }))),
+                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 12, style: {
+                            display: "flex",
+                            alignItems: "center",
+                            marginBottom: 12,
+                        } },
+                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 4 },
+                            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core_Typography__WEBPACK_IMPORTED_MODULE_8__["default"], { variant: "body2", gutterBottom: true }, "Description:")),
+                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 8 },
+                            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.TextField, { fullWidth: true, id: "outlined-basic", placeholder: "Description Value", variant: "outlined", type: "text", value: descriptionValue, onChange: (e) => setDescriptionValue(e.target.value) }))),
+                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 12, style: {
+                            display: "flex",
+                            alignItems: "center",
+                            marginBottom: 12,
+                        } },
+                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 4 },
+                            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core_Typography__WEBPACK_IMPORTED_MODULE_8__["default"], { variant: "body2", gutterBottom: true }, "Type:")),
+                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 8 },
+                            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.TextField, { fullWidth: true, id: "outlined-basic", placeholder: "Select the Type", variant: "outlined", type: "text", value: typeValue, onChange: (e) => setTypeValue(e.target.value) }))),
+                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 12, style: {
+                            display: "flex",
+                            alignItems: "center",
+                            marginBottom: 12,
+                        } },
+                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 4 },
+                            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core_Typography__WEBPACK_IMPORTED_MODULE_8__["default"], { variant: "body2", gutterBottom: true }, "Assigned To:")),
+                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 8 },
+                            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.TextField, { fullWidth: true, id: "outlined-basic", placeholder: "Select the assigned to", variant: "outlined", type: "text", value: assignedToValue, onChange: (e) => setAssignedToValue(e.target.value) }))),
+                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 12, style: {
+                            display: "flex",
+                            alignItems: "center",
+                            marginBottom: 12,
+                        } },
+                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 4 },
+                            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core_Typography__WEBPACK_IMPORTED_MODULE_8__["default"], { variant: "body2", gutterBottom: true }, "Resubmissions:")),
+                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 8 },
+                            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.TextField, { fullWidth: true, id: "outlined-basic", placeholder: "Enter the number of resubmissions", variant: "outlined", type: "number", value: resubmissionValue, onChange: (e) => setResubmissionValue(e.target.value) }))),
+                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 12, style: {
+                            display: "flex",
+                            alignItems: "center",
+                            marginBottom: 12,
+                        } },
+                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 4 },
+                            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core_Typography__WEBPACK_IMPORTED_MODULE_8__["default"], { variant: "body2", gutterBottom: true }, "Resubmission Time:")),
+                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 8 },
+                            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.TextField, { fullWidth: true, id: "outlined-basic", placeholder: "Enter the resubmission date", variant: "outlined", type: "date", value: resubmissionDateValue, onChange: (e) => setResubmissionDateValue(e.target.value) }))),
+                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 12, style: {
+                            display: "flex",
+                            alignItems: "center",
+                            marginBottom: 12,
+                        } },
+                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 4 },
+                            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core_Typography__WEBPACK_IMPORTED_MODULE_8__["default"], { variant: "body2", gutterBottom: true }, "Publish Date:")),
+                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 8 },
+                            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.TextField, { fullWidth: true, id: "outlined-basic", placeholder: "Enter Date", variant: "outlined", type: "date", value: dateValue, onChange: (e) => setDateValue(e.target.value) }))),
+                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 12, style: {
+                            display: "flex",
+                            alignItems: "center",
+                            marginBottom: 12,
+                        } },
+                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 4 },
+                            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core_Typography__WEBPACK_IMPORTED_MODULE_8__["default"], { variant: "body2", gutterBottom: true }, "Grade Scale:")),
+                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 8 },
+                            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.TextField, { fullWidth: true, id: "outlined-basic", placeholder: "Enter the Grade Scale", variant: "outlined", type: "number", value: gradeScaleValue, onChange: (e) => setGradeScaleValue(e.target.value) }))),
+                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.DialogActions, null,
+                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 12, style: { display: "flex", justifyContent: "end" } },
+                            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Button, { variant: "outlined", onClick: handleSubmit, style: { background: "orange", color: "#fff" } }, "Submit"))))))));
+}
+
+
+/***/ }),
+
+/***/ "./lib/LecturerView/AssignmentQuestionList.js":
+/*!****************************************************!*\
+  !*** ./lib/LecturerView/AssignmentQuestionList.js ***!
+  \****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ AssignmentQuestionList)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "webpack/sharing/consume/default/react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _material_ui_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @material-ui/core */ "webpack/sharing/consume/default/@material-ui/core/@material-ui/core");
+/* harmony import */ var _material_ui_core__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _apollo_client__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @apollo/client */ "webpack/sharing/consume/default/@apollo/client/@apollo/client");
+/* harmony import */ var _apollo_client__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_apollo_client__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _graphql_mutations_question__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../graphql/mutations/question */ "./lib/graphql/mutations/question.js");
+/* harmony import */ var _graphql_queries_assignment__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../graphql/queries/assignment */ "./lib/graphql/queries/assignment.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-router-dom */ "webpack/sharing/consume/default/react-router-dom/react-router-dom");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react_router_dom__WEBPACK_IMPORTED_MODULE_3__);
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+
+
+
+
+
+
+function AssignmentQuestionList({ props }) {
+    var _a, _b;
+    const location = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_3__.useLocation)();
+    const state = location.state;
+    console.log("props", state.data);
+    // Soru eklemek için gerekli popUp'ı açan değeri tanımlıyoruz
+    const [open, setOpen] = react__WEBPACK_IMPORTED_MODULE_0___default().useState(false);
+    // Soru eklemek için gerekli değerleri tanımlıyoruz.
+    const [questionDescValue, setQuestionDescValue] = react__WEBPACK_IMPORTED_MODULE_0___default().useState("");
+    const [answerValue, setAnswerValue] = react__WEBPACK_IMPORTED_MODULE_0___default().useState("");
+    const [gradeInputValue, setGradeInputValue] = react__WEBPACK_IMPORTED_MODULE_0___default().useState("");
+    const [gradeOutputValue, setGradeOutputValue] = react__WEBPACK_IMPORTED_MODULE_0___default().useState("");
+    const [gradeValue, setGradeValue] = react__WEBPACK_IMPORTED_MODULE_0___default().useState("");
+    const [createQuestion] = (0,_apollo_client__WEBPACK_IMPORTED_MODULE_2__.useMutation)(_graphql_mutations_question__WEBPACK_IMPORTED_MODULE_4__.CREATE_QUESTION);
+    const [assignedQuestionToAssignment] = (0,_apollo_client__WEBPACK_IMPORTED_MODULE_2__.useMutation)(_graphql_mutations_question__WEBPACK_IMPORTED_MODULE_4__.ADD_QUESTION_TO_ASSIGNMENT, {
+        refetchQueries: [
+            { query: _graphql_queries_assignment__WEBPACK_IMPORTED_MODULE_5__.GET_ASSIGNMENT, variables: { id: state.data } },
+        ],
+    });
+    const [deleteQuestion] = (0,_apollo_client__WEBPACK_IMPORTED_MODULE_2__.useMutation)(_graphql_mutations_question__WEBPACK_IMPORTED_MODULE_4__.DELETE_QUESTION, {
+        refetchQueries: [{ query: _graphql_queries_assignment__WEBPACK_IMPORTED_MODULE_5__.GET_ASSIGNMENT, variables: { id: state.data } }],
+    });
+    const { data: assignmentData, loading: assignmentLoading } = (0,_apollo_client__WEBPACK_IMPORTED_MODULE_2__.useQuery)(_graphql_queries_assignment__WEBPACK_IMPORTED_MODULE_5__.GET_ASSIGNMENT, {
+        fetchPolicy: "network-only",
+        errorPolicy: "ignore",
+        variables: {
+            id: state.data,
+        },
+    });
+    console.log("assignmentData", (_a = assignmentData === null || assignmentData === void 0 ? void 0 : assignmentData.getAssignment) === null || _a === void 0 ? void 0 : _a.questions);
+    if (assignmentLoading) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, "Loading...");
+    }
+    const handleQuestionAdd = () => {
+        setOpen(true);
+    };
+    const handleSubmit = async () => {
+        const newQuestion = await createQuestion({
+            variables: {
+                questionDesc: questionDescValue || "",
+                answer: answerValue || "",
+                grade: gradeValue || "",
+                autoGrade: false,
+                gradingInput: gradeInputValue || "",
+                gradingOutput: gradeOutputValue || "",
+            },
+        });
+        await assignedQuestionToAssignment({
+            variables: {
+                AssignmentId: state.data,
+                questionId: newQuestion.data.createQuestion.id,
+            },
+        });
+        setQuestionDescValue("");
+        setAnswerValue("");
+        setGradeInputValue("");
+        setGradeOutputValue("");
+        setGradeValue("");
+        setOpen(false);
+    };
+    const handleDeleteQuestion = async (questionId) => {
+        await deleteQuestion({
+            variables: {
+                id: questionId,
+            },
+        });
+    };
+    return (react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null,
+        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { container: true },
+            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, style: { width: "100%" } },
+                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Card, { variant: "outlined", style: {
+                        height: 500,
+                        width: "100%",
+                        border: "1px solid orange",
+                        overflow: "scroll",
+                    } }, (_b = assignmentData === null || assignmentData === void 0 ? void 0 : assignmentData.getAssignment) === null || _b === void 0 ? void 0 :
+                    _b.questions.map((question) => (react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 12, key: question.id, style: { display: "flex" } },
+                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.CardContent, { style: { width: "100%", display: "flex" } },
+                            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 9, style: { display: "flex" } },
+                                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 8, style: {
+                                        display: "flex",
+                                        justifyContent: "start",
+                                        alignItems: "center",
+                                    } },
+                                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Typography, { variant: "body2", component: "h6", style: {
+                                            fontWeight: "bold",
+                                        } },
+                                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", { style: { color: "orange" } }, "Question:"),
+                                        " ",
+                                        question.questionDesc)),
+                                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 4, style: {
+                                        display: "flex",
+                                        justifyContent: "end",
+                                        alignItems: "center",
+                                    } },
+                                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Typography, { variant: "body2", component: "h6", style: {
+                                            fontWeight: "bold",
+                                        } },
+                                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", { style: { color: "orange" } }, "Grade:"),
+                                        " ",
+                                        question.grade))),
+                            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 3, style: {
+                                    display: "flex",
+                                    justifyContent: "end",
+                                    alignItems: "center",
+                                } },
+                                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Button, { variant: "contained", style: { background: "orange", color: "#fff" }, onClick: () => {
+                                        handleDeleteQuestion(question.id);
+                                    } }, "DELETE")))))),
+                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.CardActions, null,
+                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { container: true, item: true },
+                            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.CardContent, { style: {
+                                    display: "flex",
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                    padding: 12,
+                                    margin: 12,
+                                    width: "100%",
+                                    border: "1px dotted orange",
+                                } },
+                                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Button, { onClick: () => handleQuestionAdd() },
+                                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Typography, { style: { fontSize: 14 }, gutterBottom: true }, "Add Question"))),
+                            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, { to: "/lab/home-page" },
+                                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.CardContent, { style: {
+                                        display: "flex",
+                                        justifyContent: "center",
+                                        alignItems: "center",
+                                        padding: 12,
+                                        margin: 12,
+                                        width: "100%",
+                                        border: "1px dotted orange",
+                                    } },
+                                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Button, null,
+                                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Typography, { style: { fontSize: 14 }, gutterBottom: true }, "Save Content"))))))))),
+        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Dialog, { open: open, onClose: () => setOpen(false), "aria-labelledby": "form-dialog-title" },
+            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.DialogTitle, { id: "form-dialog-title" }, "Add Question"),
+            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.DialogContent, null,
+                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.DialogContentText, null, "Please enter the question and the answer."),
+                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.TextareaAutosize, { autoFocus: true, id: "question", maxRows: 8, minRows: 8, style: { width: "100%", whiteSpace: "pre-line" }, value: questionDescValue, onChange: (e) => setQuestionDescValue(e.target.value) }),
+                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.TextField, { margin: "dense", id: "answer", label: "Answer", type: "text", fullWidth: true, value: answerValue, onChange: (e) => setAnswerValue(e.target.value) }),
+                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.TextField, { margin: "dense", id: "gradeInput", label: "Grade Input", type: "text", fullWidth: true, value: gradeInputValue, onChange: (e) => setGradeInputValue(e.target.value) }),
+                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.TextField, { margin: "dense", id: "gradeOutput", label: "Grade Output", type: "text", fullWidth: true, value: gradeOutputValue, onChange: (e) => setGradeOutputValue(e.target.value) }),
+                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.TextField, { margin: "dense", id: "grade", label: "Grade", type: "text", fullWidth: true, value: gradeValue, onChange: (e) => setGradeValue(e.target.value) }),
+                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.DialogActions, null,
+                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 12, style: { display: "flex", justifyContent: "end" } },
+                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Button, { variant: "outlined", onClick: handleSubmit, style: { background: "orange", color: "#fff" } }, "Submit")))))));
 }
 
 
@@ -514,6 +914,7 @@ function QuestionList({ props }) {
             id: state.data,
         },
     });
+    console.log("examData", examData);
     if (examLoading) {
         return react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, "Loading...");
     }
@@ -1282,7 +1683,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _StudentView_StudentExamList__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../StudentView/StudentExamList */ "./lib/StudentView/StudentExamList.js");
 /* harmony import */ var _StudentView_StudentHomePage__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../StudentView/StudentHomePage */ "./lib/StudentView/StudentHomePage.js");
 /* harmony import */ var _StudentView_StudentExam__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../StudentView/StudentExam */ "./lib/StudentView/StudentExam.js");
+/* harmony import */ var _LecturerView_AssignmentQuestionList__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../LecturerView/AssignmentQuestionList */ "./lib/LecturerView/AssignmentQuestionList.js");
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+
 
 
 
@@ -1308,6 +1711,10 @@ const ROUTES = [
     { path: "/lab/question-list", element: react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_LecturerView_QuestionList__WEBPACK_IMPORTED_MODULE_9__["default"], null) },
     { path: "lab/student-exam", element: react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_StudentView_StudentExam__WEBPACK_IMPORTED_MODULE_10__["default"], null) },
     { path: "/lab/terminal", element: react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Pages_Terminal__WEBPACK_IMPORTED_MODULE_11__["default"], null) },
+    {
+        path: "/lab/assignment-question-list",
+        element: react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_LecturerView_AssignmentQuestionList__WEBPACK_IMPORTED_MODULE_12__["default"], null),
+    },
 ];
 const Route = () => {
     // useRoutes() hook to define and render routes using regular JavaScript objects instead of <Routes> and <Route> elements.
@@ -1350,6 +1757,127 @@ const ASSIGN_ANSWER_TO_QUESTION = _apollo_client__WEBPACK_IMPORTED_MODULE_0__.gq
   mutation assignAnswerToQuestion($questionId: ID!, $answerId: ID!) {
     assignAnswerToQuestion(questionId: $questionId, answerId: $answerId) {
       id
+    }
+  }
+`;
+
+
+/***/ }),
+
+/***/ "./lib/graphql/mutations/assignment.js":
+/*!*********************************************!*\
+  !*** ./lib/graphql/mutations/assignment.js ***!
+  \*********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "CREATE_ASSIGNMENT": () => (/* binding */ CREATE_ASSIGNMENT),
+/* harmony export */   "DELETE_ASSIGNMENT": () => (/* binding */ DELETE_ASSIGNMENT),
+/* harmony export */   "UPDATE_ASSIGNMENT": () => (/* binding */ UPDATE_ASSIGNMENT)
+/* harmony export */ });
+/* harmony import */ var _apollo_client__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @apollo/client */ "webpack/sharing/consume/default/@apollo/client/@apollo/client");
+/* harmony import */ var _apollo_client__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_apollo_client__WEBPACK_IMPORTED_MODULE_0__);
+
+const CREATE_ASSIGNMENT = _apollo_client__WEBPACK_IMPORTED_MODULE_0__.gql `
+  mutation createAssignment(
+    $title: String!
+    $description: String!
+    $type: String!
+    $date: String!
+    $dueDate: String!
+    $dueTime: String!
+    $duration: String!
+    $gradeScale: String!
+    $resubmissionNumber: String!
+    $resubmissionTime: String!
+    $resubmissionDate: String!
+    $status: Boolean!
+  ) {
+    createAssignment(
+      title: $title
+      description: $description
+      type: $type
+      date: $date
+      dueDate: $dueDate
+      dueTime: $dueTime
+      duration: $duration
+      gradeScale: $gradeScale
+      resubmissionNumber: $resubmissionNumber
+      resubmissionTime: $resubmissionTime
+      resubmissionDate: $resubmissionDate
+      status: $status
+    ) {
+      id
+      title
+      description
+      type
+      date
+      dueDate
+      dueTime
+      duration
+      gradeScale
+      resubmissionNumber
+      resubmissionTime
+      resubmissionDate
+      status
+    }
+  }
+`;
+const DELETE_ASSIGNMENT = _apollo_client__WEBPACK_IMPORTED_MODULE_0__.gql `
+  mutation deleteAssignment($id: ID!) {
+    deleteAssignment(id: $id) {
+      id
+    }
+  }
+`;
+const UPDATE_ASSIGNMENT = _apollo_client__WEBPACK_IMPORTED_MODULE_0__.gql `
+  mutation updateAssignment(
+    $id: ID!
+    $title: String
+    $description: String
+    $type: String
+    $date: String
+    $time: String
+    $dueDate: String
+    $dueTime: String
+    $duration: String
+    $gradeScale: String
+    $resubmissionNumber: String
+    $resubmissionTime: String
+    $resubmissionDate: String
+    $status: Boolean!
+  ) {
+    updateAssignment(
+      id: $id
+      title: $title
+      description: $description
+      type: $type
+      date: $date
+      time: $time
+      dueDate: $dueDate
+      dueTime: $dueTime
+      duration: $duration
+      gradeScale: $gradeScale
+      resubmissionNumber: $resubmissionNumber
+      resubmissionTime: $resubmissionTime
+      resubmissionDate: $resubmissionDate
+      status: $status
+    ) {
+      id
+      title
+      description
+      type
+      date
+      time
+      dueDate
+      dueTime
+      duration
+      gradeScale
+      resubmissionNumber
+      resubmissionTime
+      resubmissionDate
+      status
     }
   }
 `;
@@ -1517,6 +2045,7 @@ const UPDATE_EXAM = _apollo_client__WEBPACK_IMPORTED_MODULE_0__.gql `
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "ADD_QUESTION_TO_ASSIGNMENT": () => (/* binding */ ADD_QUESTION_TO_ASSIGNMENT),
 /* harmony export */   "ADD_QUESTION_TO_EXAM": () => (/* binding */ ADD_QUESTION_TO_EXAM),
 /* harmony export */   "CREATE_QUESTION": () => (/* binding */ CREATE_QUESTION),
 /* harmony export */   "DELETE_QUESTION": () => (/* binding */ DELETE_QUESTION)
@@ -1559,10 +2088,67 @@ const ADD_QUESTION_TO_EXAM = _apollo_client__WEBPACK_IMPORTED_MODULE_0__.gql `
     }
   }
 `;
+const ADD_QUESTION_TO_ASSIGNMENT = _apollo_client__WEBPACK_IMPORTED_MODULE_0__.gql `
+  mutation assignedQuestionToAssignment($AssignmentId: ID!, $questionId: ID!) {
+    assignedQuestionToAssignment(
+      AssignmentId: $AssignmentId
+      questionId: $questionId
+    ) {
+      id
+      questionDesc
+    }
+  }
+`;
 const DELETE_QUESTION = _apollo_client__WEBPACK_IMPORTED_MODULE_0__.gql `
   mutation deleteQuestion($id: ID!) {
     deleteQuestion(id: $id) {
       id
+    }
+  }
+`;
+
+
+/***/ }),
+
+/***/ "./lib/graphql/queries/assignment.js":
+/*!*******************************************!*\
+  !*** ./lib/graphql/queries/assignment.js ***!
+  \*******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "GET_ASSIGNMENT": () => (/* binding */ GET_ASSIGNMENT),
+/* harmony export */   "LIST_ASSIGNMENT": () => (/* binding */ LIST_ASSIGNMENT)
+/* harmony export */ });
+/* harmony import */ var _apollo_client__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @apollo/client */ "webpack/sharing/consume/default/@apollo/client/@apollo/client");
+/* harmony import */ var _apollo_client__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_apollo_client__WEBPACK_IMPORTED_MODULE_0__);
+
+const LIST_ASSIGNMENT = _apollo_client__WEBPACK_IMPORTED_MODULE_0__.gql `
+  query assignmentList {
+    assignmentList {
+      id
+      title
+      questions {
+        id
+        questionDesc
+        grade
+        answer
+      }
+    }
+  }
+`;
+const GET_ASSIGNMENT = _apollo_client__WEBPACK_IMPORTED_MODULE_0__.gql `
+  query getAssignment($id: ID!) {
+    getAssignment(id: $id) {
+      id
+      title
+      questions {
+        id
+        questionDesc
+        grade
+        answer
+      }
     }
   }
 `;
@@ -1656,13 +2242,13 @@ const extension = {
         const { commands } = app;
         const command = CommandIDs.create;
         commands.addCommand(command, {
-            caption: 'Create a new React Widget',
-            label: 'React Widget',
+            caption: 'Deneme ILMS',
+            label: 'ILMS',
             icon: (args) => (args['isPalette'] ? null : _jupyterlab_ui_components__WEBPACK_IMPORTED_MODULE_2__.reactIcon),
             execute: () => {
                 const content = new _widget__WEBPACK_IMPORTED_MODULE_3__.CounterWidget();
                 const widget = new _jupyterlab_apputils__WEBPACK_IMPORTED_MODULE_0__.MainAreaWidget({ content });
-                widget.title.label = 'React Widget';
+                widget.title.label = 'ILMS';
                 widget.title.icon = _jupyterlab_ui_components__WEBPACK_IMPORTED_MODULE_2__.reactIcon;
                 app.shell.add(widget, 'main');
             },
@@ -1725,4 +2311,4 @@ class CounterWidget extends _jupyterlab_apputils__WEBPACK_IMPORTED_MODULE_0__.Re
 /***/ })
 
 }]);
-//# sourceMappingURL=lib_index_js.a6e7abc5a36a6855c118.js.map
+//# sourceMappingURL=lib_index_js.d0cb94a56864df9cf7ec.js.map

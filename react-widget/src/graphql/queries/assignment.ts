@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client';
+import { gql } from "@apollo/client";
 
 export const LIST_ASSIGNMENT = gql`
   query assignmentList {
@@ -8,6 +8,23 @@ export const LIST_ASSIGNMENT = gql`
       questions {
         id
         questionDesc
+        grade
+        answer
+      }
+    }
+  }
+`;
+
+export const GET_ASSIGNMENT = gql`
+  query getAssignment($id: ID!) {
+    getAssignment(id: $id) {
+      id
+      title
+      questions {
+        id
+        questionDesc
+        grade
+        answer
       }
     }
   }

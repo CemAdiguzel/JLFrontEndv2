@@ -17,15 +17,15 @@ import {
 } from "@material-ui/core";
 import { useMutation, useQuery } from "@apollo/client";
 import {
-  ADD_QUESTION_TO_EXAM,
+  ADD_QUESTION_TO_ASSIGNMENT,
   CREATE_QUESTION,
   DELETE_QUESTION,
 } from "../graphql/mutations/question";
-import { GET_EXAM } from "../graphql/queries/exam";
+import { GET_ASSIGNMENT } from "../graphql/queries/assignment";
 
 import { Link, useLocation } from "react-router-dom";
 
-export default function QuestionList({ props }: any) {
+export default function AssignmentQuestionList({ props }: any) {
   const location = useLocation();
   const state = location.state as any;
   console.log("props", state.data);
@@ -40,23 +40,31 @@ export default function QuestionList({ props }: any) {
   const [gradeValue, setGradeValue] = React.useState("");
 
   const [createQuestion] = useMutation(CREATE_QUESTION);
-  const [assignedQuestionToExam] = useMutation(ADD_QUESTION_TO_EXAM, {
-    refetchQueries: [{ query: GET_EXAM, variables: { id: state.data } }],
-  });
+  const [assignedQuestionToAssignment] = useMutation(
+    ADD_QUESTION_TO_ASSIGNMENT,
+    {
+      refetchQueries: [
+        { query: GET_ASSIGNMENT, variables: { id: state.data } },
+      ],
+    }
+  );
   const [deleteQuestion] = useMutation(DELETE_QUESTION, {
-    refetchQueries: [{ query: GET_EXAM, variables: { id: state.data } }],
+    refetchQueries: [{ query: GET_ASSIGNMENT, variables: { id: state.data } }],
   });
 
-  const { data: examData, loading: examLoading } = useQuery(GET_EXAM, {
-    fetchPolicy: "network-only",
-    errorPolicy: "ignore",
-    variables: {
-      id: state.data,
-    },
-  });
-  console.log("examData", examData);
+  const { data: assignmentData, loading: assignmentLoading } = useQuery(
+    GET_ASSIGNMENT,
+    {
+      fetchPolicy: "network-only",
+      errorPolicy: "ignore",
+      variables: {
+        id: state.data,
+      },
+    }
+  );
+  console.log("assignmentData", assignmentData?.getAssignment?.questions);
 
-  if (examLoading) {
+  if (assignmentLoading) {
     return <div>Loading...</div>;
   }
 
@@ -74,9 +82,9 @@ export default function QuestionList({ props }: any) {
         gradingOutput: gradeOutputValue || "",
       },
     });
-    await assignedQuestionToExam({
+    await assignedQuestionToAssignment({
       variables: {
-        ExamId: state.data,
+        AssignmentId: state.data,
         questionId: newQuestion.data.createQuestion.id,
       },
     });
@@ -108,7 +116,7 @@ export default function QuestionList({ props }: any) {
               overflow: "scroll",
             }}
           >
-            {examData?.getExam?.questions.map((question: any) => (
+            {assignmentData?.getAssignment?.questions.map((question: any) => (
               <Grid item xs={12} key={question.id} style={{ display: "flex" }}>
                 <CardContent style={{ width: "100%", display: "flex" }}>
                   <Grid item xs={9} style={{ display: "flex" }}>
