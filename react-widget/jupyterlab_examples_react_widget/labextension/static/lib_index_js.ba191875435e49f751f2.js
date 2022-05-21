@@ -1094,12 +1094,14 @@ function MainPage() {
     const navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_2__.useNavigate)();
     const [authenticateUser] = (0,_apollo_client__WEBPACK_IMPORTED_MODULE_3__.useMutation)(_graphql_mutations_authenticate__WEBPACK_IMPORTED_MODULE_4__.AUTHENTICATE_USER);
     const handleSubmit = async () => {
+        var _a, _b;
         const { data: userData } = await authenticateUser({
             variables: {
                 email,
                 password,
             },
         });
+        console.log("userData", (_b = (_a = userData === null || userData === void 0 ? void 0 : userData.authenticate) === null || _a === void 0 ? void 0 : _a.user) === null || _b === void 0 ? void 0 : _b.id);
         userData.authenticate.token &&
             localStorage.setItem("accessToken", userData.authenticate.token);
         if (userData.authenticate.user.userRole === "Lecturer") {
@@ -1541,7 +1543,7 @@ function StudentAssignmentList() {
                         react__WEBPACK_IMPORTED_MODULE_0__.createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.CardActions, null,
                             assignment.isEnded === false && (react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, { to: "/lab/student-assignment", state: { data: assignment.id } },
                                 react__WEBPACK_IMPORTED_MODULE_0__.createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Button, { variant: "contained", style: { background: "orange", color: "#fff" } }, "Take Assignment"))),
-                            assignment.isEnded === true && (react__WEBPACK_IMPORTED_MODULE_0__.createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Button, { variant: "contained", style: { background: "orange", color: "#fff" } }, "Finished"))))))))))));
+                            assignment.isEnded === true && (react__WEBPACK_IMPORTED_MODULE_0__.createElement(_material_ui_core_Typography__WEBPACK_IMPORTED_MODULE_7__["default"], { variant: "body2", component: "h6" }, "Finished"))))))))))));
 }
 
 
@@ -1746,7 +1748,7 @@ function StudentExamList() {
                         react__WEBPACK_IMPORTED_MODULE_0__.createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.CardActions, null,
                             exam.isEnded === false && (react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, { to: "/lab/student-exam", state: { data: exam.id } },
                                 react__WEBPACK_IMPORTED_MODULE_0__.createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Button, { variant: "contained", style: { background: "orange", color: "#fff" } }, "Take Exam"))),
-                            exam.isEnded === true && (react__WEBPACK_IMPORTED_MODULE_0__.createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Button, { variant: "contained", style: { background: "orange", color: "#fff" } }, "Finished"))))))))))));
+                            exam.isEnded === true && (react__WEBPACK_IMPORTED_MODULE_0__.createElement(_material_ui_core_Typography__WEBPACK_IMPORTED_MODULE_7__["default"], { variant: "body2", component: "h6" }, "Finished"))))))))))));
 }
 
 
@@ -2109,6 +2111,8 @@ const AUTHENTICATE_USER = _apollo_client__WEBPACK_IMPORTED_MODULE_0__.gql `
       token
       user {
         id
+        firstName
+        lastName
         userRole
       }
     }
@@ -2529,4 +2533,4 @@ class CounterWidget extends _jupyterlab_apputils__WEBPACK_IMPORTED_MODULE_0__.Re
 /***/ })
 
 }]);
-//# sourceMappingURL=lib_index_js.de610239d38b97dc35da.js.map
+//# sourceMappingURL=lib_index_js.ba191875435e49f751f2.js.map

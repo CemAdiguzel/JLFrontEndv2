@@ -21,6 +21,7 @@ export default function MainPage() {
         password,
       },
     });
+    console.log("userData", userData?.authenticate?.user?.id);
     userData.authenticate.token &&
       localStorage.setItem("accessToken", userData.authenticate.token);
     if (userData.authenticate.user.userRole === "Lecturer") {
