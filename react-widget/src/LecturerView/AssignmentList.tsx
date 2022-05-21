@@ -70,6 +70,7 @@ export default function AssignmentList(): JSX.Element {
         dueDate: dateValue || "",
         dueTime: "",
         status: false,
+        isEnded: false,
       },
     });
     // clear all the states
@@ -94,12 +95,22 @@ export default function AssignmentList(): JSX.Element {
     });
     refetch();
   };
-  // Bu fonksiyonla herhangi bir exami güncelleyebiliyoruz
+  // Bu fonksiyonla herhangi bir assignmentı güncelleyebiliyoruz ve öğrenciler tarafından görünür hale geliyorlar
   const handleUpdateAssignment = async (updatedId: any) => {
     await updateAssignment({
       variables: {
         id: updatedId,
         status: true,
+      },
+    });
+  };
+
+  // Bu fonksiyonla herhangi bir assignmentı güncelleyebiliyoruz ve de bitirebiliyoruz
+  const handleEndAssignment = async (updatedId: any) => {
+    await updateAssignment({
+      variables: {
+        id: updatedId,
+        isEnded: true,
       },
     });
   };
@@ -166,15 +177,28 @@ export default function AssignmentList(): JSX.Element {
                 }}
               >
                 <CardActions>
-                  <Button
-                    variant="contained"
-                    style={{ background: "orange", color: "#fff" }}
-                    onClick={() => {
-                      handleUpdateAssignment(assignment?.id);
-                    }}
-                  >
-                    Publish
-                  </Button>
+                  {assignment.status === false && (
+                    <Button
+                      variant="contained"
+                      style={{ background: "orange", color: "#fff" }}
+                      onClick={() => {
+                        handleUpdateAssignment(assignment?.id);
+                      }}
+                    >
+                      Publish
+                    </Button>
+                  )}
+                  {assignment.status === true && (
+                    <Button
+                      variant="contained"
+                      style={{ background: "orange", color: "#fff" }}
+                      onClick={() => {
+                        handleEndAssignment(assignment?.id);
+                      }}
+                    >
+                      End Assignment
+                    </Button>
+                  )}
                   <Button
                     variant="contained"
                     style={{ background: "orange", color: "#fff" }}

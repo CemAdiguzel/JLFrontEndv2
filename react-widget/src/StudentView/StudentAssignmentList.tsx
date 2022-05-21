@@ -38,7 +38,7 @@ export default function StudentAssignmentList(): JSX.Element {
           >
             {/* Burası genel listeleme kısmı. Tüm Sınavların sadece title ları yazıyor */}
             {assignmentList?.assignmentList
-              ?.filter((u: any) => u.status === true)
+              ?.filter((u: any) => u.status === true && u.isEnded === false)
               .map((assignment: any) => (
                 <Grid
                   item
@@ -77,17 +77,24 @@ export default function StudentAssignmentList(): JSX.Element {
                     }}
                   >
                     <CardActions>
-                      <Link
-                        to="/lab/student-assignment"
-                        state={{ data: assignment.id }}
-                      >
-                        <Button
-                          variant="contained"
-                          style={{ background: "orange", color: "#fff" }}
+                      {assignment.isEnded === false && (
+                        <Link
+                          to="/lab/student-assignment"
+                          state={{ data: assignment.id }}
                         >
-                          Take Assignment
-                        </Button>
-                      </Link>
+                          <Button
+                            variant="contained"
+                            style={{ background: "orange", color: "#fff" }}
+                          >
+                            Take Assignment
+                          </Button>
+                        </Link>
+                      )}
+                      {assignment.isEnded === true && (
+                        <Typography variant="body2" component="h6">
+                          Finished
+                        </Typography>
+                      )}
                     </CardActions>
                   </Grid>
                 </Grid>

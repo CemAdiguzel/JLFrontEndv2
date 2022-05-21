@@ -12,6 +12,7 @@ export const LIST_EXAM = gql`
         answer
       }
       status
+      isEnded
     }
   }
 `;
@@ -26,6 +27,8 @@ export const GET_EXAM = gql`
         grade
         answer
       }
+      status
+      isEnded
     }
   }
 `;

@@ -126,6 +126,7 @@ function AssignmentList() {
                 dueDate: dateValue || "",
                 dueTime: "",
                 status: false,
+                isEnded: false,
             },
         });
         // clear all the states
@@ -149,12 +150,21 @@ function AssignmentList() {
         });
         refetch();
     };
-    // Bu fonksiyonla herhangi bir exami güncelleyebiliyoruz
+    // Bu fonksiyonla herhangi bir assignmentı güncelleyebiliyoruz ve öğrenciler tarafından görünür hale geliyorlar
     const handleUpdateAssignment = async (updatedId) => {
         await updateAssignment({
             variables: {
                 id: updatedId,
                 status: true,
+            },
+        });
+    };
+    // Bu fonksiyonla herhangi bir assignmentı güncelleyebiliyoruz ve de bitirebiliyoruz
+    const handleEndAssignment = async (updatedId) => {
+        await updateAssignment({
+            variables: {
+                id: updatedId,
+                isEnded: true,
             },
         });
     };
@@ -195,9 +205,12 @@ function AssignmentList() {
                             justifyContent: "end",
                         } },
                         react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.CardActions, null,
-                            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Button, { variant: "contained", style: { background: "orange", color: "#fff" }, onClick: () => {
+                            assignment.status === false && (react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Button, { variant: "contained", style: { background: "orange", color: "#fff" }, onClick: () => {
                                     handleUpdateAssignment(assignment === null || assignment === void 0 ? void 0 : assignment.id);
-                                } }, "Publish"),
+                                } }, "Publish")),
+                            assignment.status === true && (react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Button, { variant: "contained", style: { background: "orange", color: "#fff" }, onClick: () => {
+                                    handleEndAssignment(assignment === null || assignment === void 0 ? void 0 : assignment.id);
+                                } }, "End Assignment")),
                             react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Button, { variant: "contained", style: { background: "orange", color: "#fff" }, onClick: () => {
                                     handleDeleteAssignment(assignment === null || assignment === void 0 ? void 0 : assignment.id);
                                 } }, "Delete")))))),
@@ -562,6 +575,7 @@ function ExamList() {
                 dueDate: dateValue || "",
                 dueTime: "",
                 status: false,
+                isEnded: false,
             },
         });
         // clear all the states
@@ -598,6 +612,14 @@ function ExamList() {
             },
         });
         console.log("update", examList.examList);
+    };
+    const handleEndExam = async (updatedId) => {
+        await updateExam({
+            variables: {
+                id: updatedId,
+                isEnded: true,
+            },
+        });
     };
     // Bu fonksiyonla detaylar popup'ını kapatıyoruz
     const handleClose = () => {
@@ -637,9 +659,12 @@ function ExamList() {
                             justifyContent: "end",
                         } },
                         react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.CardActions, null,
-                            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Button, { variant: "contained", style: { background: "orange", color: "#fff" }, onClick: () => {
+                            exam.status === false && (react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Button, { variant: "contained", style: { background: "orange", color: "#fff" }, onClick: () => {
                                     handleUpdateExam(exam === null || exam === void 0 ? void 0 : exam.id);
-                                } }, "Publish"),
+                                } }, "Publish Exam")),
+                            exam.status === true && (react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Button, { variant: "contained", style: { background: "orange", color: "#fff" }, onClick: () => {
+                                    handleEndExam(exam === null || exam === void 0 ? void 0 : exam.id);
+                                } }, "End Exam")),
                             react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Button, { variant: "contained", style: { background: "orange", color: "#fff" }, onClick: () => {
                                     handleDeleteExam(exam === null || exam === void 0 ? void 0 : exam.id);
                                 } }, "Delete")))))),
@@ -1364,14 +1389,12 @@ function StudentAssignment({ props }) {
         return react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, "Loading...");
     }
     const handleSave = async (idValue) => {
-        console.log("idValue", idValue);
         const newAnswer = await createAnswer({
             variables: {
                 questionId: idValue,
                 answer: answerValue,
             },
         });
-        console.log("newAnswer", newAnswer);
         await assignAnswerToQuestion({
             variables: {
                 answerId: newAnswer.data.createAnswer.id,
@@ -1500,7 +1523,7 @@ function StudentAssignmentList() {
                         width: "100%",
                         border: "1px solid orange",
                         overflow: "scroll",
-                    } }, (_a = assignmentList === null || assignmentList === void 0 ? void 0 : assignmentList.assignmentList) === null || _a === void 0 ? void 0 : _a.filter((u) => u.status === true).map((assignment) => (react__WEBPACK_IMPORTED_MODULE_0__.createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 12, key: assignment.id, style: { display: "flex" } },
+                    } }, (_a = assignmentList === null || assignmentList === void 0 ? void 0 : assignmentList.assignmentList) === null || _a === void 0 ? void 0 : _a.filter((u) => u.status === true && u.isEnded === false).map((assignment) => (react__WEBPACK_IMPORTED_MODULE_0__.createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 12, key: assignment.id, style: { display: "flex" } },
                     react__WEBPACK_IMPORTED_MODULE_0__.createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 8, style: {
                             display: "flex",
                             justifyContent: "start",
@@ -1516,8 +1539,9 @@ function StudentAssignmentList() {
                             justifyContent: "end",
                         } },
                         react__WEBPACK_IMPORTED_MODULE_0__.createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.CardActions, null,
-                            react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, { to: "/lab/student-assignment", state: { data: assignment.id } },
-                                react__WEBPACK_IMPORTED_MODULE_0__.createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Button, { variant: "contained", style: { background: "orange", color: "#fff" } }, "Take Assignment"))))))))))));
+                            assignment.isEnded === false && (react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, { to: "/lab/student-assignment", state: { data: assignment.id } },
+                                react__WEBPACK_IMPORTED_MODULE_0__.createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Button, { variant: "contained", style: { background: "orange", color: "#fff" } }, "Take Assignment"))),
+                            assignment.isEnded === true && (react__WEBPACK_IMPORTED_MODULE_0__.createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Button, { variant: "contained", style: { background: "orange", color: "#fff" } }, "Finished"))))))))))));
 }
 
 
@@ -1720,8 +1744,9 @@ function StudentExamList() {
                             justifyContent: "end",
                         } },
                         react__WEBPACK_IMPORTED_MODULE_0__.createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.CardActions, null,
-                            react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, { to: "/lab/student-exam", state: { data: exam.id } },
-                                react__WEBPACK_IMPORTED_MODULE_0__.createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Button, { variant: "contained", style: { background: "orange", color: "#fff" } }, "Take Exam"))))))))))));
+                            exam.isEnded === false && (react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, { to: "/lab/student-exam", state: { data: exam.id } },
+                                react__WEBPACK_IMPORTED_MODULE_0__.createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Button, { variant: "contained", style: { background: "orange", color: "#fff" } }, "Take Exam"))),
+                            exam.isEnded === true && (react__WEBPACK_IMPORTED_MODULE_0__.createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Button, { variant: "contained", style: { background: "orange", color: "#fff" } }, "Finished"))))))))))));
 }
 
 
@@ -1970,6 +1995,7 @@ const CREATE_ASSIGNMENT = _apollo_client__WEBPACK_IMPORTED_MODULE_0__.gql `
     $resubmissionTime: String!
     $resubmissionDate: String!
     $status: Boolean!
+    $isEnded: Boolean!
   ) {
     createAssignment(
       title: $title
@@ -1984,6 +2010,7 @@ const CREATE_ASSIGNMENT = _apollo_client__WEBPACK_IMPORTED_MODULE_0__.gql `
       resubmissionTime: $resubmissionTime
       resubmissionDate: $resubmissionDate
       status: $status
+      isEnded: $isEnded
     ) {
       id
       title
@@ -1998,6 +2025,7 @@ const CREATE_ASSIGNMENT = _apollo_client__WEBPACK_IMPORTED_MODULE_0__.gql `
       resubmissionTime
       resubmissionDate
       status
+      isEnded
     }
   }
 `;
@@ -2022,7 +2050,8 @@ const UPDATE_ASSIGNMENT = _apollo_client__WEBPACK_IMPORTED_MODULE_0__.gql `
     $resubmissionNumber: String
     $resubmissionTime: String
     $resubmissionDate: String
-    $status: Boolean!
+    $status: Boolean
+    $isEnded: Boolean
   ) {
     updateAssignment(
       id: $id
@@ -2038,6 +2067,7 @@ const UPDATE_ASSIGNMENT = _apollo_client__WEBPACK_IMPORTED_MODULE_0__.gql `
       resubmissionTime: $resubmissionTime
       resubmissionDate: $resubmissionDate
       status: $status
+      isEnded: $isEnded
     ) {
       id
       title
@@ -2052,6 +2082,7 @@ const UPDATE_ASSIGNMENT = _apollo_client__WEBPACK_IMPORTED_MODULE_0__.gql `
       resubmissionTime
       resubmissionDate
       status
+      isEnded
     }
   }
 `;
@@ -2117,6 +2148,7 @@ const CREATE_EXAM = _apollo_client__WEBPACK_IMPORTED_MODULE_0__.gql `
     $resubmissionTime: String!
     $resubmissionDate: String!
     $status: Boolean!
+    $isEnded: Boolean!
   ) {
     createExam(
       title: $title
@@ -2132,6 +2164,7 @@ const CREATE_EXAM = _apollo_client__WEBPACK_IMPORTED_MODULE_0__.gql `
       resubmissionTime: $resubmissionTime
       resubmissionDate: $resubmissionDate
       status: $status
+      isEnded: $isEnded
     ) {
       id
       title
@@ -2147,6 +2180,7 @@ const CREATE_EXAM = _apollo_client__WEBPACK_IMPORTED_MODULE_0__.gql `
       resubmissionTime
       resubmissionDate
       status
+      isEnded
     }
   }
 `;
@@ -2172,7 +2206,8 @@ const UPDATE_EXAM = _apollo_client__WEBPACK_IMPORTED_MODULE_0__.gql `
     $resubmissionNumber: String
     $resubmissionTime: String
     $resubmissionDate: String
-    $status: Boolean!
+    $status: Boolean
+    $isEnded: Boolean
   ) {
     updateExam(
       id: $id
@@ -2189,6 +2224,7 @@ const UPDATE_EXAM = _apollo_client__WEBPACK_IMPORTED_MODULE_0__.gql `
       resubmissionTime: $resubmissionTime
       resubmissionDate: $resubmissionDate
       status: $status
+      isEnded: $isEnded
     ) {
       id
       title
@@ -2204,6 +2240,7 @@ const UPDATE_EXAM = _apollo_client__WEBPACK_IMPORTED_MODULE_0__.gql `
       resubmissionTime
       resubmissionDate
       status
+      isEnded
     }
   }
 `;
@@ -2310,6 +2347,7 @@ const LIST_ASSIGNMENT = _apollo_client__WEBPACK_IMPORTED_MODULE_0__.gql `
         answer
       }
       status
+      isEnded
     }
   }
 `;
@@ -2324,6 +2362,8 @@ const GET_ASSIGNMENT = _apollo_client__WEBPACK_IMPORTED_MODULE_0__.gql `
         grade
         answer
       }
+      status
+      isEnded
     }
   }
 `;
@@ -2357,6 +2397,7 @@ const LIST_EXAM = _apollo_client__WEBPACK_IMPORTED_MODULE_0__.gql `
         answer
       }
       status
+      isEnded
     }
   }
 `;
@@ -2371,6 +2412,8 @@ const GET_EXAM = _apollo_client__WEBPACK_IMPORTED_MODULE_0__.gql `
         grade
         answer
       }
+      status
+      isEnded
     }
   }
 `;
@@ -2486,4 +2529,4 @@ class CounterWidget extends _jupyterlab_apputils__WEBPACK_IMPORTED_MODULE_0__.Re
 /***/ })
 
 }]);
-//# sourceMappingURL=lib_index_js.2f2f0f40fce2c75a774b.js.map
+//# sourceMappingURL=lib_index_js.de610239d38b97dc35da.js.map

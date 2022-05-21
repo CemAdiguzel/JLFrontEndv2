@@ -13,6 +13,7 @@ export const CREATE_ASSIGNMENT = gql`
     $resubmissionTime: String!
     $resubmissionDate: String!
     $status: Boolean!
+    $isEnded: Boolean!
   ) {
     createAssignment(
       title: $title
@@ -27,6 +28,7 @@ export const CREATE_ASSIGNMENT = gql`
       resubmissionTime: $resubmissionTime
       resubmissionDate: $resubmissionDate
       status: $status
+      isEnded: $isEnded
     ) {
       id
       title
@@ -41,6 +43,7 @@ export const CREATE_ASSIGNMENT = gql`
       resubmissionTime
       resubmissionDate
       status
+      isEnded
     }
   }
 `;
@@ -65,7 +68,8 @@ export const UPDATE_ASSIGNMENT = gql`
     $resubmissionNumber: String
     $resubmissionTime: String
     $resubmissionDate: String
-    $status: Boolean!
+    $status: Boolean
+    $isEnded: Boolean
   ) {
     updateAssignment(
       id: $id
@@ -81,6 +85,7 @@ export const UPDATE_ASSIGNMENT = gql`
       resubmissionTime: $resubmissionTime
       resubmissionDate: $resubmissionDate
       status: $status
+      isEnded: $isEnded
     ) {
       id
       title
@@ -95,6 +100,7 @@ export const UPDATE_ASSIGNMENT = gql`
       resubmissionTime
       resubmissionDate
       status
+      isEnded
     }
   }
 `;

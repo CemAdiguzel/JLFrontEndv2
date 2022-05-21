@@ -73,6 +73,7 @@ export default function ExamList(): JSX.Element {
         dueDate: dateValue || "",
         dueTime: "",
         status: false,
+        isEnded: false,
       },
     });
     // clear all the states
@@ -110,6 +111,14 @@ export default function ExamList(): JSX.Element {
       },
     });
     console.log("update", examList.examList);
+  };
+  const handleEndExam = async (updatedId: any) => {
+    await updateExam({
+      variables: {
+        id: updatedId,
+        isEnded: true,
+      },
+    });
   };
   // Bu fonksiyonla detaylar popup'ını kapatıyoruz
   const handleClose = () => {
@@ -173,15 +182,28 @@ export default function ExamList(): JSX.Element {
                 }}
               >
                 <CardActions>
-                  <Button
-                    variant="contained"
-                    style={{ background: "orange", color: "#fff" }}
-                    onClick={() => {
-                      handleUpdateExam(exam?.id);
-                    }}
-                  >
-                    Publish
-                  </Button>
+                  {exam.status === false && (
+                    <Button
+                      variant="contained"
+                      style={{ background: "orange", color: "#fff" }}
+                      onClick={() => {
+                        handleUpdateExam(exam?.id);
+                      }}
+                    >
+                      Publish Exam
+                    </Button>
+                  )}
+                  {exam.status === true && (
+                    <Button
+                      variant="contained"
+                      style={{ background: "orange", color: "#fff" }}
+                      onClick={() => {
+                        handleEndExam(exam?.id);
+                      }}
+                    >
+                      End Exam
+                    </Button>
+                  )}
                   <Button
                     variant="contained"
                     style={{ background: "orange", color: "#fff" }}

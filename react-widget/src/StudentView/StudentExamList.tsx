@@ -68,14 +68,21 @@ export default function StudentExamList(): JSX.Element {
                     }}
                   >
                     <CardActions>
-                      <Link to="/lab/student-exam" state={{ data: exam.id }}>
-                        <Button
-                          variant="contained"
-                          style={{ background: "orange", color: "#fff" }}
-                        >
-                          Take Exam
-                        </Button>
-                      </Link>
+                      {exam.isEnded === false && (
+                        <Link to="/lab/student-exam" state={{ data: exam.id }}>
+                          <Button
+                            variant="contained"
+                            style={{ background: "orange", color: "#fff" }}
+                          >
+                            Take Exam
+                          </Button>
+                        </Link>
+                      )}
+                      {exam.isEnded === true && (
+                        <Typography variant="body2" component="h6">
+                          Finished
+                        </Typography>
+                      )}
                     </CardActions>
                   </Grid>
                 </Grid>
