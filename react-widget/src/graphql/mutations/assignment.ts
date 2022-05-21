@@ -58,7 +58,6 @@ export const UPDATE_ASSIGNMENT = gql`
     $description: String
     $type: String
     $date: String
-    $time: String
     $dueDate: String
     $dueTime: String
     $duration: String
@@ -74,7 +73,6 @@ export const UPDATE_ASSIGNMENT = gql`
       description: $description
       type: $type
       date: $date
-      time: $time
       dueDate: $dueDate
       dueTime: $dueTime
       duration: $duration
@@ -89,7 +87,6 @@ export const UPDATE_ASSIGNMENT = gql`
       description
       type
       date
-      time
       dueDate
       dueTime
       duration

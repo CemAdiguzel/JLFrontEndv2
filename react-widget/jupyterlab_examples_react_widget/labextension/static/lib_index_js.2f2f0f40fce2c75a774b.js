@@ -1309,11 +1309,142 @@ function Terminal() {
                                 transition: "0.3s",
                                 cursor: "pointer",
                             } }, "Clear")))))),
-            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_3__.Grid, { item: true, xs: 12, style: { display: "flex" } },
-                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__.Link, { to: "/lab/student-exam", state: { data: state.data.id } },
-                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_3__.Button, { variant: "contained", style: { background: "orange", color: "#fff" } }, "Save"))))));
+            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_3__.Grid, { item: true, xs: 12, style: { display: "flex" } }, state.data.linkData === "exam" ? (react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__.Link, { to: "/lab/student-exam", state: { data: state.data.id } },
+                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_3__.Button, { variant: "contained", style: { background: "orange", color: "#fff" } }, "Save"))) : (react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__.Link, { to: "/lab/student-assignment", state: { data: state.data.id } },
+                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_3__.Button, { variant: "contained", style: { background: "orange", color: "#fff" } }, "Save")))))));
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Terminal);
+
+
+/***/ }),
+
+/***/ "./lib/StudentView/StudentAssignment.js":
+/*!**********************************************!*\
+  !*** ./lib/StudentView/StudentAssignment.js ***!
+  \**********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ StudentAssignment)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "webpack/sharing/consume/default/react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _material_ui_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @material-ui/core */ "webpack/sharing/consume/default/@material-ui/core/@material-ui/core");
+/* harmony import */ var _material_ui_core__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _apollo_client__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @apollo/client */ "webpack/sharing/consume/default/@apollo/client/@apollo/client");
+/* harmony import */ var _apollo_client__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_apollo_client__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _graphql_queries_assignment__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../graphql/queries/assignment */ "./lib/graphql/queries/assignment.js");
+/* harmony import */ var _graphql_mutations_answer__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../graphql/mutations/answer */ "./lib/graphql/mutations/answer.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-router-dom */ "webpack/sharing/consume/default/react-router-dom/react-router-dom");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react_router_dom__WEBPACK_IMPORTED_MODULE_3__);
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+
+
+
+
+
+
+function StudentAssignment({ props }) {
+    var _a;
+    const location = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_3__.useLocation)();
+    const state = location.state;
+    console.log("props", state.data);
+    const [answerValue, setAnswerValue] = react__WEBPACK_IMPORTED_MODULE_0___default().useState("");
+    const { data: assignmentData, loading: assignmentLoading } = (0,_apollo_client__WEBPACK_IMPORTED_MODULE_2__.useQuery)(_graphql_queries_assignment__WEBPACK_IMPORTED_MODULE_4__.GET_ASSIGNMENT, {
+        fetchPolicy: "network-only",
+        errorPolicy: "ignore",
+        variables: {
+            id: state.data,
+        },
+    });
+    const [createAnswer] = (0,_apollo_client__WEBPACK_IMPORTED_MODULE_2__.useMutation)(_graphql_mutations_answer__WEBPACK_IMPORTED_MODULE_5__.CREATE_ANSWER);
+    const [assignAnswerToQuestion] = (0,_apollo_client__WEBPACK_IMPORTED_MODULE_2__.useMutation)(_graphql_mutations_answer__WEBPACK_IMPORTED_MODULE_5__.ASSIGN_ANSWER_TO_QUESTION);
+    if (assignmentLoading) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, "Loading...");
+    }
+    const handleSave = async (idValue) => {
+        console.log("idValue", idValue);
+        const newAnswer = await createAnswer({
+            variables: {
+                questionId: idValue,
+                answer: answerValue,
+            },
+        });
+        console.log("newAnswer", newAnswer);
+        await assignAnswerToQuestion({
+            variables: {
+                answerId: newAnswer.data.createAnswer.id,
+                questionId: idValue,
+            },
+        });
+        setAnswerValue("");
+    };
+    return (react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null,
+        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { container: true },
+            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, style: { width: "100%" } },
+                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Card, { variant: "outlined", style: {
+                        height: 500,
+                        width: "100%",
+                        border: "1px solid orange",
+                        overflow: "scroll",
+                    } }, (_a = assignmentData === null || assignmentData === void 0 ? void 0 : assignmentData.getAssignment) === null || _a === void 0 ? void 0 :
+                    _a.questions.map((question) => (react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 12, key: question.id, style: { display: "flex" } },
+                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 12, style: {
+                                display: "flex",
+                                justifyContent: "start",
+                                padding: 12,
+                            } },
+                            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.CardContent, { style: { width: "100%" } },
+                                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 12, style: {
+                                        display: "flex",
+                                        justifyContent: "start",
+                                        border: "1px dotted orange",
+                                        marginBottom: 12,
+                                        minHeight: 55,
+                                    } },
+                                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Typography, { variant: "body2", component: "h6", style: {
+                                            fontWeight: "semi-bold",
+                                        } },
+                                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", { style: { color: "orange" } }, "Question:"),
+                                        " ",
+                                        question.questionDesc)),
+                                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 12, style: {
+                                        width: "100%",
+                                        display: "flex",
+                                        alignItems: "center",
+                                    } },
+                                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 8 },
+                                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.TextareaAutosize, { maxRows: 8, minRows: 8, defaultValue: "Answer", style: { width: "100%" }, onChange: (e) => {
+                                                setAnswerValue(e.target.value);
+                                            } })),
+                                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 4 },
+                                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, { to: "/lab/terminal", state: {
+                                                data: {
+                                                    terminalQuestion: question.questionDesc,
+                                                    id: state.data,
+                                                    linkData: "assignment",
+                                                },
+                                            }, style: { marginRight: 8 } },
+                                            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Button, { variant: "contained", style: { background: "orange", color: "#fff" } }, "Terminal")),
+                                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Button, { variant: "contained", style: { background: "orange", color: "#fff" }, onClick: () => {
+                                                handleSave(question.id);
+                                            } }, "Save")))))))),
+                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.CardActions, null,
+                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { container: true, item: true },
+                            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, { to: "/lab/student-home-page" },
+                                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.CardContent, { style: {
+                                        display: "flex",
+                                        justifyContent: "center",
+                                        alignItems: "center",
+                                        padding: 12,
+                                        margin: 12,
+                                        width: "100%",
+                                        border: "1px dotted orange",
+                                    } },
+                                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Button, null,
+                                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Typography, { style: { fontSize: 14 }, gutterBottom: true }, "Save Content")))))))))));
+}
 
 
 /***/ }),
@@ -1330,22 +1461,63 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "webpack/sharing/consume/default/react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _material_ui_core_Card__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @material-ui/core/Card */ "../node_modules/@material-ui/core/esm/Card/Card.js");
+/* harmony import */ var _material_ui_core_Card__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @material-ui/core/Card */ "../node_modules/@material-ui/core/esm/Card/Card.js");
+/* harmony import */ var _material_ui_core_CardContent__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @material-ui/core/CardContent */ "../node_modules/@material-ui/core/esm/CardContent/CardContent.js");
+/* harmony import */ var _material_ui_core_Typography__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @material-ui/core/Typography */ "../node_modules/@material-ui/core/esm/Typography/Typography.js");
 /* harmony import */ var _material_ui_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @material-ui/core */ "webpack/sharing/consume/default/@material-ui/core/@material-ui/core");
 /* harmony import */ var _material_ui_core__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__);
-/* eslint-disable @typescript-eslint/no-unused-vars */ /* eslint-disable no-unused-vars */ 
+/* harmony import */ var _apollo_client__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @apollo/client */ "webpack/sharing/consume/default/@apollo/client/@apollo/client");
+/* harmony import */ var _apollo_client__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_apollo_client__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _graphql_queries_assignment__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../graphql/queries/assignment */ "./lib/graphql/queries/assignment.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-router-dom */ "webpack/sharing/consume/default/react-router-dom/react-router-dom");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react_router_dom__WEBPACK_IMPORTED_MODULE_3__);
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable no-unused-vars */
 
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+
+
+
+
+
+
+/* eslint-disable react/prop-types */
 function StudentAssignmentList() {
-    const [open, setOpen] = react__WEBPACK_IMPORTED_MODULE_0__.useState(false);
-    const handleClose = () => {
-        setOpen(false);
-    };
+    var _a;
+    const { data: assignmentList, loading: assignmentLoading } = (0,_apollo_client__WEBPACK_IMPORTED_MODULE_2__.useQuery)(_graphql_queries_assignment__WEBPACK_IMPORTED_MODULE_4__.LIST_ASSIGNMENT, {
+        fetchPolicy: "cache-first",
+        errorPolicy: "ignore",
+    });
+    console.log("assignmentList", assignmentList);
+    if (assignmentLoading) {
+        return react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, "Loading...");
+    }
     return (react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null,
-        react__WEBPACK_IMPORTED_MODULE_0__.createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { style: { minWidth: 275 } },
-            react__WEBPACK_IMPORTED_MODULE_0__.createElement(_material_ui_core_Card__WEBPACK_IMPORTED_MODULE_2__["default"], { variant: "outlined", style: { minHeight: 500, border: '1px solid orange' } })),
-        react__WEBPACK_IMPORTED_MODULE_0__.createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Dialog, { open: open, onClose: handleClose })));
+        react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null,
+            react__WEBPACK_IMPORTED_MODULE_0__.createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { style: { minWidth: 275, margin: 12 } },
+                react__WEBPACK_IMPORTED_MODULE_0__.createElement(_material_ui_core_Card__WEBPACK_IMPORTED_MODULE_5__["default"], { variant: "outlined", style: {
+                        height: 500,
+                        width: "100%",
+                        border: "1px solid orange",
+                        overflow: "scroll",
+                    } }, (_a = assignmentList === null || assignmentList === void 0 ? void 0 : assignmentList.assignmentList) === null || _a === void 0 ? void 0 : _a.filter((u) => u.status === true).map((assignment) => (react__WEBPACK_IMPORTED_MODULE_0__.createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 12, key: assignment.id, style: { display: "flex" } },
+                    react__WEBPACK_IMPORTED_MODULE_0__.createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 8, style: {
+                            display: "flex",
+                            justifyContent: "start",
+                            padding: 12,
+                        } },
+                        react__WEBPACK_IMPORTED_MODULE_0__.createElement(_material_ui_core_CardContent__WEBPACK_IMPORTED_MODULE_6__["default"], null,
+                            react__WEBPACK_IMPORTED_MODULE_0__.createElement(_material_ui_core_Typography__WEBPACK_IMPORTED_MODULE_7__["default"], { variant: "body2", component: "h6", style: {
+                                    fontWeight: "bold",
+                                } }, assignment.title))),
+                    react__WEBPACK_IMPORTED_MODULE_0__.createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 4, style: {
+                            padding: 12,
+                            display: "flex",
+                            justifyContent: "end",
+                        } },
+                        react__WEBPACK_IMPORTED_MODULE_0__.createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.CardActions, null,
+                            react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, { to: "/lab/student-assignment", state: { data: assignment.id } },
+                                react__WEBPACK_IMPORTED_MODULE_0__.createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Button, { variant: "contained", style: { background: "orange", color: "#fff" } }, "Take Assignment"))))))))))));
 }
 
 
@@ -1456,8 +1628,9 @@ function StudentExam({ props }) {
                                                 data: {
                                                     terminalQuestion: question.questionDesc,
                                                     id: state.data,
+                                                    linkData: "exam",
                                                 },
-                                            } },
+                                            }, style: { marginRight: 8 } },
                                             react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Button, { variant: "contained", style: { background: "orange", color: "#fff" } }, "Terminal")),
                                         react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Button, { variant: "contained", style: { background: "orange", color: "#fff" }, onClick: () => {
                                                 handleSave(question.id);
@@ -1684,7 +1857,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _StudentView_StudentHomePage__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../StudentView/StudentHomePage */ "./lib/StudentView/StudentHomePage.js");
 /* harmony import */ var _StudentView_StudentExam__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../StudentView/StudentExam */ "./lib/StudentView/StudentExam.js");
 /* harmony import */ var _LecturerView_AssignmentQuestionList__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../LecturerView/AssignmentQuestionList */ "./lib/LecturerView/AssignmentQuestionList.js");
+/* harmony import */ var _StudentView_StudentAssignment__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../StudentView/StudentAssignment */ "./lib/StudentView/StudentAssignment.js");
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+
 
 
 
@@ -1715,6 +1890,8 @@ const ROUTES = [
         path: "/lab/assignment-question-list",
         element: react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_LecturerView_AssignmentQuestionList__WEBPACK_IMPORTED_MODULE_12__["default"], null),
     },
+    ,
+    { path: "/lab/student-assignment", element: react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_StudentView_StudentAssignment__WEBPACK_IMPORTED_MODULE_13__["default"], null) }
 ];
 const Route = () => {
     // useRoutes() hook to define and render routes using regular JavaScript objects instead of <Routes> and <Route> elements.
@@ -1838,7 +2015,6 @@ const UPDATE_ASSIGNMENT = _apollo_client__WEBPACK_IMPORTED_MODULE_0__.gql `
     $description: String
     $type: String
     $date: String
-    $time: String
     $dueDate: String
     $dueTime: String
     $duration: String
@@ -1854,7 +2030,6 @@ const UPDATE_ASSIGNMENT = _apollo_client__WEBPACK_IMPORTED_MODULE_0__.gql `
       description: $description
       type: $type
       date: $date
-      time: $time
       dueDate: $dueDate
       dueTime: $dueTime
       duration: $duration
@@ -1869,7 +2044,6 @@ const UPDATE_ASSIGNMENT = _apollo_client__WEBPACK_IMPORTED_MODULE_0__.gql `
       description
       type
       date
-      time
       dueDate
       dueTime
       duration
@@ -2135,6 +2309,7 @@ const LIST_ASSIGNMENT = _apollo_client__WEBPACK_IMPORTED_MODULE_0__.gql `
         grade
         answer
       }
+      status
     }
   }
 `;
@@ -2311,4 +2486,4 @@ class CounterWidget extends _jupyterlab_apputils__WEBPACK_IMPORTED_MODULE_0__.Re
 /***/ })
 
 }]);
-//# sourceMappingURL=lib_index_js.d0cb94a56864df9cf7ec.js.map
+//# sourceMappingURL=lib_index_js.2f2f0f40fce2c75a774b.js.map

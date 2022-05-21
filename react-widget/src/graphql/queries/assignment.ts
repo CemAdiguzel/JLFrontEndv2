@@ -11,6 +11,7 @@ export const LIST_ASSIGNMENT = gql`
         grade
         answer
       }
+      status
     }
   }
 `;

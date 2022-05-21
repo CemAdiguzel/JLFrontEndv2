@@ -198,14 +198,25 @@ function Terminal() {
           </div>
         </Grid>
         <Grid item xs={12} style={{ display: "flex" }}>
-          <Link to="/lab/student-exam" state={{ data: state.data.id }}>
-            <Button
-              variant="contained"
-              style={{ background: "orange", color: "#fff" }}
-            >
-              Save
-            </Button>
-          </Link>
+          {state.data.linkData === "exam" ? (
+            <Link to="/lab/student-exam" state={{ data: state.data.id }}>
+              <Button
+                variant="contained"
+                style={{ background: "orange", color: "#fff" }}
+              >
+                Save
+              </Button>
+            </Link>
+          ) : (
+            <Link to="/lab/student-assignment" state={{ data: state.data.id }}>
+              <Button
+                variant="contained"
+                style={{ background: "orange", color: "#fff" }}
+              >
+                Save
+              </Button>
+            </Link>
+          )}
         </Grid>
       </Grid>
     </Grid>

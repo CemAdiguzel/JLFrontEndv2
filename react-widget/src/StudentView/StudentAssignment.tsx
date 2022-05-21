@@ -10,7 +10,7 @@ import {
   TextareaAutosize,
 } from "@material-ui/core";
 import { useQuery, useMutation } from "@apollo/client";
-import { GET_EXAM } from "../graphql/queries/exam";
+import { GET_ASSIGNMENT } from "../graphql/queries/assignment";
 import {
   CREATE_ANSWER,
   ASSIGN_ANSWER_TO_QUESTION,
@@ -18,35 +18,36 @@ import {
 
 import { Link, useLocation } from "react-router-dom";
 
-export default function StudentExam({ props }: any) {
+export default function StudentAssignment({ props }: any) {
   const location = useLocation();
   const state = location.state as any;
   console.log("props", state.data);
   const [answerValue, setAnswerValue] = React.useState("");
 
-  const { data: examData, loading: examLoading } = useQuery(GET_EXAM, {
-    fetchPolicy: "network-only",
-    errorPolicy: "ignore",
-    variables: {
-      id: state.data,
-    },
-  });
+  const { data: assignmentData, loading: assignmentLoading } = useQuery(
+    GET_ASSIGNMENT,
+    {
+      fetchPolicy: "network-only",
+      errorPolicy: "ignore",
+      variables: {
+        id: state.data,
+      },
+    }
+  );
 
   const [createAnswer] = useMutation(CREATE_ANSWER);
   const [assignAnswerToQuestion] = useMutation(ASSIGN_ANSWER_TO_QUESTION);
 
-  if (examLoading) {
+  if (assignmentLoading) {
     return <div>Loading...</div>;
   }
   const handleSave = async (idValue: any) => {
-    console.log("idValue", idValue);
     const newAnswer = await createAnswer({
       variables: {
         questionId: idValue,
         answer: answerValue,
       },
     });
-    console.log("newAnswer", newAnswer);
     await assignAnswerToQuestion({
       variables: {
         answerId: newAnswer.data.createAnswer.id,
@@ -69,7 +70,7 @@ export default function StudentExam({ props }: any) {
               overflow: "scroll",
             }}
           >
-            {examData?.getExam?.questions.map((question: any) => (
+            {assignmentData?.getAssignment?.questions.map((question: any) => (
               <Grid item xs={12} key={question.id} style={{ display: "flex" }}>
                 <Grid
                   item
@@ -130,7 +131,7 @@ export default function StudentExam({ props }: any) {
                             data: {
                               terminalQuestion: question.questionDesc,
                               id: state.data,
-                              linkData: "exam",
+                              linkData: "assignment",
                             },
                           }}
                           style={{ marginRight: 8 }}

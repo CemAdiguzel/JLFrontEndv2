@@ -12,6 +12,7 @@ import StudentExamList from "../StudentView/StudentExamList";
 import StudentHomePage from "../StudentView/StudentHomePage";
 import StudentExam from "../StudentView/StudentExam";
 import AssignmentQuestionList from "../LecturerView/AssignmentQuestionList";
+import StudentAssignment from "../StudentView/StudentAssignment";
 
 const ROUTES = [
   { path: "/", element: <MainPage /> },
@@ -30,6 +31,7 @@ const ROUTES = [
     path: "/lab/assignment-question-list",
     element: <AssignmentQuestionList />,
   },
+  ,{path: "/lab/student-assignment", element: <StudentAssignment />}
 ];
 
 const Route = () => {
