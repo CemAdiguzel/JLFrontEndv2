@@ -7,7 +7,7 @@ import Tab from "@material-ui/core/Tab";
 import Typography from "@material-ui/core/Typography";
 import StudentExamList from "./StudentExamList";
 import StudentAssignmentList from "./StudentAssignmentList";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 function TabPanel(props: {
   [x: string]: any;
@@ -63,6 +63,10 @@ const useStyles = makeStyles((theme) => ({
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export default function StudentHomePage() {
+  const location = useLocation();
+  const state = location.state as any;
+  console.log("id", state.userId);
+
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
   const navigate = useNavigate();
@@ -105,14 +109,14 @@ export default function StudentHomePage() {
           index={0}
           style={{ width: "100%", padding: 12 }}
         >
-          <StudentAssignmentList />
+          <StudentAssignmentList loggedInUserId={state.userId} />
         </TabPanel>
         <TabPanel
           value={value}
           index={1}
           style={{ width: "100%", padding: 12 }}
         >
-          <StudentExamList />
+          <StudentExamList loggedInUserId={state.userId} />
         </TabPanel>
       </Grid>
     </Grid>

@@ -22,12 +22,21 @@ export default function MainPage() {
       },
     });
     console.log("userData", userData?.authenticate?.user?.id);
+    const loggedInUserId = userData?.authenticate?.user?.id;
     userData.authenticate.token &&
       localStorage.setItem("accessToken", userData.authenticate.token);
     if (userData.authenticate.user.userRole === "Lecturer") {
-      navigate("/lab/home-page");
+      navigate("/lab/home-page", {
+        state: {
+          userId: loggedInUserId,
+        },
+      });
     } else {
-      navigate("/lab/student-home-page");
+      navigate("/lab/student-home-page", {
+        state: {
+          userId: loggedInUserId,
+        },
+      });
     }
   };
   return (

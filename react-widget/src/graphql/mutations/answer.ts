@@ -1,8 +1,8 @@
 import { gql } from "@apollo/client";
 
 export const CREATE_ANSWER = gql`
-  mutation createAnswer($questionId: ID!, $answer: String!) {
-    createAnswer(questionId: $questionId, answer: $answer) {
+  mutation createAnswer($questionId: ID!, $answer: String!, $userId: ID!) {
+    createAnswer(questionId: $questionId, answer: $answer, userId: $userId) {
       id
       questionId
       answer

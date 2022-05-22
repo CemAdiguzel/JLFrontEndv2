@@ -24,11 +24,13 @@ export default function StudentExam({ props }: any) {
   console.log("props", state.data);
   const [answerValue, setAnswerValue] = React.useState("");
 
+  const [userIdValue, setUserIdValue] = React.useState("");
+
   const { data: examData, loading: examLoading } = useQuery(GET_EXAM, {
     fetchPolicy: "network-only",
     errorPolicy: "ignore",
     variables: {
-      id: state.data,
+      id: state.data.examId,
     },
   });
 
@@ -39,10 +41,11 @@ export default function StudentExam({ props }: any) {
     return <div>Loading...</div>;
   }
   const handleSave = async (idValue: any) => {
-    console.log("idValue", idValue);
+    setUserIdValue(state.data.studentId);
     const newAnswer = await createAnswer({
       variables: {
         questionId: idValue,
+        userId: userIdValue,
         answer: answerValue,
       },
     });
@@ -129,7 +132,7 @@ export default function StudentExam({ props }: any) {
                           state={{
                             data: {
                               terminalQuestion: question.questionDesc,
-                              id: state.data,
+                              id: state.data.examId,
                               linkData: "exam",
                             },
                           }}
@@ -159,7 +162,12 @@ export default function StudentExam({ props }: any) {
             ))}
             <CardActions>
               <Grid container item>
-                <Link to="/lab/student-home-page">
+                <Link
+                  to="/lab/student-home-page"
+                  state={{
+                    userId: userIdValue,
+                  }}
+                >
                   <CardContent
                     style={{
                       display: "flex",
@@ -173,7 +181,7 @@ export default function StudentExam({ props }: any) {
                   >
                     <Button>
                       <Typography style={{ fontSize: 14 }} gutterBottom>
-                        Save Content
+                        Submit Exam
                       </Typography>
                     </Button>
                   </CardContent>

@@ -10,7 +10,9 @@ import { LIST_ASSIGNMENT } from "../graphql/queries/assignment";
 import { Link } from "react-router-dom";
 
 /* eslint-disable react/prop-types */
-export default function StudentAssignmentList(): JSX.Element {
+export default function StudentAssignmentList(
+  loggedInUserId: any
+): JSX.Element {
   const { data: assignmentList, loading: assignmentLoading } = useQuery(
     LIST_ASSIGNMENT,
     {
@@ -18,7 +20,7 @@ export default function StudentAssignmentList(): JSX.Element {
       errorPolicy: "ignore",
     }
   );
-  console.log("assignmentList", assignmentList);
+  console.log("id", loggedInUserId.loggedInUserId);
   if (assignmentLoading) {
     return <div>Loading...</div>;
   }
@@ -80,7 +82,12 @@ export default function StudentAssignmentList(): JSX.Element {
                       {assignment.isEnded === false && (
                         <Link
                           to="/lab/student-assignment"
-                          state={{ data: assignment.id }}
+                          state={{
+                            data: {
+                              assignmentId: assignment.id,
+                              studentId: loggedInUserId.loggedInUserId,
+                            },
+                          }}
                         >
                           <Button
                             variant="contained"

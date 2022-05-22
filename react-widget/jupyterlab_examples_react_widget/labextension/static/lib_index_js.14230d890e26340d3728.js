@@ -1094,7 +1094,7 @@ function MainPage() {
     const navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_2__.useNavigate)();
     const [authenticateUser] = (0,_apollo_client__WEBPACK_IMPORTED_MODULE_3__.useMutation)(_graphql_mutations_authenticate__WEBPACK_IMPORTED_MODULE_4__.AUTHENTICATE_USER);
     const handleSubmit = async () => {
-        var _a, _b;
+        var _a, _b, _c, _d;
         const { data: userData } = await authenticateUser({
             variables: {
                 email,
@@ -1102,13 +1102,22 @@ function MainPage() {
             },
         });
         console.log("userData", (_b = (_a = userData === null || userData === void 0 ? void 0 : userData.authenticate) === null || _a === void 0 ? void 0 : _a.user) === null || _b === void 0 ? void 0 : _b.id);
+        const loggedInUserId = (_d = (_c = userData === null || userData === void 0 ? void 0 : userData.authenticate) === null || _c === void 0 ? void 0 : _c.user) === null || _d === void 0 ? void 0 : _d.id;
         userData.authenticate.token &&
             localStorage.setItem("accessToken", userData.authenticate.token);
         if (userData.authenticate.user.userRole === "Lecturer") {
-            navigate("/lab/home-page");
+            navigate("/lab/home-page", {
+                state: {
+                    userId: loggedInUserId,
+                },
+            });
         }
         else {
-            navigate("/lab/student-home-page");
+            navigate("/lab/student-home-page", {
+                state: {
+                    userId: loggedInUserId,
+                },
+            });
         }
     };
     return (react__WEBPACK_IMPORTED_MODULE_0__.createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { container: true, item: true },
@@ -1378,11 +1387,12 @@ function StudentAssignment({ props }) {
     const state = location.state;
     console.log("props", state.data);
     const [answerValue, setAnswerValue] = react__WEBPACK_IMPORTED_MODULE_0___default().useState("");
+    const [userIdValue, setUserIdValue] = react__WEBPACK_IMPORTED_MODULE_0___default().useState("");
     const { data: assignmentData, loading: assignmentLoading } = (0,_apollo_client__WEBPACK_IMPORTED_MODULE_2__.useQuery)(_graphql_queries_assignment__WEBPACK_IMPORTED_MODULE_4__.GET_ASSIGNMENT, {
         fetchPolicy: "network-only",
         errorPolicy: "ignore",
         variables: {
-            id: state.data,
+            id: state.data.assignmentId,
         },
     });
     const [createAnswer] = (0,_apollo_client__WEBPACK_IMPORTED_MODULE_2__.useMutation)(_graphql_mutations_answer__WEBPACK_IMPORTED_MODULE_5__.CREATE_ANSWER);
@@ -1391,10 +1401,13 @@ function StudentAssignment({ props }) {
         return react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, "Loading...");
     }
     const handleSave = async (idValue) => {
+        setUserIdValue(state.data.studentId);
+        console.log(userIdValue);
         const newAnswer = await createAnswer({
             variables: {
                 questionId: idValue,
                 answer: answerValue,
+                userId: userIdValue,
             },
         });
         await assignAnswerToQuestion({
@@ -1403,7 +1416,9 @@ function StudentAssignment({ props }) {
                 questionId: idValue,
             },
         });
+        console.log("newAnswer", newAnswer);
         setAnswerValue("");
+        setUserIdValue("");
     };
     return (react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null,
         react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { container: true },
@@ -1447,7 +1462,7 @@ function StudentAssignment({ props }) {
                                         react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, { to: "/lab/terminal", state: {
                                                 data: {
                                                     terminalQuestion: question.questionDesc,
-                                                    id: state.data,
+                                                    id: state.data.assignmentId,
                                                     linkData: "assignment",
                                                 },
                                             }, style: { marginRight: 8 } },
@@ -1457,7 +1472,7 @@ function StudentAssignment({ props }) {
                                             } }, "Save")))))))),
                     react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.CardActions, null,
                         react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { container: true, item: true },
-                            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, { to: "/lab/student-home-page" },
+                            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, { to: "/lab/student-home-page", state: { userId: userIdValue } },
                                 react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.CardContent, { style: {
                                         display: "flex",
                                         justifyContent: "center",
@@ -1507,13 +1522,13 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /* eslint-disable react/prop-types */
-function StudentAssignmentList() {
+function StudentAssignmentList(loggedInUserId) {
     var _a;
     const { data: assignmentList, loading: assignmentLoading } = (0,_apollo_client__WEBPACK_IMPORTED_MODULE_2__.useQuery)(_graphql_queries_assignment__WEBPACK_IMPORTED_MODULE_4__.LIST_ASSIGNMENT, {
         fetchPolicy: "cache-first",
         errorPolicy: "ignore",
     });
-    console.log("assignmentList", assignmentList);
+    console.log("id", loggedInUserId.loggedInUserId);
     if (assignmentLoading) {
         return react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, "Loading...");
     }
@@ -1541,7 +1556,12 @@ function StudentAssignmentList() {
                             justifyContent: "end",
                         } },
                         react__WEBPACK_IMPORTED_MODULE_0__.createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.CardActions, null,
-                            assignment.isEnded === false && (react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, { to: "/lab/student-assignment", state: { data: assignment.id } },
+                            assignment.isEnded === false && (react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, { to: "/lab/student-assignment", state: {
+                                    data: {
+                                        assignmentId: assignment.id,
+                                        studentId: loggedInUserId.loggedInUserId,
+                                    },
+                                } },
                                 react__WEBPACK_IMPORTED_MODULE_0__.createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Button, { variant: "contained", style: { background: "orange", color: "#fff" } }, "Take Assignment"))),
                             assignment.isEnded === true && (react__WEBPACK_IMPORTED_MODULE_0__.createElement(_material_ui_core_Typography__WEBPACK_IMPORTED_MODULE_7__["default"], { variant: "body2", component: "h6" }, "Finished"))))))))))));
 }
@@ -1582,11 +1602,12 @@ function StudentExam({ props }) {
     const state = location.state;
     console.log("props", state.data);
     const [answerValue, setAnswerValue] = react__WEBPACK_IMPORTED_MODULE_0___default().useState("");
+    const [userIdValue, setUserIdValue] = react__WEBPACK_IMPORTED_MODULE_0___default().useState("");
     const { data: examData, loading: examLoading } = (0,_apollo_client__WEBPACK_IMPORTED_MODULE_2__.useQuery)(_graphql_queries_exam__WEBPACK_IMPORTED_MODULE_4__.GET_EXAM, {
         fetchPolicy: "network-only",
         errorPolicy: "ignore",
         variables: {
-            id: state.data,
+            id: state.data.examId,
         },
     });
     const [createAnswer] = (0,_apollo_client__WEBPACK_IMPORTED_MODULE_2__.useMutation)(_graphql_mutations_answer__WEBPACK_IMPORTED_MODULE_5__.CREATE_ANSWER);
@@ -1595,10 +1616,11 @@ function StudentExam({ props }) {
         return react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, "Loading...");
     }
     const handleSave = async (idValue) => {
-        console.log("idValue", idValue);
+        setUserIdValue(state.data.studentId);
         const newAnswer = await createAnswer({
             variables: {
                 questionId: idValue,
+                userId: userIdValue,
                 answer: answerValue,
             },
         });
@@ -1653,7 +1675,7 @@ function StudentExam({ props }) {
                                         react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, { to: "/lab/terminal", state: {
                                                 data: {
                                                     terminalQuestion: question.questionDesc,
-                                                    id: state.data,
+                                                    id: state.data.examId,
                                                     linkData: "exam",
                                                 },
                                             }, style: { marginRight: 8 } },
@@ -1663,7 +1685,9 @@ function StudentExam({ props }) {
                                             } }, "Save")))))))),
                     react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.CardActions, null,
                         react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { container: true, item: true },
-                            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, { to: "/lab/student-home-page" },
+                            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, { to: "/lab/student-home-page", state: {
+                                    userId: userIdValue,
+                                } },
                                 react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.CardContent, { style: {
                                         display: "flex",
                                         justifyContent: "center",
@@ -1713,7 +1737,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /* eslint-disable react/prop-types */
-function StudentExamList() {
+function StudentExamList(loggedInUserId) {
     var _a;
     const { data: examList, loading: examLoading } = (0,_apollo_client__WEBPACK_IMPORTED_MODULE_2__.useQuery)(_graphql_queries_exam__WEBPACK_IMPORTED_MODULE_4__.LIST_EXAM, {
         fetchPolicy: "cache-first",
@@ -1746,7 +1770,12 @@ function StudentExamList() {
                             justifyContent: "end",
                         } },
                         react__WEBPACK_IMPORTED_MODULE_0__.createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.CardActions, null,
-                            exam.isEnded === false && (react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, { to: "/lab/student-exam", state: { data: exam.id } },
+                            exam.isEnded === false && (react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, { to: "/lab/student-exam", state: {
+                                    data: {
+                                        examId: exam.id,
+                                        studentId: loggedInUserId.loggedInUserId,
+                                    },
+                                } },
                                 react__WEBPACK_IMPORTED_MODULE_0__.createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Button, { variant: "contained", style: { background: "orange", color: "#fff" } }, "Take Exam"))),
                             exam.isEnded === true && (react__WEBPACK_IMPORTED_MODULE_0__.createElement(_material_ui_core_Typography__WEBPACK_IMPORTED_MODULE_7__["default"], { variant: "body2", component: "h6" }, "Finished"))))))))))));
 }
@@ -1830,6 +1859,9 @@ const useStyles = (0,_material_ui_core_styles__WEBPACK_IMPORTED_MODULE_5__["defa
 }));
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 function StudentHomePage() {
+    const location = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_2__.useLocation)();
+    const state = location.state;
+    console.log("id", state.userId);
     const classes = useStyles();
     const [value, setValue] = react__WEBPACK_IMPORTED_MODULE_0___default().useState(0);
     const navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_2__.useNavigate)();
@@ -1851,9 +1883,9 @@ function StudentHomePage() {
                         react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core_Tab__WEBPACK_IMPORTED_MODULE_7__["default"], Object.assign({ label: "Exam" }, a11yProps(1))))))),
         react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { container: true, item: true, xs: 12 },
             react__WEBPACK_IMPORTED_MODULE_0___default().createElement(TabPanel, { value: value, index: 0, style: { width: "100%", padding: 12 } },
-                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_StudentAssignmentList__WEBPACK_IMPORTED_MODULE_8__["default"], null)),
+                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_StudentAssignmentList__WEBPACK_IMPORTED_MODULE_8__["default"], { loggedInUserId: state.userId })),
             react__WEBPACK_IMPORTED_MODULE_0___default().createElement(TabPanel, { value: value, index: 1, style: { width: "100%", padding: 12 } },
-                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_StudentExamList__WEBPACK_IMPORTED_MODULE_9__["default"], null)))));
+                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_StudentExamList__WEBPACK_IMPORTED_MODULE_9__["default"], { loggedInUserId: state.userId })))));
 }
 
 
@@ -1949,8 +1981,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _apollo_client__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_apollo_client__WEBPACK_IMPORTED_MODULE_0__);
 
 const CREATE_ANSWER = _apollo_client__WEBPACK_IMPORTED_MODULE_0__.gql `
-  mutation createAnswer($questionId: ID!, $answer: String!) {
-    createAnswer(questionId: $questionId, answer: $answer) {
+  mutation createAnswer($questionId: ID!, $answer: String!, $userId: ID!) {
+    createAnswer(questionId: $questionId, answer: $answer, userId: $userId) {
       id
       questionId
       answer
@@ -2533,4 +2565,4 @@ class CounterWidget extends _jupyterlab_apputils__WEBPACK_IMPORTED_MODULE_0__.Re
 /***/ })
 
 }]);
-//# sourceMappingURL=lib_index_js.ba191875435e49f751f2.js.map
+//# sourceMappingURL=lib_index_js.14230d890e26340d3728.js.map

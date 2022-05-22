@@ -10,7 +10,7 @@ import { LIST_EXAM } from "../graphql/queries/exam";
 import { Link } from "react-router-dom";
 
 /* eslint-disable react/prop-types */
-export default function StudentExamList(): JSX.Element {
+export default function StudentExamList(loggedInUserId: any): JSX.Element {
   const { data: examList, loading: examLoading } = useQuery(LIST_EXAM, {
     fetchPolicy: "cache-first",
     errorPolicy: "ignore",
@@ -69,7 +69,15 @@ export default function StudentExamList(): JSX.Element {
                   >
                     <CardActions>
                       {exam.isEnded === false && (
-                        <Link to="/lab/student-exam" state={{ data: exam.id }}>
+                        <Link
+                          to="/lab/student-exam"
+                          state={{
+                            data: {
+                              examId: exam.id,
+                              studentId: loggedInUserId.loggedInUserId,
+                            },
+                          }}
+                        >
                           <Button
                             variant="contained"
                             style={{ background: "orange", color: "#fff" }}

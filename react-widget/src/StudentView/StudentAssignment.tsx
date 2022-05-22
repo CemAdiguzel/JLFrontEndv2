@@ -23,6 +23,7 @@ export default function StudentAssignment({ props }: any) {
   const state = location.state as any;
   console.log("props", state.data);
   const [answerValue, setAnswerValue] = React.useState("");
+  const [userIdValue, setUserIdValue] = React.useState("");
 
   const { data: assignmentData, loading: assignmentLoading } = useQuery(
     GET_ASSIGNMENT,
@@ -30,7 +31,7 @@ export default function StudentAssignment({ props }: any) {
       fetchPolicy: "network-only",
       errorPolicy: "ignore",
       variables: {
-        id: state.data,
+        id: state.data.assignmentId,
       },
     }
   );
@@ -42,10 +43,13 @@ export default function StudentAssignment({ props }: any) {
     return <div>Loading...</div>;
   }
   const handleSave = async (idValue: any) => {
+    setUserIdValue(state.data.studentId);
+    console.log(userIdValue);
     const newAnswer = await createAnswer({
       variables: {
         questionId: idValue,
         answer: answerValue,
+        userId: userIdValue,
       },
     });
     await assignAnswerToQuestion({
@@ -54,7 +58,9 @@ export default function StudentAssignment({ props }: any) {
         questionId: idValue,
       },
     });
+    console.log("newAnswer", newAnswer);
     setAnswerValue("");
+    setUserIdValue("");
   };
 
   return (
@@ -130,7 +136,7 @@ export default function StudentAssignment({ props }: any) {
                           state={{
                             data: {
                               terminalQuestion: question.questionDesc,
-                              id: state.data,
+                              id: state.data.assignmentId,
                               linkData: "assignment",
                             },
                           }}
@@ -160,7 +166,10 @@ export default function StudentAssignment({ props }: any) {
             ))}
             <CardActions>
               <Grid container item>
-                <Link to="/lab/student-home-page">
+                <Link
+                  to="/lab/student-home-page"
+                  state={{ userId: userIdValue }}
+                >
                   <CardContent
                     style={{
                       display: "flex",
@@ -174,7 +183,7 @@ export default function StudentAssignment({ props }: any) {
                   >
                     <Button>
                       <Typography style={{ fontSize: 14 }} gutterBottom>
-                        Save Content
+                        Submit Assignment
                       </Typography>
                     </Button>
                   </CardContent>
