@@ -74,7 +74,7 @@ export default function MainPage() {
             style={{ background: "orange", color: "#fff" }}
             onClick={handleSubmit}
           >
-            Login23
+            Login
           </Button>
         </Grid>
       </Grid>

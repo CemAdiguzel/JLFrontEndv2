@@ -32,6 +32,7 @@ function Terminal() {
   // Loading state variable to show spinner
   // while fetching data
   const [loading, setLoading] = useState(false);
+  console.log(userCode);
 
   const options = {
     fontSize: fontSize,

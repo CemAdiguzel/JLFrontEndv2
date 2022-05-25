@@ -26,6 +26,18 @@ export const GET_EXAM = gql`
         questionDesc
         grade
         answer
+        answers {
+          id
+          answer
+          userId
+        }
+      }
+      studentExamProgressions {
+        id
+        user {
+          id
+          fullName
+        }
       }
       status
       isEnded

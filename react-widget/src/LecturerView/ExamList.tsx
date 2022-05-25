@@ -193,7 +193,7 @@ export default function ExamList(): JSX.Element {
                       Publish Exam
                     </Button>
                   )}
-                  {exam.status === true && (
+                  {exam.status === true && exam.isEnded === false && (
                     <Button
                       variant="contained"
                       style={{ background: "orange", color: "#fff" }}
@@ -203,6 +203,16 @@ export default function ExamList(): JSX.Element {
                     >
                       End Exam
                     </Button>
+                  )}
+                  {exam.status === true && exam.isEnded === true && (
+                    <Link to="/lab/exam-by-student-list" state={{ data: exam.id }}>
+                      <Button
+                        variant="contained"
+                        style={{ background: "orange", color: "#fff" }}
+                      >
+                        View Results
+                      </Button>
+                    </Link>
                   )}
                   <Button
                     variant="contained"

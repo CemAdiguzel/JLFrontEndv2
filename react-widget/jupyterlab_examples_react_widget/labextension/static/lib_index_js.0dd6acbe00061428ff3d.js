@@ -496,6 +496,210 @@ function AssignmentQuestionList({ props }) {
 
 /***/ }),
 
+/***/ "./lib/LecturerView/ExamByQuestionStudentList.js":
+/*!*******************************************************!*\
+  !*** ./lib/LecturerView/ExamByQuestionStudentList.js ***!
+  \*******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ ExamByQuestionStudentList)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "webpack/sharing/consume/default/react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _material_ui_core_Card__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @material-ui/core/Card */ "../node_modules/@material-ui/core/esm/Card/Card.js");
+/* harmony import */ var _material_ui_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @material-ui/core */ "webpack/sharing/consume/default/@material-ui/core/@material-ui/core");
+/* harmony import */ var _material_ui_core__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _graphql_queries_exam__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../graphql/queries/exam */ "./lib/graphql/queries/exam.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "webpack/sharing/consume/default/react-router-dom/react-router-dom");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react_router_dom__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _apollo_client__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @apollo/client */ "webpack/sharing/consume/default/@apollo/client/@apollo/client");
+/* harmony import */ var _apollo_client__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_apollo_client__WEBPACK_IMPORTED_MODULE_3__);
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable no-unused-vars */
+
+
+
+
+
+
+/* eslint-disable react/prop-types */
+function ExamByQuestionStudentList() {
+    var _a;
+    const location = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_2__.useLocation)();
+    const state = location.state;
+    console.log("props", state.data);
+    const { data, loading } = (0,_apollo_client__WEBPACK_IMPORTED_MODULE_3__.useQuery)(_graphql_queries_exam__WEBPACK_IMPORTED_MODULE_4__.GET_EXAM, {
+        fetchPolicy: "network-only",
+        errorPolicy: "ignore",
+        variables: {
+            id: state.data.examId,
+        },
+    });
+    if (loading) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, "Loading...");
+    }
+    console.log(data);
+    return (react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null,
+        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { style: { width: "100%", margin: 12 } },
+            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core_Card__WEBPACK_IMPORTED_MODULE_5__["default"], { variant: "outlined", style: {
+                    height: 500,
+                    width: "100%",
+                    border: "1px solid orange",
+                    overflow: "scroll",
+                } },
+                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 12, style: { display: "flex" } },
+                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 8, style: {
+                            display: "flex",
+                            justifyContent: "start",
+                            padding: 12,
+                        } },
+                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.CardContent, { style: { width: "100%" } },
+                            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 12, style: { display: "flex", alignItems: "center" } },
+                                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 4, style: { display: "flex", justifyContent: "center" } },
+                                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Typography, { variant: "body2", component: "h6", style: {
+                                            fontWeight: "bold",
+                                            color: "orange",
+                                        } }, "Soru:")),
+                                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 4, style: { display: "flex", justifyContent: "center" } },
+                                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Typography, { variant: "body2", component: "h6", style: {
+                                            fontWeight: "bold",
+                                            color: "orange",
+                                        } }, "Do\u011Fru Cevap")),
+                                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 4, style: { display: "flex", justifyContent: "center" } },
+                                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Typography, { variant: "body2", component: "h6", style: {
+                                            fontWeight: "bold",
+                                            color: "orange",
+                                        } }, "Girilen Cevap")))))), (_a = data === null || data === void 0 ? void 0 : data.getExam) === null || _a === void 0 ? void 0 :
+                _a.questions.map((question) => {
+                    var _a, _b;
+                    return (react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 12, key: question.id, style: { display: "flex" } },
+                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 8, style: {
+                                display: "flex",
+                                justifyContent: "start",
+                                padding: 12,
+                            } },
+                            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.CardContent, { style: { width: "100%" } },
+                                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 12, style: { display: "flex", alignItems: "center" } },
+                                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 4, style: { display: "flex", justifyContent: "center" } },
+                                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Typography, { variant: "body2", component: "h6", style: {
+                                                fontWeight: "semi-bold",
+                                            } }, question.questionDesc)),
+                                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 4, style: { display: "flex", justifyContent: "center" } },
+                                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Typography, { variant: "body2", component: "h6", style: {
+                                                fontWeight: "semi-bold",
+                                            } }, question.answer)),
+                                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 4, style: { display: "flex", justifyContent: "center" } },
+                                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Typography, { variant: "body2", component: "h6", style: {
+                                                fontWeight: "semi-bold",
+                                            } },
+                                            react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, ((_b = (_a = question === null || question === void 0 ? void 0 : question.answers) === null || _a === void 0 ? void 0 : _a.find((a) => a.userId === state.data.userId)) === null || _b === void 0 ? void 0 : _b.answer) || "No Answer")))))),
+                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 4, style: {
+                                padding: 12,
+                                display: "flex",
+                                justifyContent: "end",
+                            } },
+                            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.CardActions, null,
+                                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Button, { variant: "contained", style: { background: "orange", color: "#fff" } }, "Grade")))));
+                }),
+                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 12, style: {
+                        display: "flex",
+                        justifyContent: "end",
+                        margin: 12,
+                        padding: 12,
+                    } },
+                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true },
+                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Link, { to: "/lab/exam-by-student-list", state: { data: state.data.examId } },
+                            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Button, { variant: "contained", style: { background: "orange", color: "#fff" } },
+                                "Back",
+                                " "))))))));
+}
+
+
+/***/ }),
+
+/***/ "./lib/LecturerView/ExamByStudentList.js":
+/*!***********************************************!*\
+  !*** ./lib/LecturerView/ExamByStudentList.js ***!
+  \***********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ ExamByStudentList)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "webpack/sharing/consume/default/react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _material_ui_core_Card__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @material-ui/core/Card */ "../node_modules/@material-ui/core/esm/Card/Card.js");
+/* harmony import */ var _material_ui_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @material-ui/core */ "webpack/sharing/consume/default/@material-ui/core/@material-ui/core");
+/* harmony import */ var _material_ui_core__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _graphql_queries_exam__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../graphql/queries/exam */ "./lib/graphql/queries/exam.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "webpack/sharing/consume/default/react-router-dom/react-router-dom");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react_router_dom__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _apollo_client__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @apollo/client */ "webpack/sharing/consume/default/@apollo/client/@apollo/client");
+/* harmony import */ var _apollo_client__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_apollo_client__WEBPACK_IMPORTED_MODULE_3__);
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable no-unused-vars */
+
+
+
+
+
+
+/* eslint-disable react/prop-types */
+function ExamByStudentList() {
+    var _a;
+    const location = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_2__.useLocation)();
+    const state = location.state;
+    console.log("props", state.data);
+    const { data, loading } = (0,_apollo_client__WEBPACK_IMPORTED_MODULE_3__.useQuery)(_graphql_queries_exam__WEBPACK_IMPORTED_MODULE_4__.GET_EXAM, {
+        fetchPolicy: "network-only",
+        errorPolicy: "ignore",
+        variables: {
+            id: state.data,
+        },
+    });
+    if (loading) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, "Loading...");
+    }
+    return (react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null,
+        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { style: { width: "100%", margin: 12 } },
+            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core_Card__WEBPACK_IMPORTED_MODULE_5__["default"], { variant: "outlined", style: {
+                    height: 500,
+                    width: "100%",
+                    border: "1px solid orange",
+                    overflow: "scroll",
+                } }, (_a = data === null || data === void 0 ? void 0 : data.getExam) === null || _a === void 0 ? void 0 : _a.studentExamProgressions.map((student) => (react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 12, key: student.id, style: { display: "flex" } },
+                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 8, style: {
+                        display: "flex",
+                        justifyContent: "start",
+                        padding: 12,
+                    } },
+                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.CardContent, null,
+                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Typography, { variant: "body2", component: "h6", style: {
+                                fontWeight: "bold",
+                            } }, student.user.fullName))),
+                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 4, style: {
+                        padding: 12,
+                        display: "flex",
+                        justifyContent: "end",
+                    } },
+                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.CardActions, null,
+                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Link, { to: "/lab/exam-by-question-student-list", state: {
+                                data: {
+                                    examId: state.data,
+                                    userId: student.user.id,
+                                },
+                            } },
+                            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Button, { variant: "contained", style: { background: "orange", color: "#fff" } }, "Grade")))))))))));
+}
+
+
+/***/ }),
+
 /***/ "./lib/LecturerView/ExamList.js":
 /*!**************************************!*\
   !*** ./lib/LecturerView/ExamList.js ***!
@@ -662,9 +866,11 @@ function ExamList() {
                             exam.status === false && (react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Button, { variant: "contained", style: { background: "orange", color: "#fff" }, onClick: () => {
                                     handleUpdateExam(exam === null || exam === void 0 ? void 0 : exam.id);
                                 } }, "Publish Exam")),
-                            exam.status === true && (react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Button, { variant: "contained", style: { background: "orange", color: "#fff" }, onClick: () => {
+                            exam.status === true && exam.isEnded === false && (react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Button, { variant: "contained", style: { background: "orange", color: "#fff" }, onClick: () => {
                                     handleEndExam(exam === null || exam === void 0 ? void 0 : exam.id);
                                 } }, "End Exam")),
+                            exam.status === true && exam.isEnded === true && (react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, { to: "/lab/exam-by-student-list", state: { data: exam.id } },
+                                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Button, { variant: "contained", style: { background: "orange", color: "#fff" } }, "View Results"))),
                             react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Button, { variant: "contained", style: { background: "orange", color: "#fff" }, onClick: () => {
                                     handleDeleteExam(exam === null || exam === void 0 ? void 0 : exam.id);
                                 } }, "Delete")))))),
@@ -1132,7 +1338,7 @@ function MainPage() {
             react__WEBPACK_IMPORTED_MODULE_0__.createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 12 },
                 react__WEBPACK_IMPORTED_MODULE_0__.createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.TextField, { id: "standard-basic", variant: "outlined", label: "Password", type: "password", onChange: (e) => setPassword(e.target.value) })),
             react__WEBPACK_IMPORTED_MODULE_0__.createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 12 },
-                react__WEBPACK_IMPORTED_MODULE_0__.createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Button, { variant: "contained", style: { background: "orange", color: "#fff" }, onClick: handleSubmit }, "Login23")))));
+                react__WEBPACK_IMPORTED_MODULE_0__.createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Button, { variant: "contained", style: { background: "orange", color: "#fff" }, onClick: handleSubmit }, "Login")))));
 }
 
 
@@ -1247,6 +1453,7 @@ function Terminal() {
     // Loading state variable to show spinner
     // while fetching data
     const [loading, setLoading] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
+    console.log(userCode);
     const options = {
         fontSize: fontSize,
     };
@@ -1483,7 +1690,7 @@ function StudentAssignment({ props }) {
                                         border: "1px dotted orange",
                                     } },
                                     react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Button, null,
-                                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Typography, { style: { fontSize: 14 }, gutterBottom: true }, "Save Content")))))))))));
+                                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Typography, { style: { fontSize: 14 }, gutterBottom: true }, "Submit Assignment")))))))))));
 }
 
 
@@ -1698,7 +1905,7 @@ function StudentExam({ props }) {
                                         border: "1px dotted orange",
                                     } },
                                     react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Button, null,
-                                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Typography, { style: { fontSize: 14 }, gutterBottom: true }, "Save Content")))))))))));
+                                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Typography, { style: { fontSize: 14 }, gutterBottom: true }, "Submit Exam")))))))))));
 }
 
 
@@ -1917,7 +2124,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _StudentView_StudentExam__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../StudentView/StudentExam */ "./lib/StudentView/StudentExam.js");
 /* harmony import */ var _LecturerView_AssignmentQuestionList__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../LecturerView/AssignmentQuestionList */ "./lib/LecturerView/AssignmentQuestionList.js");
 /* harmony import */ var _StudentView_StudentAssignment__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../StudentView/StudentAssignment */ "./lib/StudentView/StudentAssignment.js");
+/* harmony import */ var _LecturerView_ExamByStudentList__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../LecturerView/ExamByStudentList */ "./lib/LecturerView/ExamByStudentList.js");
+/* harmony import */ var _LecturerView_ExamByQuestionStudentList__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../LecturerView/ExamByQuestionStudentList */ "./lib/LecturerView/ExamByQuestionStudentList.js");
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+
+
 
 
 
@@ -1950,7 +2161,12 @@ const ROUTES = [
         element: react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_LecturerView_AssignmentQuestionList__WEBPACK_IMPORTED_MODULE_12__["default"], null),
     },
     ,
-    { path: "/lab/student-assignment", element: react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_StudentView_StudentAssignment__WEBPACK_IMPORTED_MODULE_13__["default"], null) }
+    { path: "/lab/student-assignment", element: react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_StudentView_StudentAssignment__WEBPACK_IMPORTED_MODULE_13__["default"], null) },
+    { path: "/lab/exam-by-student-list", element: react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_LecturerView_ExamByStudentList__WEBPACK_IMPORTED_MODULE_14__["default"], null) },
+    {
+        path: "/lab/exam-by-question-student-list",
+        element: react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_LecturerView_ExamByQuestionStudentList__WEBPACK_IMPORTED_MODULE_15__["default"], null),
+    },
 ];
 const Route = () => {
     // useRoutes() hook to define and render routes using regular JavaScript objects instead of <Routes> and <Route> elements.
@@ -2447,6 +2663,18 @@ const GET_EXAM = _apollo_client__WEBPACK_IMPORTED_MODULE_0__.gql `
         questionDesc
         grade
         answer
+        answers {
+          id
+          answer
+          userId
+        }
+      }
+      studentExamProgressions {
+        id
+        user {
+          id
+          fullName
+        }
       }
       status
       isEnded
@@ -2565,4 +2793,4 @@ class CounterWidget extends _jupyterlab_apputils__WEBPACK_IMPORTED_MODULE_0__.Re
 /***/ })
 
 }]);
-//# sourceMappingURL=lib_index_js.14230d890e26340d3728.js.map
+//# sourceMappingURL=lib_index_js.0dd6acbe00061428ff3d.js.map
