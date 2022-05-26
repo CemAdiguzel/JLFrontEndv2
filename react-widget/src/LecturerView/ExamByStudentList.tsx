@@ -96,6 +96,29 @@ export default function ExamByStudentList(): JSX.Element {
               </Grid>
             </Grid>
           ))}
+          <Grid
+            item
+            xs={12}
+            style={{
+              display: "flex",
+              justifyContent: "end",
+              margin: 12,
+              padding: 12,
+            }}
+          >
+            <Grid item>
+              <Link
+                to="/lab/exam-list"
+              >
+                <Button
+                  variant="contained"
+                  style={{ background: "orange", color: "#fff" }}
+                >
+                  Back{" "}
+                </Button>
+              </Link>
+            </Grid>
+          </Grid>
           {/* Listeleme Kısmı Bitti */}
         </Card>
       </Grid>

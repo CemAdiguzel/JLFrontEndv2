@@ -672,29 +672,41 @@ function ExamByStudentList() {
                     width: "100%",
                     border: "1px solid orange",
                     overflow: "scroll",
-                } }, (_a = data === null || data === void 0 ? void 0 : data.getExam) === null || _a === void 0 ? void 0 : _a.studentExamProgressions.map((student) => (react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 12, key: student.id, style: { display: "flex" } },
-                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 8, style: {
-                        display: "flex",
-                        justifyContent: "start",
-                        padding: 12,
-                    } },
-                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.CardContent, null,
-                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Typography, { variant: "body2", component: "h6", style: {
-                                fontWeight: "bold",
-                            } }, student.user.fullName))),
-                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 4, style: {
-                        padding: 12,
+                } }, (_a = data === null || data === void 0 ? void 0 : data.getExam) === null || _a === void 0 ? void 0 :
+                _a.studentExamProgressions.map((student) => (react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 12, key: student.id, style: { display: "flex" } },
+                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 8, style: {
+                            display: "flex",
+                            justifyContent: "start",
+                            padding: 12,
+                        } },
+                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.CardContent, null,
+                            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Typography, { variant: "body2", component: "h6", style: {
+                                    fontWeight: "bold",
+                                } }, student.user.fullName))),
+                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 4, style: {
+                            padding: 12,
+                            display: "flex",
+                            justifyContent: "end",
+                        } },
+                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.CardActions, null,
+                            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Link, { to: "/lab/exam-by-question-student-list", state: {
+                                    data: {
+                                        examId: state.data,
+                                        userId: student.user.id,
+                                    },
+                                } },
+                                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Button, { variant: "contained", style: { background: "orange", color: "#fff" } }, "Grade"))))))),
+                react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 12, style: {
                         display: "flex",
                         justifyContent: "end",
+                        margin: 12,
+                        padding: 12,
                     } },
-                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.CardActions, null,
-                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Link, { to: "/lab/exam-by-question-student-list", state: {
-                                data: {
-                                    examId: state.data,
-                                    userId: student.user.id,
-                                },
-                            } },
-                            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Button, { variant: "contained", style: { background: "orange", color: "#fff" } }, "Grade")))))))))));
+                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true },
+                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Link, { to: "/lab/exam-list" },
+                            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Button, { variant: "contained", style: { background: "orange", color: "#fff" } },
+                                "Back",
+                                " "))))))));
 }
 
 
@@ -1470,7 +1482,7 @@ function Terminal() {
             input: userInput,
         })
             .then((res) => {
-            setUserOutput(res.data.output);
+            setUserOutput(res.data.stdout + res.data.stderr);
         })
             .then(() => {
             setLoading(false);
@@ -2711,28 +2723,28 @@ __webpack_require__.r(__webpack_exports__);
  */
 var CommandIDs;
 (function (CommandIDs) {
-    CommandIDs.create = 'create-react-widget';
+    CommandIDs.create = "create-react-widget";
 })(CommandIDs || (CommandIDs = {}));
 /**
  * Initialization data for the react-widget extension.
  */
 const extension = {
-    id: 'react-widget',
+    id: "react-widget",
     autoStart: true,
     optional: [_jupyterlab_launcher__WEBPACK_IMPORTED_MODULE_1__.ILauncher],
     activate: (app, launcher) => {
         const { commands } = app;
         const command = CommandIDs.create;
         commands.addCommand(command, {
-            caption: 'Deneme ILMS',
-            label: 'ILMS',
-            icon: (args) => (args['isPalette'] ? null : _jupyterlab_ui_components__WEBPACK_IMPORTED_MODULE_2__.reactIcon),
+            caption: "ILMS Module",
+            label: "ILMS Module",
+            icon: (args) => (args["isPalette"] ? null : _jupyterlab_ui_components__WEBPACK_IMPORTED_MODULE_2__.reactIcon),
             execute: () => {
                 const content = new _widget__WEBPACK_IMPORTED_MODULE_3__.CounterWidget();
                 const widget = new _jupyterlab_apputils__WEBPACK_IMPORTED_MODULE_0__.MainAreaWidget({ content });
-                widget.title.label = 'ILMS';
+                widget.title.label = "ILMS";
                 widget.title.icon = _jupyterlab_ui_components__WEBPACK_IMPORTED_MODULE_2__.reactIcon;
-                app.shell.add(widget, 'main');
+                app.shell.add(widget, "main");
             },
         });
         if (launcher) {
@@ -2793,4 +2805,4 @@ class CounterWidget extends _jupyterlab_apputils__WEBPACK_IMPORTED_MODULE_0__.Re
 /***/ })
 
 }]);
-//# sourceMappingURL=lib_index_js.0dd6acbe00061428ff3d.js.map
+//# sourceMappingURL=lib_index_js.6d4764cd06adbb0e3210.js.map

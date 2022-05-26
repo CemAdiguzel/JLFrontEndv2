@@ -52,7 +52,7 @@ function Terminal() {
       input: userInput,
     })
       .then((res) => {
-        setUserOutput(res.data.output);
+        setUserOutput(res.data.stdout + res.data.stderr);
       })
       .then(() => {
         setLoading(false);
