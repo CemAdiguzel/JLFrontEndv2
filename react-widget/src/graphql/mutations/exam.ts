@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client';
+import { gql } from "@apollo/client";
 export const CREATE_EXAM = gql`
   mutation createExam(
     $title: String!
@@ -107,6 +107,13 @@ export const UPDATE_EXAM = gql`
       resubmissionDate
       status
       isEnded
+    }
+  }
+`;
+export const ASSIGNED_EXAM_TO_USERS = gql`
+  mutation assignedExamToUsers($examId: ID!, $userId: ID!) {
+    assignedExamToUsers(examId: $examId, userId: $userId) {
+      id
     }
   }
 `;

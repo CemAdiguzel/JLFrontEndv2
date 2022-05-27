@@ -11,6 +11,7 @@ import {
 } from "@material-ui/core";
 import { useQuery, useMutation } from "@apollo/client";
 import { GET_EXAM } from "../graphql/queries/exam";
+import { ASSIGNED_EXAM_TO_USERS } from "../graphql/mutations/exam";
 import {
   CREATE_ANSWER,
   ASSIGN_ANSWER_TO_QUESTION,
@@ -36,6 +37,7 @@ export default function StudentExam({ props }: any) {
 
   const [createAnswer] = useMutation(CREATE_ANSWER);
   const [assignAnswerToQuestion] = useMutation(ASSIGN_ANSWER_TO_QUESTION);
+  const [assignedExamToUsers] = useMutation(ASSIGNED_EXAM_TO_USERS);
 
   if (examLoading) {
     return <div>Loading...</div>;
@@ -57,6 +59,17 @@ export default function StudentExam({ props }: any) {
       },
     });
     setAnswerValue("");
+  };
+  const handleSubmitExam = async () => {
+    console.log("submitted");
+    console.log("state.data.examId", state.data.examId);
+    console.log("state.data.studentId", state.data.studentId);
+    await assignedExamToUsers({
+      variables: {
+        examId: state.data.examId,
+        userId: state.data.studentId,
+      },
+    });
   };
 
   return (
@@ -165,7 +178,7 @@ export default function StudentExam({ props }: any) {
                 <Link
                   to="/lab/student-home-page"
                   state={{
-                    userId: userIdValue,
+                    userId: state.data.studentId,
                   }}
                 >
                   <CardContent
@@ -179,7 +192,11 @@ export default function StudentExam({ props }: any) {
                       border: "1px dotted orange",
                     }}
                   >
-                    <Button>
+                    <Button
+                      onClick={() => {
+                        handleSubmitExam();
+                      }}
+                    >
                       <Typography style={{ fontSize: 14 }} gutterBottom>
                         Submit Exam
                       </Typography>

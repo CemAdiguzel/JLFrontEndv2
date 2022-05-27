@@ -11,6 +11,7 @@ import { Link } from "react-router-dom";
 
 /* eslint-disable react/prop-types */
 export default function StudentExamList(loggedInUserId: any): JSX.Element {
+  console.log("loggedInUserId", loggedInUserId);
   const { data: examList, loading: examLoading } = useQuery(LIST_EXAM, {
     fetchPolicy: "cache-first",
     errorPolicy: "ignore",

@@ -62,10 +62,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export default function StudentHomePage() {
+export default function StudentHomePage(userId: any) {
   const location = useLocation();
   const state = location.state as any;
   console.log("id", state.userId);
+  console.log("props", userId);
 
   const classes = useStyles();
   const [value, setValue] = React.useState(0);

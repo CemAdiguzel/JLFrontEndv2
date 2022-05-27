@@ -108,7 +108,7 @@ export default function ExamByStudentList(): JSX.Element {
           >
             <Grid item>
               <Link
-                to="/lab/exam-list"
+                to="/lab/home-page"
               >
                 <Button
                   variant="contained"

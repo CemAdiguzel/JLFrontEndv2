@@ -703,7 +703,7 @@ function ExamByStudentList() {
                         padding: 12,
                     } },
                     react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true },
-                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Link, { to: "/lab/exam-list" },
+                        react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Link, { to: "/lab/home-page" },
                             react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Button, { variant: "contained", style: { background: "orange", color: "#fff" } },
                                 "Back",
                                 " "))))))));
@@ -1805,10 +1805,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _apollo_client__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @apollo/client */ "webpack/sharing/consume/default/@apollo/client/@apollo/client");
 /* harmony import */ var _apollo_client__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_apollo_client__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _graphql_queries_exam__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../graphql/queries/exam */ "./lib/graphql/queries/exam.js");
+/* harmony import */ var _graphql_mutations_exam__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../graphql/mutations/exam */ "./lib/graphql/mutations/exam.js");
 /* harmony import */ var _graphql_mutations_answer__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../graphql/mutations/answer */ "./lib/graphql/mutations/answer.js");
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-router-dom */ "webpack/sharing/consume/default/react-router-dom/react-router-dom");
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react_router_dom__WEBPACK_IMPORTED_MODULE_3__);
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+
 
 
 
@@ -1831,6 +1833,7 @@ function StudentExam({ props }) {
     });
     const [createAnswer] = (0,_apollo_client__WEBPACK_IMPORTED_MODULE_2__.useMutation)(_graphql_mutations_answer__WEBPACK_IMPORTED_MODULE_5__.CREATE_ANSWER);
     const [assignAnswerToQuestion] = (0,_apollo_client__WEBPACK_IMPORTED_MODULE_2__.useMutation)(_graphql_mutations_answer__WEBPACK_IMPORTED_MODULE_5__.ASSIGN_ANSWER_TO_QUESTION);
+    const [assignedExamToUsers] = (0,_apollo_client__WEBPACK_IMPORTED_MODULE_2__.useMutation)(_graphql_mutations_exam__WEBPACK_IMPORTED_MODULE_6__.ASSIGNED_EXAM_TO_USERS);
     if (examLoading) {
         return react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, "Loading...");
     }
@@ -1851,6 +1854,17 @@ function StudentExam({ props }) {
             },
         });
         setAnswerValue("");
+    };
+    const handleSubmitExam = async () => {
+        console.log("submitted");
+        console.log("state.data.examId", state.data.examId);
+        console.log("state.data.studentId", state.data.studentId);
+        await assignedExamToUsers({
+            variables: {
+                examId: state.data.examId,
+                userId: state.data.studentId,
+            },
+        });
     };
     return (react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null,
         react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { container: true },
@@ -1905,7 +1919,7 @@ function StudentExam({ props }) {
                     react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.CardActions, null,
                         react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { container: true, item: true },
                             react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, { to: "/lab/student-home-page", state: {
-                                    userId: userIdValue,
+                                    userId: state.data.studentId,
                                 } },
                                 react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.CardContent, { style: {
                                         display: "flex",
@@ -1916,7 +1930,9 @@ function StudentExam({ props }) {
                                         width: "100%",
                                         border: "1px dotted orange",
                                     } },
-                                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Button, null,
+                                    react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Button, { onClick: () => {
+                                            handleSubmitExam();
+                                        } },
                                         react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Typography, { style: { fontSize: 14 }, gutterBottom: true }, "Submit Exam")))))))))));
 }
 
@@ -1958,6 +1974,7 @@ __webpack_require__.r(__webpack_exports__);
 /* eslint-disable react/prop-types */
 function StudentExamList(loggedInUserId) {
     var _a;
+    console.log("loggedInUserId", loggedInUserId);
     const { data: examList, loading: examLoading } = (0,_apollo_client__WEBPACK_IMPORTED_MODULE_2__.useQuery)(_graphql_queries_exam__WEBPACK_IMPORTED_MODULE_4__.LIST_EXAM, {
         fetchPolicy: "cache-first",
         errorPolicy: "ignore",
@@ -2077,10 +2094,11 @@ const useStyles = (0,_material_ui_core_styles__WEBPACK_IMPORTED_MODULE_5__["defa
     },
 }));
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-function StudentHomePage() {
+function StudentHomePage(userId) {
     const location = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_2__.useLocation)();
     const state = location.state;
     console.log("id", state.userId);
+    console.log("props", userId);
     const classes = useStyles();
     const [value, setValue] = react__WEBPACK_IMPORTED_MODULE_0___default().useState(0);
     const navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_2__.useNavigate)();
@@ -2390,6 +2408,7 @@ const AUTHENTICATE_USER = _apollo_client__WEBPACK_IMPORTED_MODULE_0__.gql `
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "ASSIGNED_EXAM_TO_USERS": () => (/* binding */ ASSIGNED_EXAM_TO_USERS),
 /* harmony export */   "CREATE_EXAM": () => (/* binding */ CREATE_EXAM),
 /* harmony export */   "DELETE_EXAM": () => (/* binding */ DELETE_EXAM),
 /* harmony export */   "UPDATE_EXAM": () => (/* binding */ UPDATE_EXAM)
@@ -2505,6 +2524,13 @@ const UPDATE_EXAM = _apollo_client__WEBPACK_IMPORTED_MODULE_0__.gql `
       resubmissionDate
       status
       isEnded
+    }
+  }
+`;
+const ASSIGNED_EXAM_TO_USERS = _apollo_client__WEBPACK_IMPORTED_MODULE_0__.gql `
+  mutation assignedExamToUsers($examId: ID!, $userId: ID!) {
+    assignedExamToUsers(examId: $examId, userId: $userId) {
+      id
     }
   }
 `;
@@ -2805,4 +2831,4 @@ class CounterWidget extends _jupyterlab_apputils__WEBPACK_IMPORTED_MODULE_0__.Re
 /***/ })
 
 }]);
-//# sourceMappingURL=lib_index_js.6d4764cd06adbb0e3210.js.map
+//# sourceMappingURL=lib_index_js.3c5fbc4ab0e74b703d97.js.map
