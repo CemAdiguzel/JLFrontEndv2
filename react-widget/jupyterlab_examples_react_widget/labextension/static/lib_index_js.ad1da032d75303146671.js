@@ -945,7 +945,7 @@ function ExamList() {
                         react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 4 },
                             react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core_Typography__WEBPACK_IMPORTED_MODULE_8__["default"], { variant: "body2", gutterBottom: true }, "Assigned To:")),
                         react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 8 },
-                            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.TextField, { fullWidth: true, id: "outlined-basic", placeholder: "Select the assigned to", variant: "outlined", type: "date", value: assignedToValue, onChange: (e) => setAssignedToValue(e.target.value) }))),
+                            react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.TextField, { fullWidth: true, id: "outlined-basic", placeholder: "Select the assigned to", variant: "outlined", type: "text", value: assignedToValue, onChange: (e) => setAssignedToValue(e.target.value) }))),
                     react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__.Grid, { item: true, xs: 12, style: {
                             display: "flex",
                             alignItems: "center",
@@ -2831,4 +2831,4 @@ class CounterWidget extends _jupyterlab_apputils__WEBPACK_IMPORTED_MODULE_0__.Re
 /***/ })
 
 }]);
-//# sourceMappingURL=lib_index_js.3c5fbc4ab0e74b703d97.js.map
+//# sourceMappingURL=lib_index_js.ad1da032d75303146671.js.map

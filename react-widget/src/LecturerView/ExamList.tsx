@@ -384,7 +384,7 @@ export default function ExamList(): JSX.Element {
                   id="outlined-basic"
                   placeholder="Select the assigned to"
                   variant="outlined"
-                  type="date"
+                  type="text"
                   value={assignedToValue}
                   onChange={(e) => setAssignedToValue(e.target.value)}
                 />
